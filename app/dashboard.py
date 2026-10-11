@@ -1375,10 +1375,10 @@ def load_wafer_dashboard_data(use_synthetic: bool = False) -> tuple[dict[str, An
         try:
             df_runs = pd.read_parquet(runs_path)
             return metrics, df_runs
-        except Exception:
+        except (OSError, ValueError):
             pass
 
-    # Synthetic demo data fallback (10 runs with 152 sensor channels)
+    # Synthetic demo data fallback (20 runs with 152 time steps)
     rng = np.random.default_rng(42)
     synthetic_rows = []
     sensor_cols = [f"s{i:03d}" for i in range(152)]
@@ -1410,60 +1410,89 @@ def render_wafer_etch_view(use_synthetic: bool = False) -> None:
         summary=(
             "Following the exploratory finding on SECOM that equipment sensor drift was the primary driver "
             "of false alarms, YieldGuard Protocol v0.2 was frozen and applied to an independent semiconductor "
-            "wafer etch dataset (7,164 runs, 152 sensor channels, 7-block prequential evaluation). "
-            "All confirmatory targets passed decisively."
+            "wafer etch benchmark dataset (7,164 runs, 1 sensor trace of 152 time steps per wafer, 7-block prequential evaluation). "
+            "Note: Timestamps are synthetic 10-minute intervals tracking UCR file order. All confirmatory targets passed."
         ),
         how_to_read=[
             "**Official Scorecard**: inspect the 4 pre-registered confirmatory targets (O1_v2 to O4_v2).",
-            "**Sensor Trace Inspector**: select individual wafer runs to inspect the 152 sensor readings compared against the normal mean baseline.",
+            "**Sensor Trace Inspector**: select individual wafer runs to inspect the 152-time-step inline sensor trace compared against the normal mean baseline.",
             "**Detector Comparison**: compare all 9 detectors across the operational alarm budgets (2, 5, 10 alarms per 100 runs).",
         ],
         technical=(
             "Protocol v0.2 uses rolling-window prequential evaluation over 7 sequential evaluation blocks (B2–B8) "
             "comprising 6,268 scored runs and 676 real etch faults. Baselines and alarm thresholds are refit "
-            "per block without look-ahead leakage. Confirmatory evaluation was executed strictly once on frozen code."
+            "per block without look-ahead leakage. Confirmatory evaluation was executed strictly once on frozen code. "
+            "Targets O1_v2–O4_v2 are tracked dynamically from the confirmatory metrics report; targets O5_v2 (calibration fidelity) "
+            "and O6_v2 (reproducibility) are protocol verification gates documented in docs/11_PROTOCOL_V02.md."
         ),
     )
+
+    if use_synthetic:
+        st.info("ℹ️ Running with synthetic wafer demo traces. The benchmark scorecard below reflects the frozen confirmatory metrics report.")
 
     if metrics is None:
         st.warning("Confirmatory metrics file `reports/v0_2/wafer_confirmatory_metrics.json` not found.")
         return
 
-    # Top KPI Strip for v0.2 Targets
+    # Top KPI Strip for v0.2 Targets (dynamically derived)
     targets = metrics.get("target_outcomes_v0_2", {})
-    o1 = targets.get("O1_v2_prequential_pr_auc", {})
-    o2 = targets.get("O2_v2_recall_at_5_far", {})
-    o3 = targets.get("O3_v2_adaptive_alarm_budget", {})
-    o4 = targets.get("O4_v2_spc_vs_ml_comparison", {})
+    o1 = targets.get("O1_v2_prequential_pr_auc")
+    o2 = targets.get("O2_v2_recall_at_5_far")
+    o3 = targets.get("O3_v2_adaptive_alarm_budget")
+    o4 = targets.get("O4_v2_spc_vs_ml_comparison")
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
+        if o1 and "actual_pr_auc" in o1:
+            val_str = f"{float(o1['actual_pr_auc']):.4f}"
+            delta_str = str(o1.get("verdict", "N/A"))
+        else:
+            val_str = "n/a"
+            delta_str = "N/A"
         st.metric(
             label="O1: PR-AUC (Target > 0.2157)",
-            value=f"{o1.get('actual_pr_auc', 0.0):.4f}",
-            delta=f"PASS ({o1.get('verdict', 'PASS')})",
+            value=val_str,
+            delta=delta_str,
             delta_color="normal",
         )
     with col2:
+        if o2 and "actual_recall_at_5_far" in o2:
+            val_str = f"{float(o2['actual_recall_at_5_far']) * 100:.1f}%"
+            delta_str = str(o2.get("verdict", "N/A"))
+        else:
+            val_str = "n/a"
+            delta_str = "N/A"
         st.metric(
             label="O2: Recall@5% FAR (Target > 20%)",
-            value=f"{o2.get('actual_recall_at_5_far', 0.0) * 100:.1f}%",
-            delta=f"PASS ({o2.get('verdict', 'PASS')})",
+            value=val_str,
+            delta=delta_str,
             delta_color="normal",
         )
     with col3:
+        if o3 and "realised_alarms_per_100" in o3:
+            val_str = f"{float(o3['realised_alarms_per_100']):.2f}"
+            delta_str = f"{o3.get('verdict', 'N/A')} ({o3.get('true_alarms', 0)} TP, {o3.get('false_alarms', 0)} FP)"
+        else:
+            val_str = "n/a"
+            delta_str = "N/A"
         st.metric(
             label="O3: Alarms/100 (Target [2, 8])",
-            value=f"{o3.get('realised_alarms_per_100', 0.0):.2f}",
-            delta=f"PASS ({o3.get('true_alarms', 0)} TP, {o3.get('false_alarms', 0)} FP)",
+            value=val_str,
+            delta=delta_str,
             delta_color="normal",
         )
     with col4:
-        diff_ml_spc = o4.get("diff_ml_minus_spc", 0.0)
+        if o4 and "diff_ml_minus_spc" in o4:
+            diff_ml_spc = float(o4["diff_ml_minus_spc"])
+            val_str = f"{diff_ml_spc:+.4f}"
+            delta_str = str(o4.get("verdict", "REPORTED"))
+        else:
+            val_str = "n/a"
+            delta_str = "N/A"
         st.metric(
             label="O4: ML Advantage over SPC",
-            value=f"+{diff_ml_spc:.4f}",
-            delta=f"{o4.get('verdict', 'REPORTED')}",
+            value=val_str,
+            delta=delta_str,
             delta_color="normal",
         )
 
@@ -1471,49 +1500,110 @@ def render_wafer_etch_view(use_synthetic: bool = False) -> None:
 
     # Confirmatory Scorecard Table
     st.subheader("1. Confirmatory Scorecard (Protocol v0.2 Pre-Registered Targets)")
-    scorecard_data = [
-        {
-            "Objective": "O1_v2: Prequential PR-AUC",
-            "Pre-Registered Target": f"≥ 2× prevalence ({o1.get('target_min_pr_auc_2x_prevalence', 0.2157):.4f})",
-            "Measured Outcome": f"{o1.get('actual_pr_auc', 0.9729):.4f}",
-            "95% Confidence Interval": f"[{o1.get('wider_95_ci', [0.9574, 0.9854])[0]:.4f}, {o1.get('wider_95_ci', [0.9574, 0.9854])[1]:.4f}]",
-            "Verdict": "PASS",
-            "Interpretation": "Primary detector (E08_v2 XGBoost) achieved near-perfect ranking with 676 actual fails.",
-        },
-        {
-            "Objective": "O2_v2: Recall at 5% FAR",
-            "Pre-Registered Target": f"≥ {o2.get('target_min_recall', 0.20) * 100:.0f}%",
-            "Measured Outcome": f"{o2.get('actual_recall_at_5_far', 0.9970) * 100:.2f}%",
-            "95% Confidence Interval": f"[{o2.get('wider_95_ci', [0.9926, 1.0])[0] * 100:.1f}%, {o2.get('wider_95_ci', [0.9926, 1.0])[1] * 100:.1f}%]",
-            "Verdict": "PASS",
-            "Interpretation": "674 of 676 etch faults detected at a fixed 5% false alarm rate.",
-        },
-        {
-            "Objective": "O3_v2: Adaptive Alarm Budget Stability",
-            "Pre-Registered Target": "Within [2.0, 8.0] alarms per 100 runs",
-            "Measured Outcome": f"{o3.get('realised_alarms_per_100', 5.55):.2f} alarms per 100 runs",
-            "95% Confidence Interval": "Exact count across 6,268 runs",
-            "Verdict": "PASS",
-            "Interpretation": "Realised rate was 5.55/100 (348 alarms total: 344 True Positives, 4 False Alarms, Precision 98.9%).",
-        },
-        {
-            "Objective": "O4_v2: Statistical SPC vs ML Comparison",
-            "Pre-Registered Target": "Report PR-AUC difference with 95% bootstrap CI",
-            "Measured Outcome": f"Difference = +{diff_ml_spc:.4f} (E08_v2 vs E05_v2)",
-            "95% Confidence Interval": f"[{o4.get('stratified_95_ci_diff', [0.6458, 0.6931])[0]:.4f}, {o4.get('stratified_95_ci_diff', [0.6458, 0.6931])[1]:.4f}]",
-            "Verdict": "REPORTED",
-            "Interpretation": "Supervised tree ensembles heavily outperformed unsupervised SPC (+0.6715 PR-AUC advantage).",
-        },
-    ]
-    st.dataframe(pd.DataFrame(scorecard_data), width="stretch", hide_index=True)
+
+    scorecard_data = []
+
+    # O1 row
+    if o1:
+        o1_ci = o1.get("wider_95_ci")
+        ci_str = f"[{o1_ci[0]:.4f}, {o1_ci[1]:.4f}]" if o1_ci and len(o1_ci) == 2 else "n/a"
+        scorecard_data.append(
+            {
+                "Objective": "O1_v2: Prequential PR-AUC",
+                "Pre-Registered Target": (
+                    f"≥ 2× prevalence ({float(o1['target_min_pr_auc_2x_prevalence']):.4f})"
+                    if "target_min_pr_auc_2x_prevalence" in o1 else "n/a"
+                ),
+                "Measured Outcome": f"{float(o1['actual_pr_auc']):.4f}" if "actual_pr_auc" in o1 else "n/a",
+                "95% Confidence Interval": ci_str,
+                "Verdict": str(o1.get("verdict", "N/A")),
+                "Interpretation": (
+                    f"Primary detector ({o1.get('primary_detector', 'E08_v2')}) achieved top fault ranking across {o1.get('n_fails', 0)} actual fails."
+                    if "n_fails" in o1 else "No outcome available."
+                ),
+            }
+        )
+
+    # O2 row
+    if o2:
+        o2_ci = o2.get("wider_95_ci")
+        ci_str = f"[{o2_ci[0]*100:.1f}%, {o2_ci[1]*100:.1f}%]" if o2_ci and len(o2_ci) == 2 else "n/a"
+        rec_val = float(o2.get("actual_recall_at_5_far", 0.0))
+        n_f = o2.get("n_fails", 0)
+        tp_est = int(round(rec_val * n_f))
+        scorecard_data.append(
+            {
+                "Objective": "O2_v2: Recall at 5% FAR",
+                "Pre-Registered Target": (
+                    f"≥ {float(o2['target_min_recall']) * 100:.0f}%"
+                    if "target_min_recall" in o2 else "n/a"
+                ),
+                "Measured Outcome": f"{rec_val * 100:.2f}%" if "actual_recall_at_5_far" in o2 else "n/a",
+                "95% Confidence Interval": ci_str,
+                "Verdict": str(o2.get("verdict", "N/A")),
+                "Interpretation": (
+                    f"Caught {tp_est} of {n_f} etch faults ({rec_val * 100:.1f}%) at a fixed 5% false alarm rate."
+                    if n_f > 0 else "No outcome available."
+                ),
+            }
+        )
+
+    # O3 row
+    if o3:
+        n_r = o3.get("n_runs", 0)
+        scorecard_data.append(
+            {
+                "Objective": "O3_v2: Adaptive Alarm Budget Stability",
+                "Pre-Registered Target": f"Within [{o3.get('allowed_range_per_100', [2.0, 8.0])[0]:.1f}, {o3.get('allowed_range_per_100', [2.0, 8.0])[1]:.1f}] alarms per 100 runs",
+                "Measured Outcome": (
+                    f"{float(o3['realised_alarms_per_100']):.2f} alarms per 100 runs"
+                    if "realised_alarms_per_100" in o3 else "n/a"
+                ),
+                "95% Confidence Interval": f"Exact count across {n_r:,} runs" if n_r else "Exact count",
+                "Verdict": str(o3.get("verdict", "N/A")),
+                "Interpretation": (
+                    f"Realised rate was {float(o3.get('realised_alarms_per_100', 0)):.2f}/100 "
+                    f"({o3.get('alarms', 0)} alarms: {o3.get('true_alarms', 0)} True Positives, {o3.get('false_alarms', 0)} False Alarms, "
+                    f"Precision {float(o3.get('precision', 0))*100:.1f}%)."
+                    if "alarms" in o3 else "No outcome available."
+                ),
+            }
+        )
+
+    # O4 row
+    if o4:
+        o4_ci = o4.get("stratified_95_ci_diff")
+        ci_str = f"[{o4_ci[0]:+.4f}, {o4_ci[1]:+.4f}]" if o4_ci and len(o4_ci) == 2 else "n/a"
+        diff_val = float(o4.get("diff_ml_minus_spc", 0.0))
+        scorecard_data.append(
+            {
+                "Objective": "O4_v2: Statistical SPC vs ML Comparison",
+                "Pre-Registered Target": "Report PR-AUC difference with 95% bootstrap CI",
+                "Measured Outcome": (
+                    f"Difference = {diff_val:+.4f} ({o4.get('best_ml_detector', 'E08_v2')} vs {o4.get('best_spc_detector', 'E05_v2')})"
+                    if "diff_ml_minus_spc" in o4 else "n/a"
+                ),
+                "95% Confidence Interval": ci_str,
+                "Verdict": str(o4.get("verdict", "REPORTED")),
+                "Interpretation": (
+                    f"Supervised tree ensembles outperformed unsupervised SPC ({diff_val:+.4f} PR-AUC advantage)."
+                    if "diff_ml_minus_spc" in o4 else "No outcome available."
+                ),
+            }
+        )
+
+    if scorecard_data:
+        st.dataframe(pd.DataFrame(scorecard_data), width="stretch", hide_index=True)
+    else:
+        st.info("No confirmatory targets loaded.")
 
     st.divider()
 
     # Section 2: Interactive Wafer Run Sensor Trace Inspector
     st.subheader("2. Interactive Wafer Run Sensor Trace Inspector")
     st.markdown(
-        "Each wafer run records 152 sequential radio-frequency and chemical sensor measurements during etch processing. "
-        "Select a wafer run below to view its sensor profile against the normal baseline."
+        "Each wafer run records one sensor trace of 152 sequential time steps during etch processing. "
+        "Select a wafer run below to view its inline sensor profile against the normal baseline."
     )
 
     sensor_cols = [c for c in df_runs.columns if c.startswith("s") and len(c) == 4]
@@ -1537,7 +1627,7 @@ def render_wafer_etch_view(use_synthetic: bool = False) -> None:
             selected_run_id = st.selectbox(
                 "Select Wafer Run ID:",
                 sample_options,
-                index=0 if sample_options else 0,
+                index=0 if len(sample_options) > 0 else None,
             )
 
         if selected_run_id:
@@ -1584,8 +1674,8 @@ def render_wafer_etch_view(use_synthetic: bool = False) -> None:
                 )
             )
             fig_trace.update_layout(
-                title=f"Sensor Measurements across 152 Channels — Wafer {selected_run_id}",
-                xaxis_title="Sensor Channel Index (0 to 151)",
+                title=f"Sensor Trace across 152 Time Steps — Wafer {selected_run_id}",
+                xaxis_title="Time Step Index (0 to 151)",
                 yaxis_title="Sensor Reading (Standardized)",
                 legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="left", x=0),
                 margin=dict(l=20, r=20, t=50, b=20),
