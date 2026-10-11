@@ -110,7 +110,7 @@ To address drift without retuning on the spent SECOM holdout, Protocol [`v0.2.0`
 - **Backlog Supervised Baseline (`E09_v2`)**: Add L2-regularised balanced Logistic Regression (`C=0.1`) alongside shallow Class-Weighted XGBoost (`E08_v2`).
 
 #### Confirmatory One-Shot Benchmark: Semiconductor Wafer Etch Dataset (Bobick & Olszewski 2001)
-Applied once without modification to the **Semiconductor Wafer Etch dataset** ([`wafer_source_manifest.json`](data/wafer_source_manifest.json): 7,164 wafer runs, 152 inline sensor time-step readings per wafer, 762 abnormal/faulty wafers = 10.64%; 6,268 evaluated runs and 676 fails across $B_2 \dots B_8$, prevalence `0.1078`):
+Applied once without modification to the **Semiconductor Wafer Etch dataset** ([`wafer_source_manifest.json`](data/wafer_source_manifest.json): 7,164 wafer runs, 1 inline process sensor trace of 152 sequential time steps per wafer, 762 abnormal/faulty wafers = 10.64%; 6,268 evaluated runs and 676 fails across $B_2 \dots B_8$, prevalence `0.1078`). *Chronology Note*: Because original fab equipment timestamps are not included in the public UCR archive, sequential 10-minute intervals tracking UCR train+test file order were assigned for prequential evaluation.
 
 | ID | Objective (Confirmatory Wafer Etch) | Predeclared Target | Measured Result (`E08_v2` Primary) | 95% Wider CI | Fail Count ($n$) | Verdict | Evidence |
 |---|---|---|---|---|---|---|---|
@@ -118,6 +118,8 @@ Applied once without modification to the **Semiconductor Wafer Etch dataset** ([
 | **O2_v2** | Operational Recall @ 5% FAR | $\ge 0.20$ (chance: 0.05) | **0.9970** (674 / 676 fails) | $[0.9926, 1.0000]$ | 676 | **PASS** | [wafer_confirmatory_metrics.json](reports/v0_2/wafer_confirmatory_metrics.json) |
 | **O3_v2** | Adaptive Alarm Budget Stability | $\in [2.0, 8.0]$ per 100 & $\ge 1$ TP | **5.55 per 100** (348 alarms: **344 TP, 4 FP**, precision **98.85%**) | N/A | 676 | **PASS** | [wafer_confirmatory_metrics.json](reports/v0_2/wafer_confirmatory_metrics.json) |
 | **O4_v2** | SPC vs ML Comparison | Report paired diff & 95% CI | **+0.6715** (`E08_v2` 0.9729 vs `E05_v2` 0.3014) | $[+0.6458, +0.6931]$ | 676 | **REPORTED** | [wafer_confirmatory_metrics.json](reports/v0_2/wafer_confirmatory_metrics.json) |
+
+*Protocol Gates*: `O5_v2` (calibration-window alarm rate within $[4.5, 5.5]$ per 100) and `O6_v2` (reproducibility across seeds within $10^{-6}$) are protocol verification gates defined in [`docs/11_PROTOCOL_V02.md`](docs/11_PROTOCOL_V02.md).
 
 #### Detector Comparison Across Protocol `v0.2.0` (Confirmatory Wafer Etch vs Exploratory SECOM)
 

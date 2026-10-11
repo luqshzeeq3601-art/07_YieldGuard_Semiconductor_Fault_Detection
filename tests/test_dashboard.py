@@ -35,6 +35,39 @@ def test_dashboard_apptest_runs_all_views_without_exceptions() -> None:
         at.sidebar.radio[0].set_value(view_name).run()
         assert not at.exception, f"View '{view_name}' threw exception: {at.exception}"
 
+    # Specifically verify View 6 content under Synthetic Demo Mode
+    at.sidebar.radio[0].set_value("6. Semiconductor Wafer Etch (v0.2 Benchmark)").run()
+    assert not at.exception
+    metric_values = [m.value for m in at.metric]
+    assert any("0.9729" in v for v in metric_values), "Expected O1 PR-AUC in Wafer view metrics"
+    info_texts = [info.value for info in at.info]
+    assert any("synthetic wafer demo traces" in t for t in info_texts), (
+        "Synthetic mode must explicitly label synthetic wafer demo traces"
+    )
+
+
+def test_dashboard_wafer_view_real_data_content_and_scorecard() -> None:
+    dashboard_path = Path("app/dashboard.py").resolve().as_posix()
+    at = AppTest.from_file(dashboard_path, default_timeout=30)
+    at.run()
+    assert not at.exception
+
+    # Select real data mode if available
+    at.sidebar.radio[0].set_value("6. Semiconductor Wafer Etch (v0.2 Benchmark)").run()
+    assert not at.exception
+
+    # Metric labels and values must reflect confirmatory scorecard
+    metric_labels = [m.label for m in at.metric]
+    metric_values = [m.value for m in at.metric]
+    metric_deltas = [m.delta for m in at.metric]
+
+    assert any("O1: PR-AUC" in lbl for lbl in metric_labels)
+    assert any("0.9729" in val for val in metric_values)
+    # Deltas should be dynamic verdict strings without duplicated "PASS (PASS)"
+    assert any(d == "PASS" for d in metric_deltas)
+    assert any("PASS (344 TP, 4 FP)" in (d or "") for d in metric_deltas)
+    assert any(d == "REPORTED" for d in metric_deltas)
+
 
 def test_dashboard_chart_values_match_package_outputs() -> None:
     bundle = load_model_bundle("models/v0.1.0")

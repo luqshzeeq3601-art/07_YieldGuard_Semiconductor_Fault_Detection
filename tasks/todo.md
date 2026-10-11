@@ -205,4 +205,10 @@
 - Files: `app/dashboard.py`, `tests/test_dashboard.py`.
 - Acceptance check: Dedicated View 6 ("Wafer Etch benchmark") implemented in Streamlit dashboard; dynamic display of confirmatory scorecard (`O1_v2`–`O4_v2`), interactive 152-channel sensor trace inspector vs normal baseline, and detector comparison table/chart across alarm budgets 2, 5, 10; synthetic demo fallback tested; AppTest and full pytest suite pass cleanly (81 tests, 0 failures).
 
+### T27: Post-T26 Portfolio-Ready Corrections Pass
+- [x] Complete T27 (12 October 2026).
+- Dependencies: T26.
+- Files: `app/dashboard.py`, `tests/test_dashboard.py`, `docs/MODEL_CARD.md`, `README.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`.
+- Acceptance check: Accurate "152 time steps / 1 sensor trace" and "Time Step Index" axis labels; dynamic scorecard verdicts and interpretation strings driven strictly from loaded metrics without hard-coded fallbacks or duplicate "PASS (PASS)" prefixes; explicit synthetic wafer banner when in synthetic mode; narrow exception catching on parquet reads; strengthened `test_dashboard.py` verifying View 6 metrics, deltas, and synthetic mode labeling; disclosures of synthetic timestamps and O5_v2/O6_v2 protocol gates aligned across docs and dashboard.
+
 

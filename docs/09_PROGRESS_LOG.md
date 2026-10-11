@@ -270,10 +270,22 @@
   - `app/dashboard.py` (added `VIEW_WAFER`, `VIEW_LABELS` navigation entries, `load_wafer_dashboard_data` with synthetic fallback, `render_wafer_etch_view`, KPI strip for `O1_v2`–`O4_v2`, interactive 152-channel sensor trace inspector with baseline overlay, and detector comparison across budgets 2, 5, 10).
   - `tests/test_dashboard.py` (added `6. Semiconductor Wafer Etch (v0.2 Benchmark)` to the AppTest test loop).
   - `tasks/todo.md`, `docs/09_PROGRESS_LOG.md`.
+- Unresolved issues: None.
+- Next ready task: none in the MVP tracker; backlog items remain in `tasks/todo.md` section 9.
+
+## 15. Session: 12 October 2026, T27 Post-T26 Portfolio-Ready Corrections Pass
+
+- Date/time: 2026-10-12 01:14 (Asia/Kuala_Lumpur)
+- Task completed: `T27`.
+- Changed files:
+  - `app/dashboard.py` (corrected data descriptions to 1 sensor trace of 152 time steps, changed x-axis to "Time Step Index (0 to 151)", drove all KPI deltas and scorecard rows dynamically from loaded metrics with "n/a" fallbacks, fixed "PASS (PASS)" duplication, added explicit synthetic banner for wafer demo traces, and narrowed exception handling).
+  - `tests/test_dashboard.py` (added tests verifying View 6 metrics, deltas, and synthetic mode labeling on both real and synthetic paths).
+  - `docs/MODEL_CARD.md`, `README.md` (disclosed synthetic timestamps assigned to UCR file order, and clarified that O5_v2 and O6_v2 are protocol verification gates).
+  - `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `tasks/todo.md`.
 - Verification evidence:
   - `.\.venv\Scripts\python.exe -m ruff check app/dashboard.py tests/test_dashboard.py` -> `All checks passed!`
-  - `.\.venv\Scripts\python.exe -m pytest tests/test_dashboard.py -v` -> `2 passed`
-  - `.\.venv\Scripts\python.exe -m pytest -q` -> `81 passed`
+  - `.\.venv\Scripts\python.exe -m pytest tests/test_dashboard.py -v` -> `3 passed`
+  - `.\.venv\Scripts\python.exe -m pytest -q` -> `82 passed`
 - Unresolved issues: None.
-- Next ready task: All current and backlog dashboard enhancement tasks completed.
+- Next ready task: Portfolio-ready baseline complete.
 
