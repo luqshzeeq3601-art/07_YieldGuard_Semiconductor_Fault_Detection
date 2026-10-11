@@ -18,7 +18,7 @@
   - `src/yieldguard/__init__.py`, `tests/test_smoke.py`
   - `docs/00_START_HERE.md`, `docs/06_VALIDATION_AND_RELEASE.md`, `docs/07_OPERATIONS_AND_COMMANDS.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `docs/10_SOURCES.md`
 - Environment and pinned versions recorded:
-  - Python: `3.11.9` (`C:\Users\ZeeqRyz\AppData\Local\Programs\Python\Python311\python.exe` -> `.venv`)
+  - Python: `3.11.9` (`python.exe` -> `.venv`)
   - Git: `2.54.0.windows.1` (local `git init` only; no remote configured)
   - Docker CLI: `29.6.1` (daemon currently stopped on Windows host; noted for T17)
   - Key package pins in `requirements.lock`: `numpy==1.26.4`, `pandas==2.3.3`, `pyarrow==25.0.1`, `scipy==1.17.1`, `scikit-learn==1.9.1`, `xgboost==3.2.0`, `shap==0.49.1`, `fastapi==0.142.2`, `uvicorn==0.54.0`, `streamlit==1.65.0`, `plotly==5.24.1`, `mlflow==3.16.1`, `evidently==0.7.23`, `pytest==9.1.1`, `ruff==0.16.10`.

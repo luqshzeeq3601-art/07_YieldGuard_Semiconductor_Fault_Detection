@@ -8,7 +8,7 @@ Run commands from the project root in PowerShell using the project-local Python 
 
 ```powershell
 Set-Location '07_YieldGuard_Semiconductor_Fault_Detection'
-C:\Users\ZeeqRyz\AppData\Local\Programs\Python\Python311\python.exe -m venv .venv
+py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.lock
 .\.venv\Scripts\python.exe -m pip install -e . --no-deps
 .\.venv\Scripts\python.exe -m pip check
