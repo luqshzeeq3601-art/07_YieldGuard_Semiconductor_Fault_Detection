@@ -1,0 +1,5317 @@
+{
+  "model_dir": "models/staging",
+  "n_flagged_runs_explained": 20,
+  "o5_synthetic_verification": {
+    "target_id": "O5",
+    "verdict": "PASS",
+    "n_test_trials": 100,
+    "shift_sigma": 5.0,
+    "top1_mspc_hit_rate": 1.0,
+    "top3_mspc_hit_rate": 1.0,
+    "top3_spe_hit_rate": 0.96,
+    "target_min_top3_hit_rate": 0.9,
+    "max_shap_additivity_error": 2.0294550431287917e-06,
+    "target_max_shap_additivity_error": 0.0001,
+    "mean_injected_sensor_rank": 1.0
+  },
+  "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses.",
+  "flagged_run_explanations": [
+    {
+      "run_id": 950,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 89.22584749630835,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 236.79079249175237,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 2.6408278148064213
+      },
+      "xgb_summary": {
+        "raw_margin": -1.9387717247009277,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 3.67872416973114e-08
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f140",
+          "method": "mspc_combined",
+          "contribution": 0.582961623767875,
+          "t2_contribution": 19.007344991041055,
+          "spe_contribution": 53.53806615744307,
+          "mspc_contribution": 0.582961623767875,
+          "sensor_value": 3.225,
+          "group_members": [
+            "f275"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f004",
+          "method": "mspc_combined",
+          "contribution": 0.2958696979767761,
+          "t2_contribution": 11.152272310888094,
+          "spe_contribution": 24.40541110905457,
+          "mspc_contribution": 0.2958696979767761,
+          "sensor_value": 3.8894,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f007",
+          "method": "mspc_combined",
+          "contribution": 0.12786986379315865,
+          "t2_contribution": -2.550814671532706,
+          "spe_contribution": 24.092769365675878,
+          "mspc_contribution": 0.12786986379315865,
+          "sensor_value": 0.1181,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f002",
+          "method": "mspc_combined",
+          "contribution": 0.11363419122478229,
+          "t2_contribution": 2.9712565350886604,
+          "spe_contribution": 11.78439481414885,
+          "mspc_contribution": 0.11363419122478229,
+          "sensor_value": 2060.66,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f129",
+          "method": "mspc_combined",
+          "contribution": 0.09085656649245438,
+          "t2_contribution": 6.273107898635093,
+          "spe_contribution": 2.259864619265838,
+          "mspc_contribution": 0.09085656649245438,
+          "sensor_value": -3.732,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f140",
+          "method": "spe",
+          "contribution": 53.53806615744307,
+          "t2_contribution": 19.007344991041055,
+          "spe_contribution": 53.53806615744307,
+          "mspc_contribution": 0.582961623767875,
+          "sensor_value": 3.225,
+          "group_members": [
+            "f275"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f004",
+          "method": "spe",
+          "contribution": 24.40541110905457,
+          "t2_contribution": 11.152272310888094,
+          "spe_contribution": 24.40541110905457,
+          "mspc_contribution": 0.2958696979767761,
+          "sensor_value": 3.8894,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f007",
+          "method": "spe",
+          "contribution": 24.092769365675878,
+          "t2_contribution": -2.550814671532706,
+          "spe_contribution": 24.092769365675878,
+          "mspc_contribution": 0.12786986379315865,
+          "sensor_value": 0.1181,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f002",
+          "method": "spe",
+          "contribution": 11.78439481414885,
+          "t2_contribution": 2.9712565350886604,
+          "spe_contribution": 11.78439481414885,
+          "mspc_contribution": 0.11363419122478229,
+          "sensor_value": 2060.66,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f215",
+          "method": "spe",
+          "contribution": 7.926178504662166,
+          "t2_contribution": -0.15175995372546808,
+          "spe_contribution": 7.926178504662166,
+          "mspc_contribution": 0.05039180886107979,
+          "sensor_value": 0.1507,
+          "group_members": [
+            "f353"
+          ]
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f140",
+          "method": "t2",
+          "contribution": 19.007344991041055,
+          "t2_contribution": 19.007344991041055,
+          "spe_contribution": 53.53806615744307,
+          "mspc_contribution": 0.582961623767875,
+          "sensor_value": 3.225,
+          "group_members": [
+            "f275"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f004",
+          "method": "t2",
+          "contribution": 11.152272310888094,
+          "t2_contribution": 11.152272310888094,
+          "spe_contribution": 24.40541110905457,
+          "mspc_contribution": 0.2958696979767761,
+          "sensor_value": 3.8894,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f544",
+          "method": "t2",
+          "contribution": 7.002355823982021,
+          "t2_contribution": 7.002355823982021,
+          "spe_contribution": 0.3891682985276646,
+          "mspc_contribution": 0.08736055129197266,
+          "sensor_value": 0.0018,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f129",
+          "method": "t2",
+          "contribution": 6.273107898635093,
+          "t2_contribution": 6.273107898635093,
+          "spe_contribution": 2.259864619265838,
+          "mspc_contribution": 0.09085656649245438,
+          "sensor_value": -3.732,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f413",
+          "method": "t2",
+          "contribution": 4.684100589754226,
+          "t2_contribution": 4.684100589754226,
+          "spe_contribution": 0.39350533357803097,
+          "mspc_contribution": 0.0593158548806627,
+          "sensor_value": 82.9177,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -5.1255,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f033",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.4085567891597748,
+          "abs_shap_value": 0.4085567891597748,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 8.3591,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.3011745810508728,
+          "abs_shap_value": 0.3011745810508728,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.0199,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f130",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2493891417980194,
+          "abs_shap_value": 0.2493891417980194,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.5524,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3077.04,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 956,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 106.24337424288821,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 163.1027232009622,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 2.361336537090719
+      },
+      "xgb_summary": {
+        "raw_margin": -0.8861216306686401,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 9.778887033462524e-09
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f573",
+          "method": "mspc_combined",
+          "contribution": 0.3156696715182141,
+          "t2_contribution": 19.735409751953203,
+          "spe_contribution": 11.636786988118915,
+          "mspc_contribution": 0.3156696715182141,
+          "sensor_value": 2.1967,
+          "group_members": [
+            "f575",
+            "f577"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f572",
+          "method": "mspc_combined",
+          "contribution": 0.17809859170889017,
+          "t2_contribution": 13.811472824877077,
+          "spe_contribution": 1.646011404560099,
+          "mspc_contribution": 0.17809859170889017,
+          "sensor_value": 438.87,
+          "group_members": [
+            "f574",
+            "f576"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f177",
+          "method": "mspc_combined",
+          "contribution": 0.09266127128924823,
+          "t2_contribution": 2.7071353904116466,
+          "spe_contribution": 9.086997761691698,
+          "mspc_contribution": 0.09266127128924823,
+          "sensor_value": 1.858,
+          "group_members": [
+            "f312",
+            "f448"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f034",
+          "method": "mspc_combined",
+          "contribution": 0.0888361426980698,
+          "t2_contribution": 5.46927388488158,
+          "spe_contribution": 3.4304735892860894,
+          "mspc_contribution": 0.0888361426980698,
+          "sensor_value": 57.8485,
+          "group_members": [
+            "f036"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f035",
+          "method": "mspc_combined",
+          "contribution": 0.0756890006388286,
+          "t2_contribution": 5.239362229825452,
+          "spe_contribution": 1.8578220177462623,
+          "mspc_contribution": 0.0756890006388286,
+          "sensor_value": 76.2508,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f573",
+          "method": "spe",
+          "contribution": 11.636786988118915,
+          "t2_contribution": 19.735409751953203,
+          "spe_contribution": 11.636786988118915,
+          "mspc_contribution": 0.3156696715182141,
+          "sensor_value": 2.1967,
+          "group_members": [
+            "f575",
+            "f577"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f177",
+          "method": "spe",
+          "contribution": 9.086997761691698,
+          "t2_contribution": 2.7071353904116466,
+          "spe_contribution": 9.086997761691698,
+          "mspc_contribution": 0.09266127128924823,
+          "sensor_value": 1.858,
+          "group_members": [
+            "f312",
+            "f448"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f129",
+          "method": "spe",
+          "contribution": 8.067030877982136,
+          "t2_contribution": -0.5162357889420943,
+          "spe_contribution": 8.067030877982136,
+          "mspc_contribution": 0.046906278584946226,
+          "sensor_value": -2.647,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f093",
+          "method": "spe",
+          "contribution": 7.8198071376895415,
+          "t2_contribution": 1.2922815400488978,
+          "spe_contribution": 7.8198071376895415,
+          "mspc_contribution": 0.06717772144279442,
+          "sensor_value": -0.0099,
+          "group_members": [
+            "f106"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f084",
+          "method": "spe",
+          "contribution": 5.382953358996837,
+          "t2_contribution": -0.8103841612487487,
+          "spe_contribution": 5.382953358996837,
+          "mspc_contribution": 0.025657508321141248,
+          "sensor_value": 0.1403,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f573",
+          "method": "t2",
+          "contribution": 19.735409751953203,
+          "t2_contribution": 19.735409751953203,
+          "spe_contribution": 11.636786988118915,
+          "mspc_contribution": 0.3156696715182141,
+          "sensor_value": 2.1967,
+          "group_members": [
+            "f575",
+            "f577"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f572",
+          "method": "t2",
+          "contribution": 13.811472824877077,
+          "t2_contribution": 13.811472824877077,
+          "spe_contribution": 1.646011404560099,
+          "mspc_contribution": 0.17809859170889017,
+          "sensor_value": 438.87,
+          "group_members": [
+            "f574",
+            "f576"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f034",
+          "method": "t2",
+          "contribution": 5.46927388488158,
+          "t2_contribution": 5.46927388488158,
+          "spe_contribution": 3.4304735892860894,
+          "mspc_contribution": 0.0888361426980698,
+          "sensor_value": 57.8485,
+          "group_members": [
+            "f036"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f035",
+          "method": "t2",
+          "contribution": 5.239362229825452,
+          "t2_contribution": 5.239362229825452,
+          "spe_contribution": 1.8578220177462623,
+          "mspc_contribution": 0.0756890006388286,
+          "sensor_value": 76.2508,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f006",
+          "method": "t2",
+          "contribution": 4.392125713815729,
+          "t2_contribution": 4.392125713815729,
+          "spe_contribution": 0.299662486242937,
+          "mspc_contribution": 0.05516176169371334,
+          "sensor_value": 86.7956,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -2.1709,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.206,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f021",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.06360189616680145,
+          "abs_shap_value": 0.06360189616680145,
+          "direction": "increases_fail_risk",
+          "sensor_value": -5364.0,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f486",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.054372794926166534,
+          "abs_shap_value": 0.054372794926166534,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.0,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 981,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 96.22174312286867,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 189.2445380943189,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 2.4122395672974357
+      },
+      "xgb_summary": {
+        "raw_margin": -0.8111826181411743,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 1.1827796697616577e-07
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f573",
+          "method": "mspc_combined",
+          "contribution": 0.3119745038055948,
+          "t2_contribution": 22.659987666861046,
+          "spe_contribution": 5.701467129433942,
+          "mspc_contribution": 0.3119745038055948,
+          "sensor_value": 2.1967,
+          "group_members": [
+            "f575",
+            "f577"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f543",
+          "method": "mspc_combined",
+          "contribution": 0.20612641560877637,
+          "t2_contribution": 10.513331881593594,
+          "spe_contribution": 11.960474917716049,
+          "mspc_contribution": 0.20612641560877637,
+          "sensor_value": 0.0139,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f572",
+          "method": "mspc_combined",
+          "contribution": 0.17506128997093925,
+          "t2_contribution": 14.083069482688519,
+          "spe_contribution": 0.6859625310692077,
+          "mspc_contribution": 0.17506128997093925,
+          "sensor_value": 438.87,
+          "group_members": [
+            "f574",
+            "f576"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f093",
+          "method": "mspc_combined",
+          "contribution": 0.0976275948513034,
+          "t2_contribution": 0.7954996235393068,
+          "spe_contribution": 13.353720237096153,
+          "mspc_contribution": 0.0976275948513034,
+          "sensor_value": -0.0128,
+          "group_members": [
+            "f106"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f129",
+          "method": "mspc_combined",
+          "contribution": 0.07103613478308743,
+          "t2_contribution": 0.15178639486822193,
+          "spe_contribution": 10.501256800386559,
+          "mspc_contribution": 0.07103613478308743,
+          "sensor_value": -3.591,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f093",
+          "method": "spe",
+          "contribution": 13.353720237096153,
+          "t2_contribution": 0.7954996235393068,
+          "spe_contribution": 13.353720237096153,
+          "mspc_contribution": 0.0976275948513034,
+          "sensor_value": -0.0128,
+          "group_members": [
+            "f106"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f543",
+          "method": "spe",
+          "contribution": 11.960474917716049,
+          "t2_contribution": 10.513331881593594,
+          "spe_contribution": 11.960474917716049,
+          "mspc_contribution": 0.20612641560877637,
+          "sensor_value": 0.0139,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f129",
+          "method": "spe",
+          "contribution": 10.501256800386559,
+          "t2_contribution": 0.15178639486822193,
+          "spe_contribution": 10.501256800386559,
+          "mspc_contribution": 0.07103613478308743,
+          "sensor_value": -3.591,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f542",
+          "method": "spe",
+          "contribution": 7.66299518587617,
+          "t2_contribution": -0.19027187305669976,
+          "spe_contribution": 7.66299518587617,
+          "mspc_contribution": 0.048191195705290485,
+          "sensor_value": 0.1087,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f483",
+          "method": "spe",
+          "contribution": 6.555535262278919,
+          "t2_contribution": 0.7738325670140558,
+          "spe_contribution": 6.555535262278919,
+          "mspc_contribution": 0.05256856013449829,
+          "sensor_value": 832.2034,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f573",
+          "method": "t2",
+          "contribution": 22.659987666861046,
+          "t2_contribution": 22.659987666861046,
+          "spe_contribution": 5.701467129433942,
+          "mspc_contribution": 0.3119745038055948,
+          "sensor_value": 2.1967,
+          "group_members": [
+            "f575",
+            "f577"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f572",
+          "method": "t2",
+          "contribution": 14.083069482688519,
+          "t2_contribution": 14.083069482688519,
+          "spe_contribution": 0.6859625310692077,
+          "mspc_contribution": 0.17506128997093925,
+          "sensor_value": 438.87,
+          "group_members": [
+            "f574",
+            "f576"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f543",
+          "method": "t2",
+          "contribution": 10.513331881593594,
+          "t2_contribution": 10.513331881593594,
+          "spe_contribution": 11.960474917716049,
+          "mspc_contribution": 0.20612641560877637,
+          "sensor_value": 0.0139,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f544",
+          "method": "t2",
+          "contribution": 3.643963985739131,
+          "t2_contribution": 3.643963985739131,
+          "spe_contribution": 0.045726076352748814,
+          "mspc_contribution": 0.044428465415548804,
+          "sensor_value": 0.003,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f098",
+          "method": "t2",
+          "contribution": 3.273531317204469,
+          "t2_contribution": 3.273531317204469,
+          "spe_contribution": 0.326785888897521,
+          "mspc_contribution": 0.041794697145954275,
+          "sensor_value": -1.3583,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.5522563457489014,
+          "abs_shap_value": 0.5522563457489014,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.7827,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f130",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2493891417980194,
+          "abs_shap_value": 0.2493891417980194,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.5882,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.12193197757005692,
+          "abs_shap_value": 0.12193197757005692,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.0563,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3075.1,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.151,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 985,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 94.73590596438804,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 284.6867141303047,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 3.023163007652126
+      },
+      "xgb_summary": {
+        "raw_margin": -0.16337813436985016,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 4.7963112592697144e-08
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f140",
+          "method": "mspc_combined",
+          "contribution": 0.5915630408252757,
+          "t2_contribution": 18.62424124834934,
+          "spe_contribution": 55.54742463831271,
+          "mspc_contribution": 0.5915630408252757,
+          "sensor_value": 3.225,
+          "group_members": [
+            "f275"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f004",
+          "method": "mspc_combined",
+          "contribution": 0.28133889021611885,
+          "t2_contribution": 8.933721638887386,
+          "spe_contribution": 26.277340027511446,
+          "mspc_contribution": 0.28133889021611885,
+          "sensor_value": 3.8894,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f007",
+          "method": "mspc_combined",
+          "contribution": 0.14856069838835712,
+          "t2_contribution": -3.1011867632983536,
+          "spe_contribution": 28.244168269341746,
+          "mspc_contribution": 0.14856069838835712,
+          "sensor_value": 0.1181,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f002",
+          "method": "mspc_combined",
+          "contribution": 0.12231235525136405,
+          "t2_contribution": 3.471011548458743,
+          "spe_contribution": 12.182953352217112,
+          "mspc_contribution": 0.12231235525136405,
+          "sensor_value": 2060.66,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f270",
+          "method": "mspc_combined",
+          "contribution": 0.11914577681931024,
+          "t2_contribution": 7.78922906426615,
+          "spe_contribution": 3.7667316290840747,
+          "mspc_contribution": 0.11914577681931024,
+          "sensor_value": 73.1321,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f140",
+          "method": "spe",
+          "contribution": 55.54742463831271,
+          "t2_contribution": 18.62424124834934,
+          "spe_contribution": 55.54742463831271,
+          "mspc_contribution": 0.5915630408252757,
+          "sensor_value": 3.225,
+          "group_members": [
+            "f275"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f007",
+          "method": "spe",
+          "contribution": 28.244168269341746,
+          "t2_contribution": -3.1011867632983536,
+          "spe_contribution": 28.244168269341746,
+          "mspc_contribution": 0.14856069838835712,
+          "sensor_value": 0.1181,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f004",
+          "method": "spe",
+          "contribution": 26.277340027511446,
+          "t2_contribution": 8.933721638887386,
+          "spe_contribution": 26.277340027511446,
+          "mspc_contribution": 0.28133889021611885,
+          "sensor_value": 3.8894,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f002",
+          "method": "spe",
+          "contribution": 12.182953352217112,
+          "t2_contribution": 3.471011548458743,
+          "spe_contribution": 12.182953352217112,
+          "mspc_contribution": 0.12231235525136405,
+          "sensor_value": 2060.66,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f003",
+          "method": "spe",
+          "contribution": 8.78165864116602,
+          "t2_contribution": 0.24845318580832995,
+          "spe_contribution": 8.78165864116602,
+          "mspc_contribution": 0.06087544078379699,
+          "sensor_value": 1410.3599,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f140",
+          "method": "t2",
+          "contribution": 18.62424124834934,
+          "t2_contribution": 18.62424124834934,
+          "spe_contribution": 55.54742463831271,
+          "mspc_contribution": 0.5915630408252757,
+          "sensor_value": 3.225,
+          "group_members": [
+            "f275"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f004",
+          "method": "t2",
+          "contribution": 8.933721638887386,
+          "t2_contribution": 8.933721638887386,
+          "spe_contribution": 26.277340027511446,
+          "mspc_contribution": 0.28133889021611885,
+          "sensor_value": 3.8894,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f270",
+          "method": "t2",
+          "contribution": 7.78922906426615,
+          "t2_contribution": 7.78922906426615,
+          "spe_contribution": 3.7667316290840747,
+          "mspc_contribution": 0.11914577681931024,
+          "sensor_value": 73.1321,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f135",
+          "method": "t2",
+          "contribution": 6.682318284605514,
+          "t2_contribution": 6.682318284605514,
+          "spe_contribution": 1.7610947407081183,
+          "mspc_contribution": 0.09252531867759756,
+          "sensor_value": 380.0,
+          "group_members": [
+            "f408"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f413",
+          "method": "t2",
+          "contribution": 5.088484311678508,
+          "t2_contribution": 5.088484311678508,
+          "spe_contribution": 0.3003892750696096,
+          "mspc_contribution": 0.06359921451553319,
+          "sensor_value": 82.9177,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.18038257956504822,
+          "abs_shap_value": 0.18038257956504822,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3.0982,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f460",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.1303301453590393,
+          "abs_shap_value": 0.1303301453590393,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 15.2398,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.12193197757005692,
+          "abs_shap_value": 0.12193197757005692,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.0435,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3058.91,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.178,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 993,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 46.039361708604154,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 342.1080049905344,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 2.811842284404574
+      },
+      "xgb_summary": {
+        "raw_margin": -1.1805998086929321,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 1.2433156371116638e-07
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f156",
+          "method": "mspc_combined",
+          "contribution": 1.0278096153335543,
+          "t2_contribution": 0.8323116418359557,
+          "spe_contribution": 154.44726978200427,
+          "mspc_contribution": 1.0278096153335543,
+          "sensor_value": 1.2325,
+          "group_members": [
+            "f291",
+            "f429"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f020",
+          "method": "mspc_combined",
+          "contribution": 0.5937742054082699,
+          "t2_contribution": 2.0381990163387447,
+          "spe_contribution": 86.36347739715598,
+          "mspc_contribution": 0.5937742054082699,
+          "sensor_value": 1.2449,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f129",
+          "method": "mspc_combined",
+          "contribution": 0.08360301093246286,
+          "t2_contribution": 3.4740231529266823,
+          "spe_contribution": 6.3030229283580965,
+          "mspc_contribution": 0.08360301093246286,
+          "sensor_value": -3.732,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f544",
+          "method": "mspc_combined",
+          "contribution": 0.06230714731327085,
+          "t2_contribution": 3.090369239157157,
+          "spe_contribution": 3.776284768446973,
+          "mspc_contribution": 0.06230714731327085,
+          "sensor_value": 0.0019,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f250",
+          "method": "mspc_combined",
+          "contribution": 0.0373523893616334,
+          "t2_contribution": 2.9105687657881476,
+          "spe_contribution": 0.3196600322381386,
+          "mspc_contribution": 0.0373523893616334,
+          "sensor_value": 227.9616,
+          "group_members": [
+            "f388",
+            "f522"
+          ]
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f156",
+          "method": "spe",
+          "contribution": 154.44726978200427,
+          "t2_contribution": 0.8323116418359557,
+          "spe_contribution": 154.44726978200427,
+          "mspc_contribution": 1.0278096153335543,
+          "sensor_value": 1.2325,
+          "group_members": [
+            "f291",
+            "f429"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f020",
+          "method": "spe",
+          "contribution": 86.36347739715598,
+          "t2_contribution": 2.0381990163387447,
+          "spe_contribution": 86.36347739715598,
+          "mspc_contribution": 0.5937742054082699,
+          "sensor_value": 1.2449,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f129",
+          "method": "spe",
+          "contribution": 6.3030229283580965,
+          "t2_contribution": 3.4740231529266823,
+          "spe_contribution": 6.3030229283580965,
+          "mspc_contribution": 0.08360301093246286,
+          "sensor_value": -3.732,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f084",
+          "method": "spe",
+          "contribution": 4.270549672842389,
+          "t2_contribution": -0.43833710871936155,
+          "spe_contribution": 4.270549672842389,
+          "mspc_contribution": 0.02283268403445512,
+          "sensor_value": 0.1388,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f486",
+          "method": "spe",
+          "contribution": 3.8277503077841444,
+          "t2_contribution": 0.1596812966061824,
+          "spe_contribution": 3.8277503077841444,
+          "mspc_contribution": 0.027156654354941957,
+          "sensor_value": 898.8048,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f129",
+          "method": "t2",
+          "contribution": 3.4740231529266823,
+          "t2_contribution": 3.4740231529266823,
+          "spe_contribution": 6.3030229283580965,
+          "mspc_contribution": 0.08360301093246286,
+          "sensor_value": -3.732,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f544",
+          "method": "t2",
+          "contribution": 3.090369239157157,
+          "t2_contribution": 3.090369239157157,
+          "spe_contribution": 3.776284768446973,
+          "mspc_contribution": 0.06230714731327085,
+          "sensor_value": 0.0019,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f225",
+          "method": "t2",
+          "contribution": 2.934295828743993,
+          "t2_contribution": 2.934295828743993,
+          "spe_contribution": 0.22492015271978105,
+          "mspc_contribution": 0.03701542731736106,
+          "sensor_value": 2218.8999,
+          "group_members": [
+            "f363",
+            "f497"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f250",
+          "method": "t2",
+          "contribution": 2.9105687657881476,
+          "t2_contribution": 2.9105687657881476,
+          "spe_contribution": 0.3196600322381386,
+          "mspc_contribution": 0.0373523893616334,
+          "sensor_value": 227.9616,
+          "group_members": [
+            "f388",
+            "f522"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f125",
+          "method": "t2",
+          "contribution": 2.1545295979654773,
+          "t2_contribution": 2.1545295979654773,
+          "spe_contribution": 0.9949721271457778,
+          "mspc_contribution": 0.03264698495575088,
+          "sensor_value": 2.022,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -3.2882,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f130",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2493891417980194,
+          "abs_shap_value": 0.2493891417980194,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.5833,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08106917887926102,
+          "abs_shap_value": 0.08106917887926102,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.095,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.0725298523902893,
+          "abs_shap_value": 0.0725298523902893,
+          "direction": "increases_fail_risk",
+          "sensor_value": 2966.26,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1008,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 66.69511274304614,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 321.5134708030498,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 2.926268614771627
+      },
+      "xgb_summary": {
+        "raw_margin": -1.2042863368988037,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 1.7229467630386353e-07
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f211",
+          "method": "mspc_combined",
+          "contribution": 0.630260382619067,
+          "t2_contribution": 7.308682855252942,
+          "spe_contribution": 82.21482200661187,
+          "mspc_contribution": 0.630260382619067,
+          "sensor_value": 0.3227,
+          "group_members": [
+            "f349"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f215",
+          "method": "mspc_combined",
+          "contribution": 0.4508492557670425,
+          "t2_contribution": 9.096947019641064,
+          "spe_contribution": 51.701683160568464,
+          "mspc_contribution": 0.4508492557670425,
+          "sensor_value": 0.3429,
+          "group_members": [
+            "f353"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f543",
+          "method": "mspc_combined",
+          "contribution": 0.11052934243392161,
+          "t2_contribution": 6.2489121213693535,
+          "spe_contribution": 5.2898019694363,
+          "mspc_contribution": 0.11052934243392161,
+          "sensor_value": 0.0123,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f542",
+          "method": "mspc_combined",
+          "contribution": 0.07365533259032998,
+          "t2_contribution": 1.2741865102205654,
+          "spe_contribution": 8.836080546173731,
+          "mspc_contribution": 0.07365533259032998,
+          "sensor_value": 0.1164,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f086",
+          "method": "mspc_combined",
+          "contribution": 0.06615118584405329,
+          "t2_contribution": 1.3851646177583143,
+          "spe_contribution": 7.493330605001695,
+          "mspc_contribution": 0.06615118584405329,
+          "sensor_value": 2.2802,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f211",
+          "method": "spe",
+          "contribution": 82.21482200661187,
+          "t2_contribution": 7.308682855252942,
+          "spe_contribution": 82.21482200661187,
+          "mspc_contribution": 0.630260382619067,
+          "sensor_value": 0.3227,
+          "group_members": [
+            "f349"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f215",
+          "method": "spe",
+          "contribution": 51.701683160568464,
+          "t2_contribution": 9.096947019641064,
+          "spe_contribution": 51.701683160568464,
+          "mspc_contribution": 0.4508492557670425,
+          "sensor_value": 0.3429,
+          "group_members": [
+            "f353"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f037",
+          "method": "spe",
+          "contribution": 9.113701498378134,
+          "t2_contribution": -1.315174831615638,
+          "spe_contribution": 9.113701498378134,
+          "mspc_contribution": 0.044128439196647995,
+          "sensor_value": 66.921,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f542",
+          "method": "spe",
+          "contribution": 8.836080546173731,
+          "t2_contribution": 1.2741865102205654,
+          "spe_contribution": 8.836080546173731,
+          "mspc_contribution": 0.07365533259032998,
+          "sensor_value": 0.1164,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f239",
+          "method": "spe",
+          "contribution": 7.906044986125629,
+          "t2_contribution": -0.7693760072060497,
+          "spe_contribution": 7.906044986125629,
+          "mspc_contribution": 0.0427800205430596,
+          "sensor_value": 0.0081,
+          "group_members": [
+            "f377"
+          ]
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f215",
+          "method": "t2",
+          "contribution": 9.096947019641064,
+          "t2_contribution": 9.096947019641064,
+          "spe_contribution": 51.701683160568464,
+          "mspc_contribution": 0.4508492557670425,
+          "sensor_value": 0.3429,
+          "group_members": [
+            "f353"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f211",
+          "method": "t2",
+          "contribution": 7.308682855252942,
+          "t2_contribution": 7.308682855252942,
+          "spe_contribution": 82.21482200661187,
+          "mspc_contribution": 0.630260382619067,
+          "sensor_value": 0.3227,
+          "group_members": [
+            "f349"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f543",
+          "method": "t2",
+          "contribution": 6.2489121213693535,
+          "t2_contribution": 6.2489121213693535,
+          "spe_contribution": 5.2898019694363,
+          "mspc_contribution": 0.11052934243392161,
+          "sensor_value": 0.0123,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f432",
+          "method": "t2",
+          "contribution": 3.3210143549301256,
+          "t2_contribution": 3.3210143549301256,
+          "spe_contribution": 1.7732079106951086,
+          "mspc_contribution": 0.05190090137295722,
+          "sensor_value": 461.1201,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f544",
+          "method": "t2",
+          "contribution": 2.9899865248449635,
+          "t2_contribution": 2.9899865248449635,
+          "spe_contribution": 1.2919106081263412,
+          "mspc_contribution": 0.044720758370959554,
+          "sensor_value": 0.0031,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -1.1764,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f460",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08224091678857803,
+          "abs_shap_value": 0.08224091678857803,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 20.791,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08106917887926102,
+          "abs_shap_value": 0.08106917887926102,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.102,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f031",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.06893398612737656,
+          "abs_shap_value": 0.06893398612737656,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 4.6676,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1056,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 95.66754020155577,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 170.52329859668686,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 2.2821647133184566
+      },
+      "xgb_summary": {
+        "raw_margin": -0.9743967652320862,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 9.173527359962463e-08
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f573",
+          "method": "mspc_combined",
+          "contribution": 0.3123733873944363,
+          "t2_contribution": 18.722860240966618,
+          "spe_contribution": 12.997336366160424,
+          "mspc_contribution": 0.3123733873944363,
+          "sensor_value": 2.1967,
+          "group_members": [
+            "f575",
+            "f577"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f572",
+          "method": "mspc_combined",
+          "contribution": 0.18196425645178135,
+          "t2_contribution": 14.22254724061058,
+          "spe_contribution": 1.4772117980202084,
+          "mspc_contribution": 0.18196425645178135,
+          "sensor_value": 438.87,
+          "group_members": [
+            "f574",
+            "f576"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f034",
+          "method": "mspc_combined",
+          "contribution": 0.09099906139501793,
+          "t2_contribution": 5.435212174932637,
+          "spe_contribution": 3.821306505057009,
+          "mspc_contribution": 0.09099906139501793,
+          "sensor_value": 57.8485,
+          "group_members": [
+            "f036"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f177",
+          "method": "mspc_combined",
+          "contribution": 0.08388664927151396,
+          "t2_contribution": 3.4037193087266484,
+          "spe_contribution": 6.475265648694401,
+          "mspc_contribution": 0.08388664927151396,
+          "sensor_value": 1.858,
+          "group_members": [
+            "f312",
+            "f448"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f035",
+          "method": "mspc_combined",
+          "contribution": 0.0756288677835547,
+          "t2_contribution": 4.658418131823303,
+          "spe_contribution": 2.916308791018822,
+          "mspc_contribution": 0.0756288677835547,
+          "sensor_value": 76.2508,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f573",
+          "method": "spe",
+          "contribution": 12.997336366160424,
+          "t2_contribution": 18.722860240966618,
+          "spe_contribution": 12.997336366160424,
+          "mspc_contribution": 0.3123733873944363,
+          "sensor_value": 2.1967,
+          "group_members": [
+            "f575",
+            "f577"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f482",
+          "method": "spe",
+          "contribution": 8.76857113983353,
+          "t2_contribution": -1.1340464014409015,
+          "spe_contribution": 8.76857113983353,
+          "mspc_contribution": 0.04404760510795404,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f177",
+          "method": "spe",
+          "contribution": 6.475265648694401,
+          "t2_contribution": 3.4037193087266484,
+          "spe_contribution": 6.475265648694401,
+          "mspc_contribution": 0.08388664927151396,
+          "sensor_value": 1.858,
+          "group_members": [
+            "f312",
+            "f448"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f033",
+          "method": "spe",
+          "contribution": 6.432073033666156,
+          "t2_contribution": -0.15644614194151218,
+          "spe_contribution": 6.432073033666156,
+          "mspc_contribution": 0.0404896496065723,
+          "sensor_value": 8.6611,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f543",
+          "method": "spe",
+          "contribution": 4.5979466045149735,
+          "t2_contribution": -0.057263407940010606,
+          "spe_contribution": 4.5979466045149735,
+          "mspc_contribution": 0.029604738540298346,
+          "sensor_value": 0.01,
+          "group_members": [
+            "f545"
+          ]
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f573",
+          "method": "t2",
+          "contribution": 18.722860240966618,
+          "t2_contribution": 18.722860240966618,
+          "spe_contribution": 12.997336366160424,
+          "mspc_contribution": 0.3123733873944363,
+          "sensor_value": 2.1967,
+          "group_members": [
+            "f575",
+            "f577"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f572",
+          "method": "t2",
+          "contribution": 14.22254724061058,
+          "t2_contribution": 14.22254724061058,
+          "spe_contribution": 1.4772117980202084,
+          "mspc_contribution": 0.18196425645178135,
+          "sensor_value": 438.87,
+          "group_members": [
+            "f574",
+            "f576"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f034",
+          "method": "t2",
+          "contribution": 5.435212174932637,
+          "t2_contribution": 5.435212174932637,
+          "spe_contribution": 3.821306505057009,
+          "mspc_contribution": 0.09099906139501793,
+          "sensor_value": 57.8485,
+          "group_members": [
+            "f036"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f432",
+          "method": "t2",
+          "contribution": 4.6875078907682655,
+          "t2_contribution": 4.6875078907682655,
+          "spe_contribution": 2.581162411033822,
+          "mspc_contribution": 0.07377268701014264,
+          "sensor_value": 533.9541,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f035",
+          "method": "t2",
+          "contribution": 4.658418131823303,
+          "t2_contribution": 4.658418131823303,
+          "spe_contribution": 2.916308791018822,
+          "mspc_contribution": 0.0756288677835547,
+          "sensor_value": 76.2508,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -0.5327,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2305142730474472,
+          "abs_shap_value": 0.2305142730474472,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.0216,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.0725298523902893,
+          "abs_shap_value": 0.0725298523902893,
+          "direction": "increases_fail_risk",
+          "sensor_value": 2908.22,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.169,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f562",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.05666716769337654,
+          "abs_shap_value": 0.05666716769337654,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 268.062,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1069,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 79.8779178099769,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 378.6046413846832,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 3.462110247939382
+      },
+      "xgb_summary": {
+        "raw_margin": -1.2160770893096924,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 7.404014468193054e-08
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f035",
+          "method": "mspc_combined",
+          "contribution": 0.766408552684709,
+          "t2_contribution": 14.345447292560397,
+          "spe_contribution": 89.9445968662862,
+          "mspc_contribution": 0.766408552684709,
+          "sensor_value": 94.2641,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f146",
+          "method": "mspc_combined",
+          "contribution": 0.18223977729497756,
+          "t2_contribution": 12.006932236808883,
+          "spe_contribution": 5.5907028964842835,
+          "mspc_contribution": 0.18223977729497756,
+          "sensor_value": 0.2091,
+          "group_members": [
+            "f281"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f125",
+          "method": "mspc_combined",
+          "contribution": 0.15598771404187228,
+          "t2_contribution": -0.3396195534379276,
+          "spe_contribution": 24.296280372021087,
+          "mspc_contribution": 0.15598771404187228,
+          "sensor_value": 2.465,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f211",
+          "method": "mspc_combined",
+          "contribution": 0.1445324951082652,
+          "t2_contribution": 4.732203428127709,
+          "spe_contribution": 13.23728779395792,
+          "mspc_contribution": 0.1445324951082652,
+          "sensor_value": 0.1908,
+          "group_members": [
+            "f349"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f108",
+          "method": "mspc_combined",
+          "contribution": 0.10275979878727907,
+          "t2_contribution": -1.163438562782297,
+          "spe_contribution": 17.732544724193335,
+          "mspc_contribution": 0.10275979878727907,
+          "sensor_value": -0.3143,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f035",
+          "method": "spe",
+          "contribution": 89.9445968662862,
+          "t2_contribution": 14.345447292560397,
+          "spe_contribution": 89.9445968662862,
+          "mspc_contribution": 0.766408552684709,
+          "sensor_value": 94.2641,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f125",
+          "method": "spe",
+          "contribution": 24.296280372021087,
+          "t2_contribution": -0.3396195534379276,
+          "spe_contribution": 24.296280372021087,
+          "mspc_contribution": 0.15598771404187228,
+          "sensor_value": 2.465,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f108",
+          "method": "spe",
+          "contribution": 17.732544724193335,
+          "t2_contribution": -1.163438562782297,
+          "spe_contribution": 17.732544724193335,
+          "mspc_contribution": 0.10275979878727907,
+          "sensor_value": -0.3143,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f211",
+          "method": "spe",
+          "contribution": 13.23728779395792,
+          "t2_contribution": 4.732203428127709,
+          "spe_contribution": 13.23728779395792,
+          "mspc_contribution": 0.1445324951082652,
+          "sensor_value": 0.1908,
+          "group_members": [
+            "f349"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f542",
+          "method": "spe",
+          "contribution": 9.792735440716188,
+          "t2_contribution": 2.043747502426186,
+          "spe_contribution": 9.792735440716188,
+          "mspc_contribution": 0.08927833153645401,
+          "sensor_value": 0.1169,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f035",
+          "method": "t2",
+          "contribution": 14.345447292560397,
+          "t2_contribution": 14.345447292560397,
+          "spe_contribution": 89.9445968662862,
+          "mspc_contribution": 0.766408552684709,
+          "sensor_value": 94.2641,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f146",
+          "method": "t2",
+          "contribution": 12.006932236808883,
+          "t2_contribution": 12.006932236808883,
+          "spe_contribution": 5.5907028964842835,
+          "mspc_contribution": 0.18223977729497756,
+          "sensor_value": 0.2091,
+          "group_members": [
+            "f281"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f211",
+          "method": "t2",
+          "contribution": 4.732203428127709,
+          "t2_contribution": 4.732203428127709,
+          "spe_contribution": 13.23728779395792,
+          "mspc_contribution": 0.1445324951082652,
+          "sensor_value": 0.1908,
+          "group_members": [
+            "f349"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f145",
+          "method": "t2",
+          "contribution": 4.6881461329928475,
+          "t2_contribution": 4.6881461329928475,
+          "spe_contribution": 0.4942577442925559,
+          "mspc_contribution": 0.060028753241890706,
+          "sensor_value": 0.1519,
+          "group_members": [
+            "f280"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f368",
+          "method": "t2",
+          "contribution": 4.204886427389895,
+          "t2_contribution": 4.204886427389895,
+          "spe_contribution": 6.491398410359619,
+          "mspc_contribution": 0.09369481500248697,
+          "sensor_value": 0.0137,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.1873,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f131",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.10607238858938217,
+          "abs_shap_value": 0.10607238858938217,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.994,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f460",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08224091678857803,
+          "abs_shap_value": 0.08224091678857803,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 18.1433,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08106917887926102,
+          "abs_shap_value": 0.08106917887926102,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.115,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1097,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 63.507002184375196,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 439.3441488090368,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 3.664107188949672
+      },
+      "xgb_summary": {
+        "raw_margin": -0.45415323972702026,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 1.9278377294540405e-07
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f104",
+          "method": "mspc_combined",
+          "contribution": 1.3646202137405554,
+          "t2_contribution": 22.111334753998616,
+          "spe_contribution": 166.45560211559868,
+          "mspc_contribution": 1.3646202137405554,
+          "sensor_value": -0.0117,
+          "group_members": [
+            "f099"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f155",
+          "method": "mspc_combined",
+          "contribution": 0.5372959740168362,
+          "t2_contribution": -0.6622752832225999,
+          "spe_contribution": 82.7552511544561,
+          "mspc_contribution": 0.5372959740168362,
+          "sensor_value": 7.732,
+          "group_members": [
+            "f290",
+            "f428"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f543",
+          "method": "mspc_combined",
+          "contribution": 0.18149444989855737,
+          "t2_contribution": 11.556542169220988,
+          "spe_contribution": 6.305285226695291,
+          "mspc_contribution": 0.18149444989855737,
+          "sensor_value": 0.0133,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f544",
+          "method": "mspc_combined",
+          "contribution": 0.11322568320389086,
+          "t2_contribution": 7.8784389993510535,
+          "spe_contribution": 2.704375897330037,
+          "mspc_contribution": 0.11322568320389086,
+          "sensor_value": 0.0034,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f129",
+          "method": "mspc_combined",
+          "contribution": 0.06470696762913275,
+          "t2_contribution": -0.40285080198044826,
+          "spe_contribution": 10.560031948410266,
+          "mspc_contribution": 0.06470696762913275,
+          "sensor_value": -2.505,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f104",
+          "method": "spe",
+          "contribution": 166.45560211559868,
+          "t2_contribution": 22.111334753998616,
+          "spe_contribution": 166.45560211559868,
+          "mspc_contribution": 1.3646202137405554,
+          "sensor_value": -0.0117,
+          "group_members": [
+            "f099"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f155",
+          "method": "spe",
+          "contribution": 82.7552511544561,
+          "t2_contribution": -0.6622752832225999,
+          "spe_contribution": 82.7552511544561,
+          "mspc_contribution": 0.5372959740168362,
+          "sensor_value": 7.732,
+          "group_members": [
+            "f290",
+            "f428"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f129",
+          "method": "spe",
+          "contribution": 10.560031948410266,
+          "t2_contribution": -0.40285080198044826,
+          "spe_contribution": 10.560031948410266,
+          "mspc_contribution": 0.06470696762913275,
+          "sensor_value": -2.505,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f102",
+          "method": "spe",
+          "contribution": 9.714361844648376,
+          "t2_contribution": -1.1786741255964805,
+          "spe_contribution": 9.714361844648376,
+          "mspc_contribution": 0.04973946850949846,
+          "sensor_value": 0.1055,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f093",
+          "method": "spe",
+          "contribution": 7.165867055582895,
+          "t2_contribution": -0.5784852516845641,
+          "spe_contribution": 7.165867055582895,
+          "mspc_contribution": 0.04021423806287689,
+          "sensor_value": -0.0066,
+          "group_members": [
+            "f106"
+          ]
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f104",
+          "method": "t2",
+          "contribution": 22.111334753998616,
+          "t2_contribution": 22.111334753998616,
+          "spe_contribution": 166.45560211559868,
+          "mspc_contribution": 1.3646202137405554,
+          "sensor_value": -0.0117,
+          "group_members": [
+            "f099"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f543",
+          "method": "t2",
+          "contribution": 11.556542169220988,
+          "t2_contribution": 11.556542169220988,
+          "spe_contribution": 6.305285226695291,
+          "mspc_contribution": 0.18149444989855737,
+          "sensor_value": 0.0133,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f544",
+          "method": "t2",
+          "contribution": 7.8784389993510535,
+          "t2_contribution": 7.8784389993510535,
+          "spe_contribution": 2.704375897330037,
+          "mspc_contribution": 0.11322568320389086,
+          "sensor_value": 0.0034,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f107",
+          "method": "t2",
+          "contribution": 4.302317347188969,
+          "t2_contribution": 4.302317347188969,
+          "spe_contribution": 0.031912852011227615,
+          "mspc_contribution": 0.05230987641980366,
+          "sensor_value": 0.2692,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f091",
+          "method": "t2",
+          "contribution": 1.4478660892130404,
+          "t2_contribution": 1.4478660892130404,
+          "spe_contribution": 0.6445656203489307,
+          "mspc_contribution": 0.021780527967172586,
+          "sensor_value": 0.1019,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.18038257956504822,
+          "abs_shap_value": 0.18038257956504822,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 2.0282,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3070.78,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08106917887926102,
+          "abs_shap_value": 0.08106917887926102,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.12,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f486",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.054372794926166534,
+          "abs_shap_value": 0.054372794926166534,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.0,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1105,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 84.40132268598333,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 225.9218185942764,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 2.5107833488124
+      },
+      "xgb_summary": {
+        "raw_margin": -0.35151609778404236,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 4.330649971961975e-08
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f407",
+          "method": "mspc_combined",
+          "contribution": 0.17820810553204583,
+          "t2_contribution": 13.190194956540317,
+          "spe_contribution": 2.804365328122187,
+          "mspc_contribution": 0.17820810553204583,
+          "sensor_value": 3.3128,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f269",
+          "method": "mspc_combined",
+          "contribution": 0.15496859911219893,
+          "t2_contribution": 11.529730879177281,
+          "spe_contribution": 2.3290856735000287,
+          "mspc_contribution": 0.15496859911219893,
+          "sensor_value": 10.1529,
+          "group_members": [
+            "f541"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f571",
+          "method": "mspc_combined",
+          "contribution": 0.11896788777779169,
+          "t2_contribution": 1.6463674567164688,
+          "spe_contribution": 15.028592680468979,
+          "mspc_contribution": 0.11896788777779169,
+          "sensor_value": 1.0912,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f227",
+          "method": "mspc_combined",
+          "contribution": 0.10796978890709638,
+          "t2_contribution": 6.761701659524203,
+          "spe_contribution": 3.959009636950935,
+          "mspc_contribution": 0.10796978890709638,
+          "sensor_value": 0.0775,
+          "group_members": [
+            "f365"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f563",
+          "method": "mspc_combined",
+          "contribution": 0.08968838008519078,
+          "t2_contribution": 0.7854653266017594,
+          "spe_contribution": 12.167332742670816,
+          "mspc_contribution": 0.08968838008519078,
+          "sensor_value": 1.0799,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f571",
+          "method": "spe",
+          "contribution": 15.028592680468979,
+          "t2_contribution": 1.6463674567164688,
+          "spe_contribution": 15.028592680468979,
+          "mspc_contribution": 0.11896788777779169,
+          "sensor_value": 1.0912,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f563",
+          "method": "spe",
+          "contribution": 12.167332742670816,
+          "t2_contribution": 0.7854653266017594,
+          "spe_contribution": 12.167332742670816,
+          "mspc_contribution": 0.08968838008519078,
+          "sensor_value": 1.0799,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f129",
+          "method": "spe",
+          "contribution": 8.730072832188622,
+          "t2_contribution": -0.5739728981261281,
+          "spe_contribution": 8.730072832188622,
+          "mspc_contribution": 0.050576218349642946,
+          "sensor_value": -2.458,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f088",
+          "method": "spe",
+          "contribution": 6.473371666073939,
+          "t2_contribution": -0.5562362205795323,
+          "spe_contribution": 6.473371666073939,
+          "mspc_contribution": 0.03592046637788755,
+          "sensor_value": 1841.7575,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f543",
+          "method": "spe",
+          "contribution": 6.441694259310595,
+          "t2_contribution": 3.7502381840015238,
+          "spe_contribution": 6.441694259310595,
+          "mspc_contribution": 0.08786165519301814,
+          "sensor_value": 0.0118,
+          "group_members": [
+            "f545"
+          ]
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f407",
+          "method": "t2",
+          "contribution": 13.190194956540317,
+          "t2_contribution": 13.190194956540317,
+          "spe_contribution": 2.804365328122187,
+          "mspc_contribution": 0.17820810553204583,
+          "sensor_value": 3.3128,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f269",
+          "method": "t2",
+          "contribution": 11.529730879177281,
+          "t2_contribution": 11.529730879177281,
+          "spe_contribution": 2.3290856735000287,
+          "mspc_contribution": 0.15496859911219893,
+          "sensor_value": 10.1529,
+          "group_members": [
+            "f541"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f227",
+          "method": "t2",
+          "contribution": 6.761701659524203,
+          "t2_contribution": 6.761701659524203,
+          "spe_contribution": 3.959009636950935,
+          "mspc_contribution": 0.10796978890709638,
+          "sensor_value": 0.0775,
+          "group_members": [
+            "f365"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f543",
+          "method": "t2",
+          "contribution": 3.7502381840015238,
+          "t2_contribution": 3.7502381840015238,
+          "spe_contribution": 6.441694259310595,
+          "mspc_contribution": 0.08786165519301814,
+          "sensor_value": 0.0118,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f367",
+          "method": "t2",
+          "contribution": 3.2168237475076675,
+          "t2_contribution": 3.2168237475076675,
+          "spe_contribution": 1.4536109536336976,
+          "mspc_contribution": 0.048533204056543676,
+          "sensor_value": 0.0138,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.18038257956504822,
+          "abs_shap_value": 0.18038257956504822,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 1.7018,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f563",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.09505937993526459,
+          "abs_shap_value": 0.09505937993526459,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 1.0799,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3018.57,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.08328371495008469,
+          "abs_shap_value": 0.08328371495008469,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.0233,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08106917887926102,
+          "abs_shap_value": 0.08106917887926102,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.108,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [
+          "f563"
+        ],
+        "overlap_count": 1
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1112,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 80.8158919866149,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 166.571688435146,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 2.076277206773759
+      },
+      "xgb_summary": {
+        "raw_margin": -1.738002061843872,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 5.21540641784668e-08
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f003",
+          "method": "mspc_combined",
+          "contribution": 0.2054069362811926,
+          "t2_contribution": 10.683762648232515,
+          "spe_contribution": 11.538085276491378,
+          "mspc_contribution": 0.2054069362811926,
+          "sensor_value": 3619.7397,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f129",
+          "method": "mspc_combined",
+          "contribution": 0.08056628793464699,
+          "t2_contribution": 1.1097953028726184,
+          "spe_contribution": 10.18696811380421,
+          "mspc_contribution": 0.08056628793464699,
+          "sensor_value": -3.025,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f316",
+          "method": "mspc_combined",
+          "contribution": 0.06450796022328781,
+          "t2_contribution": 3.1670801041808763,
+          "spe_contribution": 3.9692994519122617,
+          "mspc_contribution": 0.06450796022328781,
+          "sensor_value": 8.9384,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f006",
+          "method": "mspc_combined",
+          "contribution": 0.060240690947399735,
+          "t2_contribution": 4.940116120153662,
+          "spe_contribution": 0.06337050427863261,
+          "mspc_contribution": 0.060240690947399735,
+          "sensor_value": 87.22,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f142",
+          "method": "mspc_combined",
+          "contribution": 0.04972731934709628,
+          "t2_contribution": 0.29327159366145134,
+          "spe_contribution": 7.007494703447639,
+          "mspc_contribution": 0.04972731934709628,
+          "sensor_value": 11.83,
+          "group_members": [
+            "f277",
+            "f415"
+          ]
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f003",
+          "method": "spe",
+          "contribution": 11.538085276491378,
+          "t2_contribution": 10.683762648232515,
+          "spe_contribution": 11.538085276491378,
+          "mspc_contribution": 0.2054069362811926,
+          "sensor_value": 3619.7397,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f129",
+          "method": "spe",
+          "contribution": 10.18696811380421,
+          "t2_contribution": 1.1097953028726184,
+          "spe_contribution": 10.18696811380421,
+          "mspc_contribution": 0.08056628793464699,
+          "sensor_value": -3.025,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f142",
+          "method": "spe",
+          "contribution": 7.007494703447639,
+          "t2_contribution": 0.29327159366145134,
+          "spe_contribution": 7.007494703447639,
+          "mspc_contribution": 0.04972731934709628,
+          "sensor_value": 11.83,
+          "group_members": [
+            "f277",
+            "f415"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f486",
+          "method": "spe",
+          "contribution": 6.821472217765754,
+          "t2_contribution": -0.9732509550204586,
+          "spe_contribution": 6.821472217765754,
+          "mspc_contribution": 0.03316437036680421,
+          "sensor_value": 735.1351,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f040",
+          "method": "spe",
+          "contribution": 4.345138176145268,
+          "t2_contribution": 0.6515266379805842,
+          "spe_contribution": 4.345138176145268,
+          "mspc_contribution": 0.03652206108836576,
+          "sensor_value": 10.24,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f003",
+          "method": "t2",
+          "contribution": 10.683762648232515,
+          "t2_contribution": 10.683762648232515,
+          "spe_contribution": 11.538085276491378,
+          "mspc_contribution": 0.2054069362811926,
+          "sensor_value": 3619.7397,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f006",
+          "method": "t2",
+          "contribution": 4.940116120153662,
+          "t2_contribution": 4.940116120153662,
+          "spe_contribution": 0.06337050427863261,
+          "mspc_contribution": 0.060240690947399735,
+          "sensor_value": 87.22,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f273",
+          "method": "t2",
+          "contribution": 3.5173490442536344,
+          "t2_contribution": 3.5173490442536344,
+          "spe_contribution": 0.030056840281241646,
+          "mspc_contribution": 0.04279194946175499,
+          "sensor_value": 8.9612,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f316",
+          "method": "t2",
+          "contribution": 3.1670801041808763,
+          "t2_contribution": 3.1670801041808763,
+          "spe_contribution": 3.9692994519122617,
+          "mspc_contribution": 0.06450796022328781,
+          "sensor_value": 8.9384,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f544",
+          "method": "t2",
+          "contribution": 2.691585797496882,
+          "t2_contribution": 2.691585797496882,
+          "spe_contribution": 0.0035016918897940075,
+          "mspc_contribution": 0.03261725472130153,
+          "sensor_value": 0.0021,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -0.9536,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f033",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.4085567891597748,
+          "abs_shap_value": 0.4085567891597748,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 8.1166,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f460",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.1303301453590393,
+          "abs_shap_value": 0.1303301453590393,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 15.6077,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f563",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.09505937993526459,
+          "abs_shap_value": 0.09505937993526459,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.8977,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1121,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 55.40702822487531,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 603.4069383382856,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 4.647111378481219
+      },
+      "xgb_summary": {
+        "raw_margin": -0.9868755340576172,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 4.284083843231201e-08
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f112",
+          "method": "mspc_combined",
+          "contribution": 2.5870294548127704,
+          "t2_contribution": 1.2221605405687452,
+          "spe_contribution": 390.3526359136177,
+          "mspc_contribution": 2.5870294548127704,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f474",
+          "method": "mspc_combined",
+          "contribution": 0.4371962789039522,
+          "t2_contribution": 6.993298590626477,
+          "spe_contribution": 53.49567055535546,
+          "mspc_contribution": 0.4371962789039522,
+          "sensor_value": 253.3888,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f587",
+          "method": "mspc_combined",
+          "contribution": 0.08254174110882381,
+          "t2_contribution": 3.348399235210232,
+          "spe_contribution": 6.372829827621105,
+          "mspc_contribution": 0.08254174110882381,
+          "sensor_value": 0.0503,
+          "group_members": [
+            "f588"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f542",
+          "method": "mspc_combined",
+          "contribution": 0.06539135189584935,
+          "t2_contribution": 2.009676900272913,
+          "spe_contribution": 6.230342406895959,
+          "mspc_contribution": 0.06539135189584935,
+          "sensor_value": 0.1162,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f129",
+          "method": "mspc_combined",
+          "contribution": 0.06149772916587337,
+          "t2_contribution": -0.4572001037527328,
+          "spe_contribution": 10.172887815890036,
+          "mspc_contribution": 0.06149772916587337,
+          "sensor_value": -2.458,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f112",
+          "method": "spe",
+          "contribution": 390.3526359136177,
+          "t2_contribution": 1.2221605405687452,
+          "spe_contribution": 390.3526359136177,
+          "mspc_contribution": 2.5870294548127704,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f474",
+          "method": "spe",
+          "contribution": 53.49567055535546,
+          "t2_contribution": 6.993298590626477,
+          "spe_contribution": 53.49567055535546,
+          "mspc_contribution": 0.4371962789039522,
+          "sensor_value": 253.3888,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f129",
+          "method": "spe",
+          "contribution": 10.172887815890036,
+          "t2_contribution": -0.4572001037527328,
+          "spe_contribution": 10.172887815890036,
+          "mspc_contribution": 0.06149772916587337,
+          "sensor_value": -2.458,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f587",
+          "method": "spe",
+          "contribution": 6.372829827621105,
+          "t2_contribution": 3.348399235210232,
+          "spe_contribution": 6.372829827621105,
+          "mspc_contribution": 0.08254174110882381,
+          "sensor_value": 0.0503,
+          "group_members": [
+            "f588"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f542",
+          "method": "spe",
+          "contribution": 6.230342406895959,
+          "t2_contribution": 2.009676900272913,
+          "spe_contribution": 6.230342406895959,
+          "mspc_contribution": 0.06539135189584935,
+          "sensor_value": 0.1162,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f474",
+          "method": "t2",
+          "contribution": 6.993298590626477,
+          "t2_contribution": 6.993298590626477,
+          "spe_contribution": 53.49567055535546,
+          "mspc_contribution": 0.4371962789039522,
+          "sensor_value": 253.3888,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f432",
+          "method": "t2",
+          "contribution": 3.8520223686009865,
+          "t2_contribution": 3.8520223686009865,
+          "spe_contribution": 0.9267123115739373,
+          "mspc_contribution": 0.05275324166900838,
+          "sensor_value": 473.5786,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f587",
+          "method": "t2",
+          "contribution": 3.348399235210232,
+          "t2_contribution": 3.348399235210232,
+          "spe_contribution": 6.372829827621105,
+          "mspc_contribution": 0.08254174110882381,
+          "sensor_value": 0.0503,
+          "group_members": [
+            "f588"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f115",
+          "method": "t2",
+          "contribution": 2.4006805016274115,
+          "t2_contribution": 2.4006805016274115,
+          "spe_contribution": 0.5275669162112142,
+          "mspc_contribution": 0.032547820311374265,
+          "sensor_value": 854.6818,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f542",
+          "method": "t2",
+          "contribution": 2.009676900272913,
+          "t2_contribution": 2.009676900272913,
+          "spe_contribution": 6.230342406895959,
+          "mspc_contribution": 0.06539135189584935,
+          "sensor_value": 0.1162,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f033",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.4085567891597748,
+          "abs_shap_value": 0.4085567891597748,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 8.324,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.3011745810508728,
+          "abs_shap_value": 0.3011745810508728,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.0,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.18038257956504822,
+          "abs_shap_value": 0.18038257956504822,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 1.63,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3038.68,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.236,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1123,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 236.73165425766365,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 1484.9614517041598,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 12.651895681193796
+      },
+      "xgb_summary": {
+        "raw_margin": -1.017491340637207,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 1.8812716007232666e-07
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f167",
+          "method": "mspc_combined",
+          "contribution": 4.774416740419822,
+          "t2_contribution": 56.019635521689295,
+          "spe_contribution": 621.6005584593295,
+          "mspc_contribution": 4.774416740419822,
+          "sensor_value": 16.3,
+          "group_members": [
+            "f302"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f166",
+          "method": "mspc_combined",
+          "contribution": 2.310613028753156,
+          "t2_contribution": 35.90335200375735,
+          "spe_contribution": 284.6703334601236,
+          "mspc_contribution": 2.310613028753156,
+          "sensor_value": 18.9,
+          "group_members": [
+            "f301",
+            "f437"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f439",
+          "method": "mspc_combined",
+          "contribution": 0.7256291063380278,
+          "t2_contribution": 41.283562135540485,
+          "spe_contribution": 34.25134910104043,
+          "mspc_contribution": 0.7256291063380278,
+          "sensor_value": 657.7621,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f168",
+          "method": "mspc_combined",
+          "contribution": 0.5900366072469814,
+          "t2_contribution": 25.52237105846071,
+          "spe_contribution": 42.638950350627844,
+          "mspc_contribution": 0.5900366072469814,
+          "sensor_value": 0.725,
+          "group_members": [
+            "f303"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f438",
+          "method": "mspc_combined",
+          "contribution": 0.3512482361609257,
+          "t2_contribution": -2.7416466419218417,
+          "spe_contribution": 58.3425926401231,
+          "mspc_contribution": 0.3512482361609257,
+          "sensor_value": 0.0,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f167",
+          "method": "spe",
+          "contribution": 621.6005584593295,
+          "t2_contribution": 56.019635521689295,
+          "spe_contribution": 621.6005584593295,
+          "mspc_contribution": 4.774416740419822,
+          "sensor_value": 16.3,
+          "group_members": [
+            "f302"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f166",
+          "method": "spe",
+          "contribution": 284.6703334601236,
+          "t2_contribution": 35.90335200375735,
+          "spe_contribution": 284.6703334601236,
+          "mspc_contribution": 2.310613028753156,
+          "sensor_value": 18.9,
+          "group_members": [
+            "f301",
+            "f437"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f438",
+          "method": "spe",
+          "contribution": 58.3425926401231,
+          "t2_contribution": -2.7416466419218417,
+          "spe_contribution": 58.3425926401231,
+          "mspc_contribution": 0.3512482361609257,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f168",
+          "method": "spe",
+          "contribution": 42.638950350627844,
+          "t2_contribution": 25.52237105846071,
+          "spe_contribution": 42.638950350627844,
+          "mspc_contribution": 0.5900366072469814,
+          "sensor_value": 0.725,
+          "group_members": [
+            "f303"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f439",
+          "method": "spe",
+          "contribution": 34.25134910104043,
+          "t2_contribution": 41.283562135540485,
+          "spe_contribution": 34.25134910104043,
+          "mspc_contribution": 0.7256291063380278,
+          "sensor_value": 657.7621,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f167",
+          "method": "t2",
+          "contribution": 56.019635521689295,
+          "t2_contribution": 56.019635521689295,
+          "spe_contribution": 621.6005584593295,
+          "mspc_contribution": 4.774416740419822,
+          "sensor_value": 16.3,
+          "group_members": [
+            "f302"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f439",
+          "method": "t2",
+          "contribution": 41.283562135540485,
+          "t2_contribution": 41.283562135540485,
+          "spe_contribution": 34.25134910104043,
+          "mspc_contribution": 0.7256291063380278,
+          "sensor_value": 657.7621,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f166",
+          "method": "t2",
+          "contribution": 35.90335200375735,
+          "t2_contribution": 35.90335200375735,
+          "spe_contribution": 284.6703334601236,
+          "mspc_contribution": 2.310613028753156,
+          "sensor_value": 18.9,
+          "group_members": [
+            "f301",
+            "f437"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f168",
+          "method": "t2",
+          "contribution": 25.52237105846071,
+          "t2_contribution": 25.52237105846071,
+          "spe_contribution": 42.638950350627844,
+          "mspc_contribution": 0.5900366072469814,
+          "sensor_value": 0.725,
+          "group_members": [
+            "f303"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f573",
+          "method": "t2",
+          "contribution": 22.103359672809418,
+          "t2_contribution": 22.103359672809418,
+          "spe_contribution": 8.317414339728167,
+          "mspc_contribution": 0.3224717194288432,
+          "sensor_value": 2.1967,
+          "group_members": [
+            "f575",
+            "f577"
+          ]
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -2.9573,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3030.88,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.156,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f021",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.06360189616680145,
+          "abs_shap_value": 0.06360189616680145,
+          "direction": "increases_fail_risk",
+          "sensor_value": -5349.75,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1124,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 208.69458426076548,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 490.90336683564306,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 5.762028557675365
+      },
+      "xgb_summary": {
+        "raw_margin": -1.3587493896484375,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 6.472691893577576e-08
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f543",
+          "method": "mspc_combined",
+          "contribution": 1.6481411456840247,
+          "t2_contribution": 84.49869300376494,
+          "spe_contribution": 94.83128815684884,
+          "mspc_contribution": 1.6481411456840247,
+          "sensor_value": 0.024,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f544",
+          "method": "mspc_combined",
+          "contribution": 0.6922932389578411,
+          "t2_contribution": 48.531953567144676,
+          "spe_contribution": 15.871902751240333,
+          "mspc_contribution": 0.6922932389578411,
+          "sensor_value": 0.0047,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f217",
+          "method": "mspc_combined",
+          "contribution": 0.2713806533703131,
+          "t2_contribution": -3.3313193494343,
+          "spe_contribution": 47.305818135030016,
+          "mspc_contribution": 0.2713806533703131,
+          "sensor_value": 0.3365,
+          "group_members": [
+            "f355"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f521",
+          "method": "mspc_combined",
+          "contribution": 0.146862541236779,
+          "t2_contribution": 8.182782342451825,
+          "spe_contribution": 7.249691185792132,
+          "mspc_contribution": 0.146862541236779,
+          "sensor_value": 474.6376,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f107",
+          "method": "mspc_combined",
+          "contribution": 0.1068069734264368,
+          "t2_contribution": 1.4699460848909798,
+          "spe_contribution": 13.507307468637404,
+          "mspc_contribution": 0.1068069734264368,
+          "sensor_value": -0.4018,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f543",
+          "method": "spe",
+          "contribution": 94.83128815684884,
+          "t2_contribution": 84.49869300376494,
+          "spe_contribution": 94.83128815684884,
+          "mspc_contribution": 1.6481411456840247,
+          "sensor_value": 0.024,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f217",
+          "method": "spe",
+          "contribution": 47.305818135030016,
+          "t2_contribution": -3.3313193494343,
+          "spe_contribution": 47.305818135030016,
+          "mspc_contribution": 0.2713806533703131,
+          "sensor_value": 0.3365,
+          "group_members": [
+            "f355"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f544",
+          "method": "spe",
+          "contribution": 15.871902751240333,
+          "t2_contribution": 48.531953567144676,
+          "spe_contribution": 15.871902751240333,
+          "mspc_contribution": 0.6922932389578411,
+          "sensor_value": 0.0047,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f586",
+          "method": "spe",
+          "contribution": 15.46300171227159,
+          "t2_contribution": -2.519984829005558,
+          "spe_contribution": 15.46300171227159,
+          "mspc_contribution": 0.07137733062004474,
+          "sensor_value": 0.0472,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f107",
+          "method": "spe",
+          "contribution": 13.507307468637404,
+          "t2_contribution": 1.4699460848909798,
+          "spe_contribution": 13.507307468637404,
+          "mspc_contribution": 0.1068069734264368,
+          "sensor_value": -0.4018,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f543",
+          "method": "t2",
+          "contribution": 84.49869300376494,
+          "t2_contribution": 84.49869300376494,
+          "spe_contribution": 94.83128815684884,
+          "mspc_contribution": 1.6481411456840247,
+          "sensor_value": 0.024,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f544",
+          "method": "t2",
+          "contribution": 48.531953567144676,
+          "t2_contribution": 48.531953567144676,
+          "spe_contribution": 15.871902751240333,
+          "mspc_contribution": 0.6922932389578411,
+          "sensor_value": 0.0047,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f521",
+          "method": "t2",
+          "contribution": 8.182782342451825,
+          "t2_contribution": 8.182782342451825,
+          "spe_contribution": 7.249691185792132,
+          "mspc_contribution": 0.146862541236779,
+          "sensor_value": 474.6376,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f006",
+          "method": "t2",
+          "contribution": 5.3093727035415625,
+          "t2_contribution": 5.3093727035415625,
+          "spe_contribution": 0.03276345177456474,
+          "mspc_contribution": 0.06451057621514039,
+          "sensor_value": 86.17,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f003",
+          "method": "t2",
+          "contribution": 4.412667709172717,
+          "t2_contribution": 4.412667709172717,
+          "spe_contribution": 0.04329374749141779,
+          "mspc_contribution": 0.053721175868185464,
+          "sensor_value": 2434.5273,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -0.2136,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f460",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.1303301453590393,
+          "abs_shap_value": 0.1303301453590393,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 11.0988,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3033.32,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08106917887926102,
+          "abs_shap_value": 0.08106917887926102,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.126,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1137,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 179.91878136608932,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 363.08175267138563,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 4.571282666188526
+      },
+      "xgb_summary": {
+        "raw_margin": -0.2529255151748657,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 1.0384246706962585e-07
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f543",
+          "method": "mspc_combined",
+          "contribution": 1.6526883764456657,
+          "t2_contribution": 93.54937356151072,
+          "spe_contribution": 78.88874752635044,
+          "mspc_contribution": 1.6526883764456657,
+          "sensor_value": 0.024,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f544",
+          "method": "mspc_combined",
+          "contribution": 0.754619709037592,
+          "t2_contribution": 54.333596989519116,
+          "spe_contribution": 14.668558300904714,
+          "mspc_contribution": 0.754619709037592,
+          "sensor_value": 0.0047,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f084",
+          "method": "mspc_combined",
+          "contribution": 0.09242377582852185,
+          "t2_contribution": -1.4790189264249791,
+          "spe_contribution": 16.743933905575993,
+          "mspc_contribution": 0.09242377582852185,
+          "sensor_value": 0.1174,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f586",
+          "method": "mspc_combined",
+          "contribution": 0.07805087975686381,
+          "t2_contribution": -2.825531918517424,
+          "spe_contribution": 17.037266261030904,
+          "mspc_contribution": 0.07805087975686381,
+          "sensor_value": 0.0392,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f511",
+          "method": "mspc_combined",
+          "contribution": 0.0549016802626907,
+          "t2_contribution": -0.8733126365808637,
+          "spe_contribution": 9.936592431200577,
+          "mspc_contribution": 0.0549016802626907,
+          "sensor_value": 900.0,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f543",
+          "method": "spe",
+          "contribution": 78.88874752635044,
+          "t2_contribution": 93.54937356151072,
+          "spe_contribution": 78.88874752635044,
+          "mspc_contribution": 1.6526883764456657,
+          "sensor_value": 0.024,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f586",
+          "method": "spe",
+          "contribution": 17.037266261030904,
+          "t2_contribution": -2.825531918517424,
+          "spe_contribution": 17.037266261030904,
+          "mspc_contribution": 0.07805087975686381,
+          "sensor_value": 0.0392,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f084",
+          "method": "spe",
+          "contribution": 16.743933905575993,
+          "t2_contribution": -1.4790189264249791,
+          "spe_contribution": 16.743933905575993,
+          "mspc_contribution": 0.09242377582852185,
+          "sensor_value": 0.1174,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f544",
+          "method": "spe",
+          "contribution": 14.668558300904714,
+          "t2_contribution": 54.333596989519116,
+          "spe_contribution": 14.668558300904714,
+          "mspc_contribution": 0.754619709037592,
+          "sensor_value": 0.0047,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f511",
+          "method": "spe",
+          "contribution": 9.936592431200577,
+          "t2_contribution": -0.8733126365808637,
+          "spe_contribution": 9.936592431200577,
+          "mspc_contribution": 0.0549016802626907,
+          "sensor_value": 900.0,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f543",
+          "method": "t2",
+          "contribution": 93.54937356151072,
+          "t2_contribution": 93.54937356151072,
+          "spe_contribution": 78.88874752635044,
+          "mspc_contribution": 1.6526883764456657,
+          "sensor_value": 0.024,
+          "group_members": [
+            "f545"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f544",
+          "method": "t2",
+          "contribution": 54.333596989519116,
+          "t2_contribution": 54.333596989519116,
+          "spe_contribution": 14.668558300904714,
+          "mspc_contribution": 0.754619709037592,
+          "sensor_value": 0.0047,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f586",
+          "method": "t2",
+          "contribution": -2.825531918517424,
+          "t2_contribution": -2.825531918517424,
+          "spe_contribution": 17.037266261030904,
+          "mspc_contribution": 0.07805087975686381,
+          "sensor_value": 0.0392,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f003",
+          "method": "t2",
+          "contribution": 2.519681588300693,
+          "t2_contribution": 2.519681588300693,
+          "spe_contribution": 1.2170235867161587,
+          "mspc_contribution": 0.03853205880353153,
+          "sensor_value": 1969.7867,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f006",
+          "method": "t2",
+          "contribution": 2.5172057150279397,
+          "t2_contribution": 2.5172057150279397,
+          "spe_contribution": 0.23509806409059195,
+          "mspc_contribution": 0.03203167654456172,
+          "sensor_value": 91.3367,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.18038257956504822,
+          "abs_shap_value": 0.18038257956504822,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3.1645,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f563",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.09505937993526459,
+          "abs_shap_value": 0.09505937993526459,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.7989,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.0725298523902893,
+          "abs_shap_value": 0.0725298523902893,
+          "direction": "increases_fail_risk",
+          "sensor_value": 2895.09,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.163,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1144,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 86.35023878601027,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 230.11575659141457,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 2.5620200171553895
+      },
+      "xgb_summary": {
+        "raw_margin": -0.7170395851135254,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 2.3283064365386963e-09
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f225",
+          "method": "mspc_combined",
+          "contribution": 0.17270124387008667,
+          "t2_contribution": 13.529991578444003,
+          "spe_contribution": 1.3442121918844503,
+          "mspc_contribution": 0.17270124387008667,
+          "sensor_value": 3601.2998,
+          "group_members": [
+            "f363",
+            "f497"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f250",
+          "method": "mspc_combined",
+          "contribution": 0.15835230938804945,
+          "t2_contribution": 12.831134707478022,
+          "spe_contribution": 0.450970558961353,
+          "mspc_contribution": 0.15835230938804945,
+          "sensor_value": 346.7927,
+          "group_members": [
+            "f388",
+            "f522"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f216",
+          "method": "mspc_combined",
+          "contribution": 0.1531610845733463,
+          "t2_contribution": 1.646539306779884,
+          "spe_contribution": 20.21731791109672,
+          "mspc_contribution": 0.1531610845733463,
+          "sensor_value": 0.2098,
+          "group_members": [
+            "f354"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f571",
+          "method": "mspc_combined",
+          "contribution": 0.11701437033311561,
+          "t2_contribution": 2.154052206481491,
+          "spe_contribution": 13.799151452908646,
+          "mspc_contribution": 0.11701437033311561,
+          "sensor_value": 1.0912,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f139",
+          "method": "mspc_combined",
+          "contribution": 0.08223906644487144,
+          "t2_contribution": 5.804219095409968,
+          "spe_contribution": 1.813788798556842,
+          "mspc_contribution": 0.08223906644487144,
+          "sensor_value": 1371.4971,
+          "group_members": [
+            "f274"
+          ]
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f216",
+          "method": "spe",
+          "contribution": 20.21731791109672,
+          "t2_contribution": 1.646539306779884,
+          "spe_contribution": 20.21731791109672,
+          "mspc_contribution": 0.1531610845733463,
+          "sensor_value": 0.2098,
+          "group_members": [
+            "f354"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f571",
+          "method": "spe",
+          "contribution": 13.799151452908646,
+          "t2_contribution": 2.154052206481491,
+          "spe_contribution": 13.799151452908646,
+          "mspc_contribution": 0.11701437033311561,
+          "sensor_value": 1.0912,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f100",
+          "method": "spe",
+          "contribution": 9.636106208457047,
+          "t2_contribution": -0.09894424495407098,
+          "spe_contribution": 9.636106208457047,
+          "mspc_contribution": 0.06229896114656966,
+          "sensor_value": 0.001,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f511",
+          "method": "spe",
+          "contribution": 8.082474510664083,
+          "t2_contribution": -0.6287698782545752,
+          "spe_contribution": 8.082474510664083,
+          "mspc_contribution": 0.0456452952324006,
+          "sensor_value": 953.8462,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f543",
+          "method": "spe",
+          "contribution": 7.609958535578175,
+          "t2_contribution": 2.4037434913208804,
+          "spe_contribution": 7.609958535578175,
+          "mspc_contribution": 0.07925434644152454,
+          "sensor_value": 0.0118,
+          "group_members": [
+            "f545"
+          ]
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f225",
+          "method": "t2",
+          "contribution": 13.529991578444003,
+          "t2_contribution": 13.529991578444003,
+          "spe_contribution": 1.3442121918844503,
+          "mspc_contribution": 0.17270124387008667,
+          "sensor_value": 3601.2998,
+          "group_members": [
+            "f363",
+            "f497"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f250",
+          "method": "t2",
+          "contribution": 12.831134707478022,
+          "t2_contribution": 12.831134707478022,
+          "spe_contribution": 0.450970558961353,
+          "mspc_contribution": 0.15835230938804945,
+          "sensor_value": 346.7927,
+          "group_members": [
+            "f388",
+            "f522"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f139",
+          "method": "t2",
+          "contribution": 5.804219095409968,
+          "t2_contribution": 5.804219095409968,
+          "spe_contribution": 1.813788798556842,
+          "mspc_contribution": 0.08223906644487144,
+          "sensor_value": 1371.4971,
+          "group_members": [
+            "f274"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f006",
+          "method": "t2",
+          "contribution": 4.325601354704513,
+          "t2_contribution": 4.325601354704513,
+          "spe_contribution": 0.0779888932771616,
+          "mspc_contribution": 0.05289545593047154,
+          "sensor_value": 87.8044,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f003",
+          "method": "t2",
+          "contribution": 3.5775013579483637,
+          "t2_contribution": 3.5775013579483637,
+          "spe_contribution": 0.16940148175276773,
+          "mspc_contribution": 0.04443858514383075,
+          "sensor_value": 2347.9092,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -5.3318,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f563",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.09505937993526459,
+          "abs_shap_value": 0.09505937993526459,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.9169,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.0725298523902893,
+          "abs_shap_value": 0.0725298523902893,
+          "direction": "increases_fail_risk",
+          "sensor_value": 2882.22,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.167,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1151,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 131.38088581134932,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 343.7387611976882,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 3.8560447254097903
+      },
+      "xgb_summary": {
+        "raw_margin": -0.9758686423301697,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 2.1886080503463745e-08
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f270",
+          "method": "mspc_combined",
+          "contribution": 0.40657799306069137,
+          "t2_contribution": 23.56313231277162,
+          "spe_contribution": 18.398438219657777,
+          "mspc_contribution": 0.40657799306069137,
+          "sensor_value": 110.2954,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f104",
+          "method": "mspc_combined",
+          "contribution": 0.35879325745441115,
+          "t2_contribution": 5.580444090218882,
+          "spe_contribution": 44.19393007857794,
+          "mspc_contribution": 0.35879325745441115,
+          "sensor_value": -0.006,
+          "group_members": [
+            "f099"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f135",
+          "method": "mspc_combined",
+          "contribution": 0.3467672409105187,
+          "t2_contribution": 21.411442815302077,
+          "spe_contribution": 13.275967615934647,
+          "mspc_contribution": 0.3467672409105187,
+          "sensor_value": 634.0,
+          "group_members": [
+            "f408"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f144",
+          "method": "mspc_combined",
+          "contribution": 0.299801283315738,
+          "t2_contribution": 9.198668605260794,
+          "spe_contribution": 28.59223059936781,
+          "mspc_contribution": 0.299801283315738,
+          "sensor_value": 0.4455,
+          "group_members": [
+            "f279",
+            "f417"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f100",
+          "method": "mspc_combined",
+          "contribution": 0.19120009161460505,
+          "t2_contribution": 10.464635761835591,
+          "spe_contribution": 9.784797529636974,
+          "mspc_contribution": 0.19120009161460505,
+          "sensor_value": 0.0022,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f104",
+          "method": "spe",
+          "contribution": 44.19393007857794,
+          "t2_contribution": 5.580444090218882,
+          "spe_contribution": 44.19393007857794,
+          "mspc_contribution": 0.35879325745441115,
+          "sensor_value": -0.006,
+          "group_members": [
+            "f099"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f144",
+          "method": "spe",
+          "contribution": 28.59223059936781,
+          "t2_contribution": 9.198668605260794,
+          "spe_contribution": 28.59223059936781,
+          "mspc_contribution": 0.299801283315738,
+          "sensor_value": 0.4455,
+          "group_members": [
+            "f279",
+            "f417"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f270",
+          "method": "spe",
+          "contribution": 18.398438219657777,
+          "t2_contribution": 23.56313231277162,
+          "spe_contribution": 18.398438219657777,
+          "mspc_contribution": 0.40657799306069137,
+          "sensor_value": 110.2954,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f468",
+          "method": "spe",
+          "contribution": 14.083276846278736,
+          "t2_contribution": -0.618543558496069,
+          "spe_contribution": 14.083276846278736,
+          "mspc_contribution": 0.08531143198582629,
+          "sensor_value": 968.5841,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f135",
+          "method": "spe",
+          "contribution": 13.275967615934647,
+          "t2_contribution": 21.411442815302077,
+          "spe_contribution": 13.275967615934647,
+          "mspc_contribution": 0.3467672409105187,
+          "sensor_value": 634.0,
+          "group_members": [
+            "f408"
+          ]
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f270",
+          "method": "t2",
+          "contribution": 23.56313231277162,
+          "t2_contribution": 23.56313231277162,
+          "spe_contribution": 18.398438219657777,
+          "mspc_contribution": 0.40657799306069137,
+          "sensor_value": 110.2954,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f135",
+          "method": "t2",
+          "contribution": 21.411442815302077,
+          "t2_contribution": 21.411442815302077,
+          "spe_contribution": 13.275967615934647,
+          "mspc_contribution": 0.3467672409105187,
+          "sensor_value": 634.0,
+          "group_members": [
+            "f408"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f100",
+          "method": "t2",
+          "contribution": 10.464635761835591,
+          "t2_contribution": 10.464635761835591,
+          "spe_contribution": 9.784797529636974,
+          "mspc_contribution": 0.19120009161460505,
+          "sensor_value": 0.0022,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f144",
+          "method": "t2",
+          "contribution": 9.198668605260794,
+          "t2_contribution": 9.198668605260794,
+          "spe_contribution": 28.59223059936781,
+          "mspc_contribution": 0.299801283315738,
+          "sensor_value": 0.4455,
+          "group_members": [
+            "f279",
+            "f417"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f139",
+          "method": "t2",
+          "contribution": 5.9203867534541175,
+          "t2_contribution": 5.9203867534541175,
+          "spe_contribution": 0.007740124125807073,
+          "mspc_contribution": 0.07174485540330898,
+          "sensor_value": 1275.644,
+          "group_members": [
+            "f274"
+          ]
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -0.8218,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.2046934813261032,
+          "abs_shap_value": 0.2046934813261032,
+          "direction": "decreases_fail_risk",
+          "sensor_value": null,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08106917887926102,
+          "abs_shap_value": 0.08106917887926102,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.08,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.0725298523902893,
+          "abs_shap_value": 0.0725298523902893,
+          "direction": "increases_fail_risk",
+          "sensor_value": 2965.73,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f021",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.06360189616680145,
+          "abs_shap_value": 0.06360189616680145,
+          "direction": "increases_fail_risk",
+          "sensor_value": -5374.0,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1157,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 43.76897080676848,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 576.9860428512036,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 4.332077951045841
+      },
+      "xgb_summary": {
+        "raw_margin": -1.134843349456787,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 3.119930624961853e-07
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f112",
+          "method": "mspc_combined",
+          "contribution": 2.598397557947049,
+          "t2_contribution": 1.0002566271480464,
+          "spe_contribution": 392.485617007169,
+          "mspc_contribution": 2.598397557947049,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f143",
+          "method": "mspc_combined",
+          "contribution": 0.2063971862796837,
+          "t2_contribution": 7.728829863111653,
+          "spe_contribution": 17.118699935733805,
+          "mspc_contribution": 0.2063971862796837,
+          "sensor_value": 0.0121,
+          "group_members": [
+            "f416"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f542",
+          "method": "mspc_combined",
+          "contribution": 0.08163093006580174,
+          "t2_contribution": 1.0744963304851591,
+          "spe_contribution": 10.413404125603874,
+          "mspc_contribution": 0.08163093006580174,
+          "sensor_value": 0.1162,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "mspc_combined",
+          "contribution": 0.07810862402448461,
+          "t2_contribution": 2.168465082300311,
+          "spe_contribution": 7.868463404486869,
+          "mspc_contribution": 0.07810862402448461,
+          "sensor_value": 3254.32,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f023",
+          "method": "mspc_combined",
+          "contribution": 0.07777681593962082,
+          "t2_contribution": -0.10500081044039633,
+          "spe_contribution": 11.99610207929023,
+          "mspc_contribution": 0.07777681593962082,
+          "sensor_value": -8812.25,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f112",
+          "method": "spe",
+          "contribution": 392.485617007169,
+          "t2_contribution": 1.0002566271480464,
+          "spe_contribution": 392.485617007169,
+          "mspc_contribution": 2.598397557947049,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f143",
+          "method": "spe",
+          "contribution": 17.118699935733805,
+          "t2_contribution": 7.728829863111653,
+          "spe_contribution": 17.118699935733805,
+          "mspc_contribution": 0.2063971862796837,
+          "sensor_value": 0.0121,
+          "group_members": [
+            "f416"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f023",
+          "method": "spe",
+          "contribution": 11.99610207929023,
+          "t2_contribution": -0.10500081044039633,
+          "spe_contribution": 11.99610207929023,
+          "mspc_contribution": 0.07777681593962082,
+          "sensor_value": -8812.25,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f542",
+          "method": "spe",
+          "contribution": 10.413404125603874,
+          "t2_contribution": 1.0744963304851591,
+          "spe_contribution": 10.413404125603874,
+          "mspc_contribution": 0.08163093006580174,
+          "sensor_value": 0.1162,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f000",
+          "method": "spe",
+          "contribution": 7.868463404486869,
+          "t2_contribution": 2.168465082300311,
+          "spe_contribution": 7.868463404486869,
+          "mspc_contribution": 0.07810862402448461,
+          "sensor_value": 3254.32,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f143",
+          "method": "t2",
+          "contribution": 7.728829863111653,
+          "t2_contribution": 7.728829863111653,
+          "spe_contribution": 17.118699935733805,
+          "mspc_contribution": 0.2063971862796837,
+          "sensor_value": 0.0121,
+          "group_members": [
+            "f416"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f225",
+          "method": "t2",
+          "contribution": 2.7969194028025606,
+          "t2_contribution": 2.7969194028025606,
+          "spe_contribution": 1.013204910449169,
+          "mspc_contribution": 0.040546250002106723,
+          "sensor_value": 2283.7002,
+          "group_members": [
+            "f363",
+            "f497"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f250",
+          "method": "t2",
+          "contribution": 2.6557671314533584,
+          "t2_contribution": 2.6557671314533584,
+          "spe_contribution": 0.4191736028275612,
+          "mspc_contribution": 0.034922573893451304,
+          "sensor_value": 222.4624,
+          "group_members": [
+            "f388",
+            "f522"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "t2",
+          "contribution": 2.168465082300311,
+          "t2_contribution": 2.168465082300311,
+          "spe_contribution": 7.868463404486869,
+          "mspc_contribution": 0.07810862402448461,
+          "sensor_value": 3254.32,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f278",
+          "method": "t2",
+          "contribution": 1.6515890231727475,
+          "t2_contribution": 1.6515890231727475,
+          "spe_contribution": 0.9416249262176426,
+          "mspc_contribution": 0.026205015701038448,
+          "sensor_value": 0.0017,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": -1.4355,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.3011745810508728,
+          "abs_shap_value": 0.3011745810508728,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.0,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3254.32,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08106917887926102,
+          "abs_shap_value": 0.08106917887926102,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.006,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f021",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.06360189616680145,
+          "abs_shap_value": 0.06360189616680145,
+          "direction": "increases_fail_risk",
+          "sensor_value": -5371.0,
+          "group_members": []
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [
+          "f000"
+        ],
+        "overlap_count": 1
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1167,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 73.70470274026869,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 527.9892406288436,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 4.371724860848427
+      },
+      "xgb_summary": {
+        "raw_margin": -0.5949612259864807,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 1.4435499906539917e-07
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f112",
+          "method": "mspc_combined",
+          "contribution": 2.5702641450196153,
+          "t2_contribution": 1.7734326675427587,
+          "spe_contribution": 386.795307036979,
+          "mspc_contribution": 2.5702641450196153,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f143",
+          "method": "mspc_combined",
+          "contribution": 0.19398005196086865,
+          "t2_contribution": 7.503955374454349,
+          "spe_contribution": 15.647574909731082,
+          "mspc_contribution": 0.19398005196086865,
+          "sensor_value": 0.0121,
+          "group_members": [
+            "f416"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f043",
+          "method": "mspc_combined",
+          "contribution": 0.06013307561542516,
+          "t2_contribution": 4.750619382752555,
+          "spe_contribution": 0.3952810336482925,
+          "mspc_contribution": 0.06013307561542516,
+          "sensor_value": 376.4691,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f269",
+          "method": "mspc_combined",
+          "contribution": 0.052213886658671646,
+          "t2_contribution": 4.247398660007939,
+          "spe_contribution": 0.11827092368472587,
+          "mspc_contribution": 0.052213886658671646,
+          "sensor_value": 7.3173,
+          "group_members": [
+            "f541"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f407",
+          "method": "mspc_combined",
+          "contribution": 0.04978249515172144,
+          "t2_contribution": 4.080489539097514,
+          "spe_contribution": 0.05602352977858466,
+          "mspc_contribution": 0.04978249515172144,
+          "sensor_value": 2.2605,
+          "group_members": []
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f112",
+          "method": "spe",
+          "contribution": 386.795307036979,
+          "t2_contribution": 1.7734326675427587,
+          "spe_contribution": 386.795307036979,
+          "mspc_contribution": 2.5702641450196153,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f143",
+          "method": "spe",
+          "contribution": 15.647574909731082,
+          "t2_contribution": 7.503955374454349,
+          "spe_contribution": 15.647574909731082,
+          "mspc_contribution": 0.19398005196086865,
+          "sensor_value": 0.0121,
+          "group_members": [
+            "f416"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f129",
+          "method": "spe",
+          "contribution": 6.665199807714542,
+          "t2_contribution": 0.4682274267707131,
+          "spe_contribution": 6.665199807714542,
+          "mspc_contribution": 0.0495904215143593,
+          "sensor_value": -2.033,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f058",
+          "method": "spe",
+          "contribution": 6.570155430345264,
+          "t2_contribution": 0.2091945098336486,
+          "spe_contribution": 6.570155430345264,
+          "mspc_contribution": 0.04582732666129814,
+          "sensor_value": 4.3183,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f485",
+          "method": "spe",
+          "contribution": 4.9797110858257305,
+          "t2_contribution": 1.0453470476260607,
+          "spe_contribution": 4.9797110858257305,
+          "mspc_contribution": 0.045472610613188746,
+          "sensor_value": 732.0755,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f143",
+          "method": "t2",
+          "contribution": 7.503955374454349,
+          "t2_contribution": 7.503955374454349,
+          "spe_contribution": 15.647574909731082,
+          "mspc_contribution": 0.19398005196086865,
+          "sensor_value": 0.0121,
+          "group_members": [
+            "f416"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f043",
+          "method": "t2",
+          "contribution": 4.750619382752555,
+          "t2_contribution": 4.750619382752555,
+          "spe_contribution": 0.3952810336482925,
+          "mspc_contribution": 0.06013307561542516,
+          "sensor_value": 376.4691,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f269",
+          "method": "t2",
+          "contribution": 4.247398660007939,
+          "t2_contribution": 4.247398660007939,
+          "spe_contribution": 0.11827092368472587,
+          "mspc_contribution": 0.052213886658671646,
+          "sensor_value": 7.3173,
+          "group_members": [
+            "f541"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f407",
+          "method": "t2",
+          "contribution": 4.080489539097514,
+          "t2_contribution": 4.080489539097514,
+          "spe_contribution": 0.05602352977858466,
+          "mspc_contribution": 0.04978249515172144,
+          "sensor_value": 2.2605,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f060",
+          "method": "t2",
+          "contribution": 3.310252421721289,
+          "t2_contribution": 3.310252421721289,
+          "spe_contribution": 0.2420006200711053,
+          "mspc_contribution": 0.041680684413676145,
+          "sensor_value": 373.8127,
+          "group_members": []
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.3011745810508728,
+          "abs_shap_value": 0.3011745810508728,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.0,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 2,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.14702032506465912,
+          "abs_shap_value": 0.14702032506465912,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3.5436,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f563",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.09505937993526459,
+          "abs_shap_value": 0.09505937993526459,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.8967,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3010.75,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.25,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    },
+    {
+      "run_id": 1168,
+      "top_k": 5,
+      "mspc_summary": {
+        "t2": 36.76746328303878,
+        "t2_limit_99": 82.57872330157657,
+        "spe": 507.6794521941744,
+        "spe_limit_99": 151.75653431514633,
+        "mspc_index": 3.7905961737285825
+      },
+      "xgb_summary": {
+        "raw_margin": -1.1734299659729004,
+        "expected_value": 0.022387824952602386,
+        "shap_additivity_error": 2.039596438407898e-07
+      },
+      "mspc_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f112",
+          "method": "mspc_combined",
+          "contribution": 2.612332679240746,
+          "t2_contribution": 0.04061251275527694,
+          "spe_contribution": 396.3639194710673,
+          "mspc_contribution": 2.612332679240746,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f544",
+          "method": "mspc_combined",
+          "contribution": 0.07287098734401468,
+          "t2_contribution": 5.348865571559536,
+          "spe_contribution": 1.2289336544571632,
+          "mspc_contribution": 0.07287098734401468,
+          "sensor_value": 0.0018,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f129",
+          "method": "mspc_combined",
+          "contribution": 0.07258097584035257,
+          "t2_contribution": 1.1396938872472928,
+          "spe_contribution": 8.92019961189409,
+          "mspc_contribution": 0.07258097584035257,
+          "sensor_value": -2.694,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f175",
+          "method": "mspc_combined",
+          "contribution": 0.04596613477917893,
+          "t2_contribution": 1.2885266347438877,
+          "spe_contribution": 4.6077107211853745,
+          "mspc_contribution": 0.04596613477917893,
+          "sensor_value": 1.0942,
+          "group_members": [
+            "f310",
+            "f446"
+          ]
+        },
+        {
+          "rank": 5,
+          "sensor": "f221",
+          "method": "mspc_combined",
+          "contribution": 0.03268041725236437,
+          "t2_contribution": 1.6439280112394432,
+          "spe_contribution": 1.938388215356733,
+          "mspc_contribution": 0.03268041725236437,
+          "sensor_value": 0.1196,
+          "group_members": [
+            "f359",
+            "f493"
+          ]
+        }
+      ],
+      "spe_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f112",
+          "method": "spe",
+          "contribution": 396.3639194710673,
+          "t2_contribution": 0.04061251275527694,
+          "spe_contribution": 396.3639194710673,
+          "mspc_contribution": 2.612332679240746,
+          "sensor_value": 0.0,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f129",
+          "method": "spe",
+          "contribution": 8.92019961189409,
+          "t2_contribution": 1.1396938872472928,
+          "spe_contribution": 8.92019961189409,
+          "mspc_contribution": 0.07258097584035257,
+          "sensor_value": -2.694,
+          "group_members": []
+        },
+        {
+          "rank": 3,
+          "sensor": "f175",
+          "method": "spe",
+          "contribution": 4.6077107211853745,
+          "t2_contribution": 1.2885266347438877,
+          "spe_contribution": 4.6077107211853745,
+          "mspc_contribution": 0.04596613477917893,
+          "sensor_value": 1.0942,
+          "group_members": [
+            "f310",
+            "f446"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f132",
+          "method": "spe",
+          "contribution": 4.286056985398491,
+          "t2_contribution": -0.18938236568654093,
+          "spe_contribution": 4.286056985398491,
+          "mspc_contribution": 0.02594962600534364,
+          "sensor_value": 2.2671,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f090",
+          "method": "spe",
+          "contribution": 4.009985705362235,
+          "t2_contribution": -0.12896285671233434,
+          "spe_contribution": 4.009985705362235,
+          "mspc_contribution": 0.024862113247675302,
+          "sensor_value": 9505.1001,
+          "group_members": []
+        }
+      ],
+      "t2_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f544",
+          "method": "t2",
+          "contribution": 5.348865571559536,
+          "t2_contribution": 5.348865571559536,
+          "spe_contribution": 1.2289336544571632,
+          "mspc_contribution": 0.07287098734401468,
+          "sensor_value": 0.0018,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f221",
+          "method": "t2",
+          "contribution": 1.6439280112394432,
+          "t2_contribution": 1.6439280112394432,
+          "spe_contribution": 1.938388215356733,
+          "mspc_contribution": 0.03268041725236437,
+          "sensor_value": 0.1196,
+          "group_members": [
+            "f359",
+            "f493"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f175",
+          "method": "t2",
+          "contribution": 1.2885266347438877,
+          "t2_contribution": 1.2885266347438877,
+          "spe_contribution": 4.6077107211853745,
+          "mspc_contribution": 0.04596613477917893,
+          "sensor_value": 1.0942,
+          "group_members": [
+            "f310",
+            "f446"
+          ]
+        },
+        {
+          "rank": 4,
+          "sensor": "f129",
+          "method": "t2",
+          "contribution": 1.1396938872472928,
+          "t2_contribution": 1.1396938872472928,
+          "spe_contribution": 8.92019961189409,
+          "mspc_contribution": 0.07258097584035257,
+          "sensor_value": -2.694,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f543",
+          "method": "t2",
+          "contribution": 1.1338444603594113,
+          "t2_contribution": 1.1338444603594113,
+          "spe_contribution": 0.16258776627192478,
+          "mspc_contribution": 0.014801839730352864,
+          "sensor_value": 0.007,
+          "group_members": [
+            "f545"
+          ]
+        }
+      ],
+      "xgb_shap_top_sensors": [
+        {
+          "rank": 1,
+          "sensor": "f059",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.7132558822631836,
+          "abs_shap_value": 0.7132558822631836,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.2073,
+          "group_members": []
+        },
+        {
+          "rank": 2,
+          "sensor": "f247",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.3011745810508728,
+          "abs_shap_value": 0.3011745810508728,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 0.0,
+          "group_members": [
+            "f519"
+          ]
+        },
+        {
+          "rank": 3,
+          "sensor": "f460",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.1303301453590393,
+          "abs_shap_value": 0.1303301453590393,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 15.246,
+          "group_members": []
+        },
+        {
+          "rank": 4,
+          "sensor": "f000",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": -0.08756434917449951,
+          "abs_shap_value": 0.08756434917449951,
+          "direction": "decreases_fail_risk",
+          "sensor_value": 3070.94,
+          "group_members": []
+        },
+        {
+          "rank": 5,
+          "sensor": "f163",
+          "method": "xgboost_shap_raw_margin",
+          "shap_value": 0.07055675238370895,
+          "abs_shap_value": 0.07055675238370895,
+          "direction": "increases_fail_risk",
+          "sensor_value": 0.21,
+          "group_members": [
+            "f164",
+            "f298",
+            "f299"
+          ]
+        }
+      ],
+      "overlap": {
+        "top_k_common_sensors": [],
+        "overlap_count": 0
+      },
+      "caveat": "Sensor contributions and SHAP attributions can smear across correlated sensors. Collinear group members are listed alongside each retained representative sensor. On SECOM, rankings are descriptive triage aids and not verified root-cause diagnoses."
+    }
+  ]
+}
