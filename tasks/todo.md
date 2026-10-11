@@ -191,7 +191,7 @@
 - [x] Complete T24 (12 October 2026; Wafer Etch dataset verified in `data/wafer_source_manifest.json`; one-shot confirmatory evaluation passed `O1_v2` [0.9729], `O2_v2` [0.9970], `O3_v2` [5.55/100, 344 TP / 4 FP], and `O4_v2` [+0.6715] in `reports/v0_2/wafer_confirmatory_metrics.json`).
 - Dependencies: T23.
 - Files: `scripts/download_wafer_data.py`, `src/yieldguard/wafer_data.py`, `tests/test_wafer_data.py`, `data/wafer_source_manifest.json`, `reports/v0_2/wafer_confirmatory_metrics.json`.
-- Acceptance check: Wafer Etch dataset (7,164 runs, 152 sensor readings, ~10.64% fault rate) downloaded with pinned SHA-256 hashes; frozen `v0.2` prequential pipeline executed once with predictions hashed before evaluation; all `O1_v2`–`O6_v2` verdicts and bootstrap CIs recorded in `reports/v0_2/wafer_confirmatory_metrics.json`.
+- Acceptance check: Wafer Etch dataset (7,164 runs, 152 time-step sensor readings, ~10.64% fault rate) downloaded with pinned SHA-256 hashes; frozen `v0.2` prequential pipeline executed once with predictions hashed before evaluation; confirmatory `O1_v2`–`O4_v2` verdicts and bootstrap CIs recorded in `reports/v0_2/wafer_confirmatory_metrics.json` (O5_v2/O6_v2 unmeasured).
 
 ### T25: Phase 4 — Final documentation, model card, and progress log update for v0.2
 - [x] Complete T25 (12 October 2026).
@@ -209,6 +209,6 @@
 - [x] Complete T27 (12 October 2026).
 - Dependencies: T26.
 - Files: `app/dashboard.py`, `tests/test_dashboard.py`, `docs/MODEL_CARD.md`, `README.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`.
-- Acceptance check: Accurate "152 time steps / 1 sensor trace" and "Time Step Index" axis labels; dynamic scorecard verdicts and interpretation strings driven strictly from loaded metrics without hard-coded fallbacks or duplicate "PASS (PASS)" prefixes; explicit synthetic wafer banner when in synthetic mode; narrow exception catching on parquet reads; strengthened `test_dashboard.py` verifying View 6 metrics, deltas, and synthetic mode labeling; disclosures of synthetic timestamps and O5_v2/O6_v2 protocol gates aligned across docs and dashboard.
+- Acceptance check: Accurate "152 time steps / 1 sensor trace" and "Time Step Index" axis labels; dynamic scorecard verdicts, numbers, and KPI target labels (using ≥, not >) driven strictly from loaded metrics without hard-coded fallbacks or duplicate "PASS (PASS)" prefixes; explicit synthetic wafer banner when in synthetic mode; narrow exception catching on parquet reads; strengthened `test_dashboard.py` verifying View 6 metrics, deltas, and mode selection; honest disclosure that O5_v2/O6_v2 were not measured/recorded in the metrics report and that arbitrary synthetic block ordering means the benchmark tests prequential evaluation mechanics rather than real process drift.
 
 

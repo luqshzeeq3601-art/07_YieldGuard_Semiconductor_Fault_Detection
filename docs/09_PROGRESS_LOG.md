@@ -275,12 +275,12 @@
 
 ## 15. Session: 12 October 2026, T27 Post-T26 Portfolio-Ready Corrections Pass
 
-- Date/time: 2026-10-12 01:14 (Asia/Kuala_Lumpur)
+- Date/time: 2026-10-12 01:21 (Asia/Kuala_Lumpur)
 - Task completed: `T27`.
 - Changed files:
-  - `app/dashboard.py` (corrected data descriptions to 1 sensor trace of 152 time steps, changed x-axis to "Time Step Index (0 to 151)", drove all KPI deltas and scorecard rows dynamically from loaded metrics with "n/a" fallbacks, fixed "PASS (PASS)" duplication, added explicit synthetic banner for wafer demo traces, and narrowed exception handling).
-  - `tests/test_dashboard.py` (added tests verifying View 6 metrics, deltas, and synthetic mode labeling on both real and synthetic paths).
-  - `docs/MODEL_CARD.md`, `README.md` (disclosed synthetic timestamps assigned to UCR file order, and clarified that O5_v2 and O6_v2 are protocol verification gates).
+  - `app/dashboard.py` (corrected data descriptions to 1 sensor trace of 152 time steps, changed x-axis to "Time Step Index (0 to 151)", drove all KPI deltas, labels [≥ not >], and scorecard rows dynamically from loaded metrics with "n/a" fallbacks, fixed "PASS (PASS)" duplication, added explicit synthetic banner for wafer demo traces, dynamic summary text, and narrowed exception handling).
+  - `tests/test_dashboard.py` (added tests verifying View 6 metrics, deltas, and mode selection without silent synthetic fallback).
+  - `docs/MODEL_CARD.md`, `README.md` (disclosed that timestamps are synthesized in file order meaning block order is arbitrary and benchmarks prequential evaluation mechanics rather than real process drift, and honestly recorded that O5_v2/O6_v2 were not measured/recorded in the metrics report).
   - `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `tasks/todo.md`.
 - Verification evidence:
   - `.\.venv\Scripts\python.exe -m ruff check app/dashboard.py tests/test_dashboard.py` -> `All checks passed!`
