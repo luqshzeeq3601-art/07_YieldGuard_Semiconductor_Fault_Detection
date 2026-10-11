@@ -1,11 +1,13 @@
 """YieldGuard: Semiconductor Process Control & Fault Detection Streamlit Dashboard.
 
-Five operational and educational views (satisfying docs/04_TECHNICAL_DESIGN.md section 8):
-1. Univariate EWMA & Run Rules: Phase II chart with time-varying limits and 4 Western Electric rules.
-2. Multivariate SPC (T² & SPE): Hotelling T-squared and Q-residual over run order with budget thresholds.
-3. Flagged-Run Drill-Down: Side-by-side MSPC contributions and XGBoost TreeSHAP with collinear group maps.
-4. Alarm-Budget Performance: Operating metrics across budgets 2, 5, 10, holdout scorecard, and drift summary.
-5. Project Overview & Architecture: End-to-end guide, chronological split protocol, and detector glossary.
+A plain-language landing page plus the four views of docs/04_TECHNICAL_DESIGN.md section 8:
+- Start here (Project Overview): the problem, the method, the frozen findings and a glossary.
+- Single-sensor trends (Univariate EWMA & Run Rules): EWMA chart with limits and Western Electric rules.
+- All sensors at once (Multivariate SPC): Hotelling T-squared and SPE over run order with budget thresholds.
+- Why was a run flagged? (Drill-Down): MSPC contributions and XGBoost TreeSHAP side by side.
+- Results (Alarm-Budget Performance): metrics at budgets 2, 5, 10, holdout scorecard and drift summary.
+
+Each view opens with a jargon-free summary and reading guide; method details sit in a collapsed expander.
 """
 
 from __future__ import annotations
@@ -61,7 +63,7 @@ DETECTOR_CATALOG: dict[str, dict[str, str]] = {
         "name": "E06 — Combined MSPC Index",
         "short": "Combined MSPC (T² + SPE)",
         "family": "Multivariate SPC",
-        "desc": "Maximum normalized excursion across Hotelling T² and SPE statistics.",
+        "desc": "Sum of normalized excursions across Hotelling T² and SPE statistics (T² / τ_T² + SPE / τ_SPE).",
     },
     "E07": {
         "name": "E07 — Isolation Forest",
@@ -76,6 +78,51 @@ DETECTOR_CATALOG: dict[str, dict[str, str]] = {
         "desc": "Shallow gradient boosted trees with dynamic scale_pos_weight tuned via inner-fold 1-SE rule.",
     },
 }
+
+# One-sentence, jargon-free description of each detector for newcomers.
+DETECTOR_PLAIN: dict[str, str] = {
+    "E01": "Random guessing. The bar every other detector has to beat.",
+    "E02": "Flags a run when any of 10 key sensors is far outside its normal range. The chosen detector.",
+    "E03": "Like E02, but on a smoothed trend, so it reacts to slow drifts rather than single spikes.",
+    "E04": "One number for all sensors: how far the run moved from normal in the usual pattern.",
+    "E05": "One number for all sensors: how much the run breaks the usual relationships between sensors.",
+    "E06": "Combines E04 and E05 by adding their normalized alarm distances together.",
+    "E07": "Machine learning that studies good runs only and flags runs that look unlike them.",
+    "E08": "Machine learning that studies labelled good and failed runs and predicts failure risk.",
+}
+
+VIEW_EWMA = "1. Univariate EWMA & Run Rules"
+VIEW_MSPC = "2. Multivariate SPC (T² & SPE)"
+VIEW_DRILLDOWN = "3. Flagged-Run Drill-Down"
+VIEW_BUDGET = "4. Alarm-Budget Performance"
+VIEW_OVERVIEW = "5. Project Overview & Architecture"
+
+# Sidebar navigation: plain-language label and the technical name shown beneath it.
+VIEW_LABELS: dict[str, tuple[str, str]] = {
+    VIEW_OVERVIEW: ("Start here", "What the project is and what it found"),
+    VIEW_EWMA: ("Single-sensor trends", "EWMA charts and run rules"),
+    VIEW_MSPC: ("All sensors at once", "Hotelling T² and SPE"),
+    VIEW_DRILLDOWN: ("Why was a run flagged?", "Sensor ranking for a flagged run"),
+    VIEW_BUDGET: ("Results", "Detector comparison and final test"),
+}
+
+GLOSSARY: list[tuple[str, str]] = [
+    ("Run", "One pass of a wafer (the silicon disc chips are built on) through production. Each data row is one run."),
+    ("Sensor (f000–f589)", "One measured signal. The dataset hides what each sensor physically measures."),
+    ("Pass / fail", "The final quality-test result for a run. Used only to check the detectors, never as an input."),
+    ("Detector", "A method that gives each run an 'unusualness' score. Eight are compared (E01–E08)."),
+    ("Alarm budget", "How many alarms per 100 runs engineers can realistically review. The main budget here is 5."),
+    ("Score cutoff (threshold, τ)", "The score above which a run is flagged. Chosen so the alarm budget is respected."),
+    ("SPC", "Statistical process control: classic factory control charts that flag readings outside their normal band."),
+    ("EWMA", "A smoothed running average that weights recent runs more. Good at spotting slow drifts."),
+    ("T² and SPE", "Two summary scores across all sensors: T² is distance from normal; SPE is how much the usual pattern broke."),
+    ("Recall", "Of the runs that really failed, the share that was flagged."),
+    ("Precision", "Of the runs that were flagged, the share that really failed."),
+    ("PR-AUC", "One number from 0 to 1 for how well a detector ranks failed runs above good ones. Random guessing scores about the failure rate."),
+    ("Holdout", "The most recent runs, locked away until every choice was frozen, then scored exactly once."),
+    ("Drift", "The process and its sensors changing over time, so the old picture of 'normal' no longer fits."),
+    ("SHAP", "A way of showing which inputs pushed a machine-learning prediction up or down."),
+]
 
 
 def inject_custom_css() -> None:
@@ -114,32 +161,22 @@ def inject_custom_css() -> None:
         }
         .yg-badge-teal {
             background-color: rgba(15, 118, 110, 0.15);
-            color: #0f766e;
-            border: 1px solid rgba(15, 118, 110, 0.35);
+            border: 1px solid rgba(15, 118, 110, 0.55);
         }
         .yg-badge-amber {
             background-color: rgba(180, 83, 9, 0.15);
-            color: #b45309;
-            border: 1px solid rgba(180, 83, 9, 0.35);
+            border: 1px solid rgba(180, 83, 9, 0.55);
         }
         .yg-badge-slate {
             background-color: rgba(100, 116, 139, 0.15);
-            color: #475569;
-            border: 1px solid rgba(100, 116, 139, 0.35);
-        }
-        .yg-card {
-            padding: 0.9rem 1.1rem;
-            border: 1px solid rgba(128, 128, 128, 0.22);
-            border-radius: 6px;
-            margin-bottom: 0.85rem;
-            background-color: rgba(128, 128, 128, 0.03);
-        }
-        .yg-card h4 {
-            margin: 0 0 0.4rem 0 !important;
-            font-size: 1.0rem !important;
+            border: 1px solid rgba(100, 116, 139, 0.55);
         }
         div[data-testid="stMetricValue"] {
             font-variant-numeric: tabular-nums;
+            font-size: 1.6rem;
+        }
+        div[data-testid="stMetricLabel"] p {
+            white-space: normal;
         }
         </style>
         """,
@@ -221,180 +258,251 @@ def load_data_and_scores(
     return scored_df, labels_df, bundle, False
 
 
+def load_json_report(path: str) -> dict[str, Any] | None:
+    p = Path(path)
+    if not p.exists():
+        return None
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def render_view_intro(
+    title: str,
+    summary: str,
+    how_to_read: list[str],
+    technical: str,
+) -> None:
+    """Render a view title, a plain-language summary, a reading guide and collapsed technical notes."""
+    st.header(title)
+    st.markdown(summary)
+    with st.container(border=True):
+        st.markdown("**How to read this page**\n\n" + "\n".join(f"- {line}" for line in how_to_read))
+    with st.expander("Technical details"):
+        st.markdown(technical)
+
+
 def render_top_header_and_kpis(
     scored_df: pd.DataFrame,
     labels_df: pd.DataFrame | None,
     bundle: LoadedBundle,
     is_synthetic: bool,
 ) -> None:
-    """Render top project banner, plain-English onboarding guide, and executive KPI strip."""
+    """Render the project banner and the KPI strip shared by every view."""
+    n_runs = len(scored_df)
     mode_badge = (
-        '<span class="yg-badge yg-badge-amber">SYNTHETIC DEMO DATA (100 RUNS)</span>'
+        f'<span class="yg-badge yg-badge-amber">SYNTHETIC DEMO DATA ({n_runs:,} RUNS)</span>'
         if is_synthetic
-        else '<span class="yg-badge yg-badge-teal">UCI SECOM BENCHMARK (1,567 RUNS)</span>'
+        else f'<span class="yg-badge yg-badge-teal">REAL DATA: UCI SECOM ({n_runs:,} RUNS)</span>'
     )
-    version_badge = f'<span class="yg-badge yg-badge-slate">BUNDLE: {bundle.version}</span>'
+    version_badge = f'<span class="yg-badge yg-badge-slate">MODEL {bundle.version}</span>'
     primary_id = bundle.policy.get("primary_detector", "E02")
-    primary_badge = (
-        f'<span class="yg-badge yg-badge-teal">PRIMARY DETECTOR: {primary_id} (SPC INDIVIDUALS)</span>'
-    )
+    budget = float(bundle.policy.get("primary_alarm_budget_per_100", 5.0))
 
     st.markdown(
         f"""
         <div class="yg-header">
-            <div style="margin-bottom: 0.45rem;">{mode_badge}{version_badge}{primary_badge}</div>
-            <h1>🔬 YieldGuard — Semiconductor Process Control & Fault Detection</h1>
+            <div style="margin-bottom: 0.45rem;">{mode_badge}{version_badge}</div>
+            <h1>YieldGuard: early warning for faulty chip-production runs</h1>
             <p>
-                Decision-support console for wafer fab yield engineers. Monitors 590 metrology & process sensor channels
-                under a strict <strong>5 false-alarms per 100 passing runs</strong> review capacity budget, comparing classical
-                Statistical Process Control (SPC) against machine learning under a leak-free chronological protocol.
+                Factory sensors record every production run. YieldGuard scores each run and flags the most unusual
+                ones for an engineer to check, while keeping to about <strong>{budget:g} alarms per 100 runs</strong>.
+                It also tests whether machine learning does this better than classic control charts.
             </p>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    with st.expander("📖 New to YieldGuard? Click here for a Plain-English Project Guide & How to Read This Dashboard"):
-        g_col1, g_col2, g_col3 = st.columns(3)
-        with g_col1:
-            st.markdown("#### 1. What Problem Does This Solve?")
-            st.markdown(
-                "- In semiconductor wafer manufacturing, **590 sensor channels** record chamber conditions after each process step.\n"
-                "- Only **~6.6% of wafer runs fail** final electrical test (`label_fail = 1`).\n"
-                "- Standard textbook $3\\sigma$ control charts trigger alarms on **>65% of normal runs**, causing severe engineer alarm fatigue.\n"
-                "- **YieldGuard** calibrates detectors to a strict **Alarm Budget** (e.g., **5 alarms per 100 passing runs**) so engineers only triage the highest-risk wafers."
-            )
-        with g_col2:
-            st.markdown("#### 2. How Was the Model Selected?")
-            st.markdown(
-                "- **Zero Data Leakage**: Wafers are split strictly by timestamp into 5 development blocks (`D1`–`D5`, 1,175 runs) and an unseen `Holdout` set (392 runs).\n"
-                "- **Train-Only Cleaning**: Out of 590 raw sensors, 24 high-missing, 122 constant, and 170 collinear duplicate channels are pruned on training runs only $\\rightarrow$ **274 retained features**.\n"
-                "- **Parsimony Rule (Rule 4)**: Tuned XGBoost (`E08`) beat Univariate SPC (`E02`) by $+0.0638$ PR-AUC in development, but the 95% confidence interval $[-0.090, +0.216]$ spanned zero. Per predeclared protocol, the simpler, transparent **`E02` Univariate SPC** was frozen as the primary detector."
-            )
-        with g_col3:
-            st.markdown("#### 3. How to Navigate the 5 Views")
-            st.markdown(
-                "1. **Univariate EWMA & Run Rules**: Inspect individual key sensors with smoothed trends and Western Electric alarm markers.\n"
-                "2. **Multivariate SPC ($T^2$ & $SPE$)**: Track global 50-component PCA correlation shifts and sensor breakdown spikes.\n"
-                "3. **Flagged-Run Drill-Down**: Triage any flagged wafer run with side-by-side MSPC physical contributions and XGBoost SHAP values.\n"
-                "4. **Alarm-Budget Performance**: Compare all 8 detectors (`E01`–`E08`) across budgets and inspect the one-shot holdout audit.\n"
-                "5. **Project Overview & Architecture**: Review the full system design, data hygiene rules, and drift findings."
-            )
-
-    # Top-level KPI Summary Strip
-    n_runs = len(scored_df)
     n_flagged = int(scored_df["alarm"].sum()) if "alarm" in scored_df.columns else 0
     flagged_rate = (n_flagged / n_runs * 100.0) if n_runs > 0 else 0.0
-    tau_b5 = float(bundle.policy.get("thresholds", {}).get(primary_id, {}).get("budget_5", 6.2822))
+    tau_primary = bundle.policy.get("thresholds", {}).get(primary_id, {}).get(f"budget_{budget:g}")
 
     if labels_df is not None and "label_fail" in labels_df.columns:
         merged_kpi = pd.merge(scored_df[["run_id", "alarm"]], labels_df[["run_id", "label_fail"]], on="run_id", how="inner")
         n_fails = int((merged_kpi["label_fail"] == 1).sum())
         fail_prev = (n_fails / len(merged_kpi) * 100.0) if len(merged_kpi) > 0 else 0.0
-        fail_str = f"{n_fails} fails ({fail_prev:.2f}%)"
+        fail_str = f"{n_fails} failed final test ({fail_prev:.1f}%)"
     else:
-        fail_str = "Unlabeled cohort"
+        fail_str = "Test results not available"
 
     k1, k2, k3, k4 = st.columns(4)
     k1.metric(
-        "Evaluated Wafer Runs",
-        f"{n_runs:,} runs",
-        delta=fail_str,
-        delta_color="off",
-        help="Total wafer runs loaded in the active cohort and their ground-truth electrical test failure rate.",
+        "Production runs",
+        f"{n_runs:,}",
+        help="Runs loaded in this session and how many of them failed the final quality test.",
     )
     k2.metric(
-        "Retained / Monitored Sensors",
-        f"{len(bundle.quality.retained_columns)} / {len(bundle.spc_model.monitored_sensors)}",
-        delta="from 590 raw channels",
-        delta_color="off",
-        help="274 sensors retained after train-only cleaning; top 10 sensors monitored by Phase I Univariate SPC.",
+        "Sensors used",
+        f"{len(bundle.quality.retained_columns)} of {len(bundle.quality.input_columns)}",
+        help="Sensors kept after removing ones that were mostly empty, never changed or duplicated another sensor.",
     )
     k3.metric(
-        "Primary Alarm Budget (E02)",
-        "5.0 / 100 runs",
-        delta=f"Cutoff τ = {tau_b5:.4f}",
-        delta_color="off",
-        help="Target maximum false-alarm rate on passing runs, calibrated on validation block D5.",
+        "Alarm budget",
+        f"{budget:g} per 100",
+        help=(
+            "How many alarms per 100 runs engineers can realistically review. The cutoff was set on separate "
+            f"calibration runs for detector {primary_id} and then frozen."
+        ),
     )
     k4.metric(
-        "Flagged Runs for Triage",
-        f"{n_flagged} runs",
-        delta=f"{flagged_rate:.2f} alarms / 100 runs",
-        delta_color="off",
-        help="Wafer runs exceeding the frozen primary detector budget-5 threshold.",
+        "Runs flagged",
+        f"{n_flagged:,}",
+        help=f"Runs whose score from the chosen detector ({primary_id}) is above the cutoff.",
     )
+    k1.caption(fail_str)
+    k2.caption(f"{len(bundle.spc_model.monitored_sensors)} tracked one by one")
+    k3.caption(f"Score cutoff {float(tau_primary):.2f}" if tau_primary is not None else "No cutoff stored")
+    k4.caption(f"{flagged_rate:.1f} per 100 runs")
     st.divider()
+
+
+def render_headline_findings(holdout: dict[str, Any]) -> None:
+    """Render the frozen holdout verdicts as three plain-language cards."""
+    obj = holdout.get("objectives", {})
+    o2 = obj.get("O2_recall_at_5_far", {})
+    o3 = obj.get("O3_alarm_budget_stability", {})
+    o4 = obj.get("O4_spc_vs_ml_comparison", {})
+    n_fails = int(holdout.get("n_holdout_fails", 0))
+    n_holdout = int(holdout.get("n_holdout_runs", 0))
+    primary_id = holdout.get("primary_detector", "E02")
+
+    def _badge(verdict: str) -> None:
+        if verdict == "PASS":
+            st.badge("Target met", color="green", icon=":material/check:")
+        elif verdict == "MISS":
+            st.badge("Target missed", color="red", icon=":material/close:")
+        else:
+            st.badge("Reported, no target", color="blue", icon=":material/info:")
+
+    c1, c2, c3 = st.columns(3)
+    with c1, st.container(border=True):
+        _badge(str(o2.get("verdict", "")))
+        st.markdown("**Catching failed runs**")
+        if o2 and n_fails > 0:
+            recall = float(o2["actual_recall_at_5_far"])
+            st.markdown(
+                f"Allowing 5 false alarms per 100 good runs, the chosen detector flagged "
+                f"**{round(recall * n_fails)} of {n_fails}** failed runs ({recall * 100:.1f}%). "
+                f"The target was {float(o2['target_min_recall']) * 100:.0f}%; "
+                f"random guessing would reach about {float(o2['chance_recall']) * 100:.0f}%."
+            )
+    with c2, st.container(border=True):
+        _badge(str(o3.get("verdict", "")))
+        st.markdown("**Keeping alarms manageable**")
+        if o3:
+            lo, hi = o3["allowed_range_per_100"]
+            st.markdown(
+                f"With the cutoff fixed in advance, it raised **{o3['alarms']} alarms on {o3['n_runs']} runs** "
+                f"({float(o3['realised_alarms_per_100']):.1f} per 100), inside the allowed {lo:g} to {hi:g}. "
+                f"{o3['true_alarms']} of those alarms were real failures."
+            )
+    with c3, st.container(border=True):
+        _badge(str(o4.get("verdict", "")))
+        st.markdown("**Machine learning vs. classic charts**")
+        if o4:
+            diff = float(o4["diff_ml_minus_spc_dev_pair"])
+            lo, hi = o4["wider_95_ci_dev_pair"]
+            spans_zero = lo <= 0.0 <= hi
+            st.markdown(
+                f"The best ML model ({o4['dev_selected_ml']}) scored {diff:+.3f} PR-AUC against the simple chart "
+                f"({o4['dev_selected_spc']}), with a 95% uncertainty range of {lo:+.3f} to {hi:+.3f}. "
+                + (
+                    "That range includes zero, so there is **no reliable difference**."
+                    if spans_zero
+                    else "That range excludes zero, so the difference is **statistically reliable**."
+                )
+            )
+
+    st.caption(
+        f"Measured once on the {n_holdout} most recent runs ({n_fails} failed), which were locked away until every "
+        f"setting was frozen. Chosen detector: {primary_id}, "
+        f"{DETECTOR_CATALOG.get(primary_id, {}).get('short', primary_id)}. "
+        "These are offline benchmark results on a public dataset, not measured factory yield or cost savings."
+    )
 
 
 def render_ewma_view(
     scored_df: pd.DataFrame,
     bundle: LoadedBundle,
 ) -> None:
-    st.subheader("1. Univariate EWMA Chart & Western Electric Run Rules")
-    st.markdown(
-        "**Purpose:** Track individual high-impact process sensors over time. "
-        "During Phase I training (`D1`–`D4`), all 274 cleaned sensors were screened using **rank-biserial correlation** "
-        "between passing and failing wafers. The top 10 most discriminative sensors are monitored below using an "
-        "**Exponentially Weighted Moving Average ($\\lambda=0.20, L=3.0$)** and **4 Western Electric run rules**."
+    monitored = bundle.spc_model.monitored_sensors
+    lam = bundle.spc_model.ewma_lambda
+    ewma_l = bundle.spc_model.ewma_l
+    render_view_intro(
+        "Single-sensor trends",
+        "Each chart follows **one sensor** across production runs in time order. If its smoothed trend leaves the "
+        "band it normally stays in, something about the process may have changed.",
+        [
+            "**Blue line**: the sensor's smoothed trend, where recent runs count more.",
+            "**Red dashed lines**: the normal band, learned from early good runs. Outside the band is unusual.",
+            "**Grey dotted line**: the sensor's normal average.",
+            "**Markers**: runs that broke a stability rule (× a sudden spike, ▲ a shift, ◇ a slower drift).",
+            "Sensor names such as `f059` are anonymised in this dataset, so we cannot say what each one measures.",
+        ],
+        f"During training (blocks D1–D4), all {len(bundle.quality.retained_columns)} cleaned sensors were screened "
+        "by rank-biserial correlation between passing and failing runs, with Benjamini-Hochberg correction. The "
+        f"top {len(monitored)} are monitored with an EWMA chart (λ = {lam:g}, L = {ewma_l:g}) and four Western "
+        "Electric run rules, using the centre line μ₀ and moving-range sigma σ₀ from passing training runs. "
+        "A missing reading leaves the EWMA unchanged. Detectors E02 and E03 are built on these sensors.",
     )
 
-    monitored = bundle.spc_model.monitored_sensors
     if not monitored:
-        st.info("No monitored sensors available in bundle.")
+        st.info("This model has no individually tracked sensors, so there is nothing to chart here.")
         return
 
-    col1, col2 = st.columns([1, 2.3])
-    with col1:
+    # Controls on top, chart at full width, supporting numbers underneath.
+    ctrl_sel, ctrl_raw = st.columns([2, 1], vertical_alignment="bottom")
+    chart_area = st.container()
+    detail_left, detail_right = st.columns(2)
+
+    with ctrl_sel:
         def _format_sensor(s_name: str) -> str:
             idx = monitored.index(s_name) + 1
             sp = bundle.spc_model.sensor_specs[s_name]
-            return f"Rank #{idx} — Sensor {s_name} (|r_rb|={abs(sp.rank_biserial):.3f})"
+            return f"#{idx} · {s_name} (separation {abs(sp.rank_biserial):.2f})"
 
         selected_sensor = st.selectbox(
-            "Select Monitored Sensor (Ranked by Fault Separation)",
+            "Sensor to inspect (strongest fault signal first)",
             monitored,
             index=0,
             format_func=_format_sensor,
-            help="Sensors are ordered by how strongly they separated failing vs passing runs in Phase I training.",
+            help=(
+                "Sensors are ordered by how well they separated failed from passed runs in training. "
+                "Separation runs from 0 (none) to 1 (perfect)."
+            ),
         )
         spec = bundle.spc_model.sensor_specs[selected_sensor]
 
+    with ctrl_raw:
         show_raw_trace = st.checkbox(
-            "Overlay raw unsmoothed sensor readings",
+            "Also show the raw readings",
             value=False,
-            help="Toggle raw run-by-run values behind the smoothed EWMA trend line.",
+            help="Draws the unsmoothed run-by-run values behind the trend line.",
         )
 
-        # Required metrics (keep exact format for automated test verification)
+    with detail_left:
+        # Values keep the .4f format: tests compare them with the package output.
         m_c1, m_c2 = st.columns(2)
         with m_c1:
             st.metric(
-                "Phase I Centre Line (μ₀)",
+                "Normal average (μ₀)",
                 f"{spec.mu0:.4f}",
-                help="Mean of passing training runs in Phase I after 3-sigma outlier trimming.",
+                help="Average reading over passing training runs, after trimming extreme outliers.",
             )
         with m_c2:
             st.metric(
-                "Phase I Moving-Range Sigma (σ₀)",
+                "Normal variation (σ₀)",
                 f"{spec.sigma0:.4f}",
-                help="Within-run standard deviation estimated from average two-point moving range (MR / 1.128).",
+                help="Typical run-to-run spread, estimated from the average moving range (MR / 1.128).",
             )
 
-        st.markdown(
-            f"""
-            <div class="yg-card">
-                <h4>📊 Phase I Screening Diagnostics ({selected_sensor})</h4>
-                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
-                    <li><strong>Rank-Biserial Correlation ($r_{{rb}}$):</strong> <code>{spec.rank_biserial:+.4f}</code></li>
-                    <li><strong>Benjamini-Hochberg FDR $p$-value:</strong> <code>{spec.bh_adjusted_p_value:.4e}</code></li>
-                    <li><strong>Training Missingness:</strong> <code>{spec.training_missing_fraction * 100:.2f}%</code></li>
-                    <li><strong>Collinear Cluster Allies:</strong> <code>{', '.join(spec.group_members) if spec.group_members else 'None (unique channel)'}</code></li>
-                </ul>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        with st.container(border=True):
+            st.markdown(
+                f"**Why sensor {selected_sensor} is tracked**\n\n"
+                f"- Separation of failed from passed runs (rank-biserial): `{spec.rank_biserial:+.4f}`\n"
+                f"- Chance the separation is a fluke (adjusted p-value): `{spec.bh_adjusted_p_value:.2e}`\n"
+                f"- Missing readings in training: `{spec.training_missing_fraction * 100:.2f}%`\n"
+                f"- Near-duplicate sensors: `{', '.join(spec.group_members) if spec.group_members else 'none'}`"
+            )
 
     # Extract series and compute EWMA
     sensor_vals = (
@@ -406,8 +514,8 @@ def render_ewma_view(
         sensor_vals,
         spec.mu0,
         spec.sigma0,
-        lam=bundle.spc_model.ewma_lambda,
-        L=bundle.spc_model.ewma_l,
+        lam=lam,
+        L=ewma_l,
     )
     rules_res = evaluate_run_rules(sensor_vals, spec.mu0, spec.sigma0)
 
@@ -419,14 +527,14 @@ def render_ewma_view(
     r3_idx = np.flatnonzero(rules_res["rule_4_of_5_beyond_1sigma"])
     r4_idx = np.flatnonzero(rules_res["rule_8_on_one_side"])
 
-    with col1:
-        st.markdown("##### Western Electric Run-Rule Violations")
+    with detail_right:
+        st.markdown("**Stability rules broken** (Western Electric run rules)")
         rules_summary_df = pd.DataFrame(
             [
-                {"Rule": "Rule 1 (> 3σ)", "Fault Signature": "Sudden single-run spike", "Violations": len(r1_idx)},
-                {"Rule": "Rule 2 (2 of 3 > 2σ)", "Fault Signature": "Moderate step shift", "Violations": len(r2_idx)},
-                {"Rule": "Rule 3 (4 of 5 > 1σ)", "Fault Signature": "Sustained process drift", "Violations": len(r3_idx)},
-                {"Rule": "Rule 4 (8 one side)", "Fault Signature": "Long-term mean offset", "Violations": len(r4_idx)},
+                {"Rule": "1 reading beyond 3σ", "Suggests": "Sudden spike", "Runs": len(r1_idx)},
+                {"Rule": "2 of 3 beyond 2σ", "Suggests": "Step shift", "Runs": len(r2_idx)},
+                {"Rule": "4 of 5 beyond 1σ", "Suggests": "Sustained drift", "Runs": len(r3_idx)},
+                {"Rule": "8 in a row on one side", "Suggests": "Long-term offset", "Runs": len(r4_idx)},
             ]
         )
         st.dataframe(rules_summary_df, width="stretch", hide_index=True)
@@ -438,7 +546,7 @@ def render_ewma_view(
                 x=run_indices,
                 y=sensor_vals,
                 mode="lines",
-                name="Raw Sensor Reading (x_t)",
+                name="Raw reading",
                 line=dict(color="rgba(148, 163, 184, 0.45)", width=1),
             )
         )
@@ -449,7 +557,7 @@ def render_ewma_view(
             x=run_indices,
             y=ewma_res["z"],
             mode="lines",
-            name="Smoothed EWMA (z_t)",
+            name="Smoothed trend (EWMA)",
             line=dict(color="#0284c7", width=2.2),
         )
     )
@@ -458,7 +566,7 @@ def render_ewma_view(
             x=run_indices,
             y=ewma_res["ucl"],
             mode="lines",
-            name="Upper Control Limit (UCL, +3σ_z)",
+            name="Upper limit of normal band",
             line=dict(color="#dc2626", dash="dash", width=1.5),
         )
     )
@@ -467,7 +575,7 @@ def render_ewma_view(
             x=run_indices,
             y=ewma_res["lcl"],
             mode="lines",
-            name="Lower Control Limit (LCL, -3σ_z)",
+            name="Lower limit of normal band",
             line=dict(color="#dc2626", dash="dash", width=1.5),
         )
     )
@@ -476,7 +584,7 @@ def render_ewma_view(
             x=run_indices,
             y=[spec.mu0] * n_runs,
             mode="lines",
-            name="Phase I Centre Line (μ₀)",
+            name="Normal average (μ₀)",
             line=dict(color="#64748b", dash="dot", width=1.5),
         )
     )
@@ -488,7 +596,7 @@ def render_ewma_view(
                 x=r1_idx,
                 y=ewma_res["z"][r1_idx],
                 mode="markers",
-                name=f"Rule 1 (> 3σ) [{len(r1_idx)}]",
+                name=f"Spike: beyond 3σ ({len(r1_idx)})",
                 marker=dict(color="#dc2626", symbol="x", size=9),
             )
         )
@@ -499,7 +607,7 @@ def render_ewma_view(
                 x=r2_idx,
                 y=ewma_res["z"][r2_idx],
                 mode="markers",
-                name=f"Rule 2 (2 of 3 > 2σ) [{len(r2_idx)}]",
+                name=f"Shift: 2 of 3 beyond 2σ ({len(r2_idx)})",
                 marker=dict(color="#ea580c", symbol="triangle-up", size=8),
             )
         )
@@ -510,42 +618,41 @@ def render_ewma_view(
                 x=r3_idx,
                 y=ewma_res["z"][r3_idx],
                 mode="markers",
-                name=f"Rule 3 (4 of 5 > 1σ) [{len(r3_idx)}]",
+                name=f"Drift: 4 of 5 beyond 1σ ({len(r3_idx)})",
                 marker=dict(color="#ca8a04", symbol="diamond-open", size=7),
             )
         )
 
     fig.update_layout(
-        title=f"Phase II EWMA Control Chart — Sensor {selected_sensor} (λ={bundle.spc_model.ewma_lambda}, L={bundle.spc_model.ewma_l})",
-        xaxis_title="Chronological Wafer Run Index (t)",
-        yaxis_title=f"Sensor {selected_sensor} Value",
+        title=f"Sensor {selected_sensor}: smoothed trend against its normal band",
+        xaxis_title="Production run (time order)",
+        yaxis_title=f"Sensor {selected_sensor} reading",
         hovermode="x unified",
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
-        margin=dict(l=20, r=20, t=65, b=20),
-        height=460,
+        legend=dict(orientation="h", yanchor="top", y=-0.22, xanchor="left", x=0),
+        margin=dict(l=20, r=20, t=50, b=20),
+        height=480,
     )
-    with col2:
+    with chart_area:
         st.plotly_chart(fig, width="stretch")
         st.caption(
-            "💡 **How to read this chart:** The blue line tracks the exponentially weighted moving average ($z_t$) of the sensor. "
-            "Missing sensor values hold $z_t$ constant without corrupting the state. Red `×` and orange `▲` markers highlight "
-            "runs where the raw sensor violated Western Electric stability rules relative to Phase I baseline parameters."
+            "Hover over the chart for exact values; click a legend entry to hide or show it. "
+            "Where a reading is missing, the trend line stays flat rather than guessing."
         )
 
-    with st.expander("📋 View All 10 Monitored Phase I Sensors Summary Table"):
+    with st.expander(f"Compare all {len(monitored)} tracked sensors"):
         all_specs_rows = []
         for idx, s_id in enumerate(monitored, start=1):
             sp = bundle.spc_model.sensor_specs[s_id]
             all_specs_rows.append(
                 {
-                    "Selection Rank": f"#{idx}",
-                    "Sensor ID": s_id,
-                    "Phase I Mean (μ₀)": round(sp.mu0, 4),
-                    "Moving-Range Sigma (σ₀)": round(sp.sigma0, 4),
-                    "Rank-Biserial (r_rb)": round(sp.rank_biserial, 4),
-                    "BH Adjusted p-value": f"{sp.bh_adjusted_p_value:.3e}",
-                    "Train Missing (%)": round(sp.training_missing_fraction * 100, 2),
-                    "Collinear Group Members": ", ".join(sp.group_members) if sp.group_members else "—",
+                    "Rank": f"#{idx}",
+                    "Sensor": s_id,
+                    "Normal average (μ₀)": round(sp.mu0, 4),
+                    "Normal variation (σ₀)": round(sp.sigma0, 4),
+                    "Separation (rank-biserial)": round(sp.rank_biserial, 4),
+                    "Adjusted p-value": f"{sp.bh_adjusted_p_value:.3e}",
+                    "Missing in training (%)": round(sp.training_missing_fraction * 100, 2),
+                    "Near-duplicate sensors": ", ".join(sp.group_members) if sp.group_members else "—",
                 }
             )
         st.dataframe(pd.DataFrame(all_specs_rows), width="stretch", hide_index=True)
@@ -555,49 +662,34 @@ def render_mspc_view(
     scored_df: pd.DataFrame,
     bundle: LoadedBundle,
 ) -> None:
-    st.subheader("2. Multivariate SPC: Hotelling T² & Squared Prediction Error (SPE)")
-    st.markdown(
-        "**Purpose:** Monitor all **274 retained sensors simultaneously** by projecting them onto a **50-component Principal Component Analysis (PCA)** "
-        "model fitted strictly on Phase I passing wafer runs (explaining 62.1% of total variance)."
+    mspc = bundle.mspc_model
+    n_retained = len(bundle.quality.retained_columns)
+    render_view_intro(
+        "All sensors at once",
+        f"Instead of one sensor at a time, these charts boil **all {n_retained} sensors down to a single score per "
+        "run**. A tall spike means that run looked very different from normal good runs.",
+        [
+            "**Left chart, overall shift (T²)**: many sensors moved together in their usual pattern, only further "
+            "than normal. Typical of a broad change, such as equipment drifting.",
+            "**Right chart, broken pattern (SPE)**: sensors stopped relating to each other the way they normally "
+            "do. Typical of one sensor or sub-system misbehaving.",
+            "**Orange dotted line**: our alarm line, tuned to raise about 5 alarms per 100 runs.",
+            "**Red dashed line**: the textbook limit. It assumes well-behaved data and fires far too often here, "
+            "which is why we do not use it.",
+            "**Red dots**: runs above our alarm line.",
+        ],
+        f"A PCA model with {mspc.n_components} components is fitted on passing training runs only and explains "
+        f"{mspc.cumulative_variance_explained * 100:.1f}% of their variance. Hotelling T² (detector E04) is the "
+        "Mahalanobis distance inside that subspace; SPE, also called the Q statistic (detector E05), is the squared "
+        "residual outside it. The textbook limits are the 99% Gaussian-theory limits; our alarm lines are empirical "
+        "budget-5 cutoffs calibrated on block D5.",
     )
 
-    info_col1, info_col2, info_col3 = st.columns([1.2, 1.2, 1.0])
-    with info_col1:
-        st.markdown(
-            """
-            <div class="yg-card">
-                <h4>🟢 Hotelling T² Statistic (Detector E04)</h4>
-                <p style="margin:0; font-size:0.88rem;">
-                    Measures <strong>in-model variation</strong>—how far a wafer run moves <em>along</em> the 50 normal correlation axes.
-                    High $T^2$ indicates a global shift across many correlated sensors (e.g., overall chamber temperature or pressure drift).
-                </p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with info_col2:
-        st.markdown(
-            """
-            <div class="yg-card">
-                <h4>🟣 Squared Prediction Error / SPE (Detector E05)</h4>
-                <p style="margin:0; font-size:0.88rem;">
-                    Measures <strong>residual model breakdown ($Q$-statistic)</strong>—how far a wafer run deviates <em>perpendicular</em> to the PCA plane.
-                    High $SPE$ catches localized sensor faults that break normal physical correlation between channels.
-                </p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with info_col3:
-        use_log_scale = st.checkbox(
-            "Use Logarithmic Y-Axis Scale (Log₁₀)",
-            value=True,
-            help="Recommended: Fault excursions on SECOM span plusieurs orders of magnitude; log scaling makes both baseline limits and extreme spikes clearly visible.",
-        )
-        st.caption(
-            "**Why two threshold lines?** Heavy-tailed fab data causes textbook 99% Gaussian limits (red dashed) to over-alarm. "
-            "Empirical **Budget-5 thresholds** (orange dotted) control the actual false alarm rate."
-        )
+    use_log_scale = st.checkbox(
+        "Log scale (recommended)",
+        value=True,
+        help="Scores here span several orders of magnitude. A log scale keeps both the everyday values and the extreme spikes visible.",
+    )
 
     n_runs = len(scored_df)
     run_indices = np.arange(n_runs)
@@ -605,8 +697,8 @@ def render_mspc_view(
     t2_vals = scored_df["t2"].to_numpy()
     spe_vals = scored_df["spe"].to_numpy()
 
-    t2_lim_theo = bundle.mspc_model.t2_limit_99
-    spe_lim_theo = bundle.mspc_model.spe_limit_99
+    t2_lim_theo = mspc.t2_limit_99
+    spe_lim_theo = mspc.spe_limit_99
     t2_thresh_b5 = float(bundle.policy["thresholds"]["E04"]["budget_5"])
     spe_thresh_b5 = float(bundle.policy["thresholds"]["E05"]["budget_5"])
 
@@ -621,7 +713,7 @@ def render_mspc_view(
                 x=run_indices,
                 y=t2_vals,
                 mode="lines",
-                name="T² Statistic",
+                name="T² score",
                 line=dict(color="#16a34a", width=1.5),
             )
         )
@@ -631,7 +723,7 @@ def render_mspc_view(
                     x=t2_alarm_idx,
                     y=t2_vals[t2_alarm_idx],
                     mode="markers",
-                    name=f"Budget 5 Alarm ({len(t2_alarm_idx)})",
+                    name=f"Above our alarm line ({len(t2_alarm_idx)})",
                     marker=dict(color="#dc2626", size=7, symbol="circle"),
                 )
             )
@@ -640,7 +732,7 @@ def render_mspc_view(
                 x=[0, n_runs - 1],
                 y=[t2_lim_theo, t2_lim_theo],
                 mode="lines",
-                name=f"Theoretical 99% Limit ({t2_lim_theo:.1f})",
+                name=f"Textbook 99% limit ({t2_lim_theo:.1f})",
                 line=dict(color="#dc2626", dash="dash"),
             )
         )
@@ -649,25 +741,25 @@ def render_mspc_view(
                 x=[0, n_runs - 1],
                 y=[t2_thresh_b5, t2_thresh_b5],
                 mode="lines",
-                name=f"Budget 5 Threshold ({t2_thresh_b5:.1f})",
+                name=f"Our alarm line ({t2_thresh_b5:.1f})",
                 line=dict(color="#ea580c", dash="dot", width=2),
             )
         )
         fig_t2.update_layout(
-            title="Hotelling T² over Chronological Run Order (E04)",
-            xaxis_title="Chronological Wafer Run Index",
-            yaxis_title="Hotelling T² (Log Scale)" if use_log_scale else "Hotelling T²",
+            title="Overall shift (T²) for each run",
+            xaxis_title="Production run (time order)",
+            yaxis_title="T² score (log scale)" if use_log_scale else "T² score",
             yaxis_type="log" if use_log_scale else "linear",
             hovermode="x unified",
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
-            margin=dict(l=20, r=20, t=65, b=20),
-            height=420,
+            legend=dict(orientation="h", yanchor="top", y=-0.22, xanchor="left", x=0),
+            margin=dict(l=20, r=20, t=50, b=20),
+            height=440,
         )
         st.plotly_chart(fig_t2, width="stretch")
 
         m1, m2 = st.columns(2)
-        m1.metric("T² Budget 5 Alarms", int(len(t2_alarm_idx)), delta=f"{len(t2_alarm_idx) / n_runs * 100:.2f} / 100 runs", delta_color="off")
-        m2.metric("T² Theoretical 99% Alarms", int(np.sum(t2_vals > t2_lim_theo)), delta=f"Limit = {t2_lim_theo:.2f}", delta_color="off")
+        m1.metric("Runs above our alarm line", int(len(t2_alarm_idx)), delta=f"{len(t2_alarm_idx) / n_runs * 100:.2f} / 100 runs", delta_color="off", delta_arrow="off")
+        m2.metric("Runs above textbook limit", int(np.sum(t2_vals > t2_lim_theo)), delta=f"Limit = {t2_lim_theo:.2f}", delta_color="off", delta_arrow="off")
 
     with col2:
         fig_spe = go.Figure()
@@ -676,7 +768,7 @@ def render_mspc_view(
                 x=run_indices,
                 y=spe_vals,
                 mode="lines",
-                name="SPE Statistic",
+                name="SPE score",
                 line=dict(color="#7c3aed", width=1.5),
             )
         )
@@ -686,7 +778,7 @@ def render_mspc_view(
                     x=spe_alarm_idx,
                     y=spe_vals[spe_alarm_idx],
                     mode="markers",
-                    name=f"Budget 5 Alarm ({len(spe_alarm_idx)})",
+                    name=f"Above our alarm line ({len(spe_alarm_idx)})",
                     marker=dict(color="#dc2626", size=7, symbol="circle"),
                 )
             )
@@ -695,7 +787,7 @@ def render_mspc_view(
                 x=[0, n_runs - 1],
                 y=[spe_lim_theo, spe_lim_theo],
                 mode="lines",
-                name=f"Theoretical 99% Limit ({spe_lim_theo:.1f})",
+                name=f"Textbook 99% limit ({spe_lim_theo:.1f})",
                 line=dict(color="#dc2626", dash="dash"),
             )
         )
@@ -704,25 +796,25 @@ def render_mspc_view(
                 x=[0, n_runs - 1],
                 y=[spe_thresh_b5, spe_thresh_b5],
                 mode="lines",
-                name=f"Budget 5 Threshold ({spe_thresh_b5:.1f})",
+                name=f"Our alarm line ({spe_thresh_b5:.1f})",
                 line=dict(color="#ea580c", dash="dot", width=2),
             )
         )
         fig_spe.update_layout(
-            title="Squared Prediction Error (SPE / Q) over Run Order (E05)",
-            xaxis_title="Chronological Wafer Run Index",
-            yaxis_title="SPE Statistic (Log Scale)" if use_log_scale else "SPE Statistic",
+            title="Broken pattern (SPE) for each run",
+            xaxis_title="Production run (time order)",
+            yaxis_title="SPE score (log scale)" if use_log_scale else "SPE score",
             yaxis_type="log" if use_log_scale else "linear",
             hovermode="x unified",
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
-            margin=dict(l=20, r=20, t=65, b=20),
-            height=420,
+            legend=dict(orientation="h", yanchor="top", y=-0.22, xanchor="left", x=0),
+            margin=dict(l=20, r=20, t=50, b=20),
+            height=440,
         )
         st.plotly_chart(fig_spe, width="stretch")
 
         s1, s2 = st.columns(2)
-        s1.metric("SPE Budget 5 Alarms", int(len(spe_alarm_idx)), delta=f"{len(spe_alarm_idx) / n_runs * 100:.2f} / 100 runs", delta_color="off")
-        s2.metric("SPE Theoretical 99% Alarms", int(np.sum(spe_vals > spe_lim_theo)), delta=f"Limit = {spe_lim_theo:.2f}", delta_color="off")
+        s1.metric("Runs above our alarm line", int(len(spe_alarm_idx)), delta=f"{len(spe_alarm_idx) / n_runs * 100:.2f} / 100 runs", delta_color="off", delta_arrow="off")
+        s2.metric("Runs above textbook limit", int(np.sum(spe_vals > spe_lim_theo)), delta=f"Limit = {spe_lim_theo:.2f}", delta_color="off", delta_arrow="off")
 
 
 def render_drilldown_view(
@@ -730,12 +822,21 @@ def render_drilldown_view(
     labels_df: pd.DataFrame | None,
     bundle: LoadedBundle,
 ) -> None:
-    st.subheader("3. Flagged-Run Drill-Down: Root-Cause Sensor Triage")
-    st.markdown(
-        "**Purpose:** When a wafer run triggers an alarm, yield engineers need to know **which sensors caused the excursion**. "
-        "This view compares two complementary attribution methods side by side:\n"
-        "1. **MSPC Physical Contributions (Left):** Decomposes $T^2$ and $SPE$ into per-sensor squared deviations from normal passing wafers.\n"
-        "2. **XGBoost TreeSHAP Attributions (Right):** Computes exact additive log-odds contributions pushing the ML model toward predicting wafer failure."
+    render_view_intro(
+        "Why was a run flagged?",
+        "An alarm is only useful if it says where to look. Pick a flagged run to see **which sensors looked most "
+        "unusual**. Two independent methods each name their top 5.",
+        [
+            "**Left, distance from normal**: a longer bar means that sensor did more to make the run look abnormal.",
+            "**Right, what the ML model reacted to**: red bars pushed its prediction towards 'fail', green bars "
+            "towards 'pass'.",
+            "Sensors named by **both** methods are the best place to start investigating.",
+            "These rankings point to where the data looked odd. They do not prove what caused a failure.",
+        ],
+        "Left: per-sensor contributions to Hotelling T² and SPE (MSPC), measured against passing training runs. "
+        "Right: TreeSHAP values for the XGBoost model (E08), which are exact additive contributions to the "
+        "predicted log-odds of failure. Near-duplicate sensors removed during cleaning are listed beside the "
+        "sensor that represents them.",
     )
 
     # Merge labels if available for richer context
@@ -749,7 +850,7 @@ def render_drilldown_view(
     flagged_df = scored_df[alarm_mask]
     if len(flagged_df) == 0:
         flagged_df = scored_df.head(10)
-        st.info("No runs flagged by primary alarm threshold; showing first 10 runs for inspection.")
+        st.info("No runs are above the alarm cutoff, so the first 10 runs are shown instead.")
 
     run_options = list(flagged_df["run_id"].astype(str))
     run_meta_lookup = flagged_df.set_index(flagged_df["run_id"].astype(str)).to_dict(orient="index")
@@ -760,11 +861,11 @@ def render_drilldown_view(
         e02_val = meta.get("e02_score", 0.0)
         lbl_str = ""
         if r_id in label_map:
-            lbl_str = " | Ground Truth: FAIL 🔴" if label_map[r_id] == 1 else " | Ground Truth: PASS 🟢"
-        return f"Run {r_id} (Block: {blk} | Primary E02 Score: {e02_val:.2f}{lbl_str})"
+            lbl_str = " · failed final test" if label_map[r_id] == 1 else " · passed final test"
+        return f"{r_id} · alarm score {e02_val:.2f} · block {blk}{lbl_str}"
 
     selected_run_id = st.selectbox(
-        f"Select Flagged Wafer Run to Inspect ({len(run_options)} Flagged Runs Available)",
+        f"Run to inspect ({len(run_options)} available, in time order)",
         run_options,
         index=0,
         format_func=_format_run_option,
@@ -782,27 +883,27 @@ def render_drilldown_view(
     # Run Diagnostic Status Strip
     tau_b5 = float(bundle.policy.get("thresholds", {}).get("E02", {}).get("budget_5", 6.2822))
     gt_status = (
-        "FAIL (Scrap/Defect)"
+        "Failed"
         if label_map.get(selected_run_id) == 1
-        else ("PASS (Normal)" if label_map.get(selected_run_id) == 0 else "Unlabeled")
+        else ("Passed" if label_map.get(selected_run_id) == 0 else "Unknown")
     )
     rc1, rc2, rc3, rc4, rc5 = st.columns(5)
-    rc1.metric("Selected Run ID", selected_run_id, delta=f"Block: {run_row.get('block', 'N/A')}", delta_color="off")
-    rc2.metric("Wafer Electrical Test", gt_status, delta=f"Timestamp: {str(run_row.get('timestamp', 'N/A'))[:16]}", delta_color="off")
-    rc3.metric("Primary E02 Score", f"{float(run_row.get('e02_score', 0.0)):.2f}", delta=f"Cutoff τ = {tau_b5:.2f}", delta_color="off")
-    rc4.metric("MSPC Index (E06)", f"{float(run_row.get('mspc_index', 0.0)):.2f}", delta=f"SPE = {float(run_row.get('spe', 0.0)):.1f}", delta_color="off")
-    rc5.metric("Missing Channels", f"{int(run_row.get('n_missing', 0))} / 590", delta="Imputed via Phase I median", delta_color="off")
+    rc1.metric("Run", selected_run_id, delta=f"Block {run_row.get('block', 'N/A')}", delta_color="off", delta_arrow="off")
+    rc2.metric("Final test result", gt_status, delta=str(run_row.get('timestamp', 'N/A'))[:16], delta_color="off", delta_arrow="off")
+    rc3.metric("Alarm score (E02)", f"{float(run_row.get('e02_score', 0.0)):.2f}", delta=f"Alarm above {tau_b5:.2f}", delta_color="off", delta_arrow="off")
+    rc4.metric("All-sensor score (E06)", f"{float(run_row.get('mspc_index', 0.0)):.2f}", delta=f"SPE {float(run_row.get('spe', 0.0)):.1f}", delta_color="off", delta_arrow="off")
+    rc5.metric("Missing readings", f"{int(run_row.get('n_missing', 0))} of {len(bundle.quality.input_columns)}", delta="Filled with typical values", delta_color="off", delta_arrow="off")
 
     overlap = explanation["overlap"]["top_k_common_sensors"]
-    overlap_text = ", ".join(overlap) if overlap else "None (MSPC and XGBoost focused on distinct physical modes)"
+    overlap_text = ", ".join(overlap) if overlap else "none for this run (the two methods point at different sensors)"
     st.info(
-        f"🔍 **Cross-Method Consensus (Top-5 Overlap):** `{overlap_text}`  \n"
-        f"⚠️ **Attribution Smearing Caveat:** {SMEARING_CAVEAT}"
+        f"**Sensors named by both methods:** {overlap_text}  \n"
+        f"**Caution:** {SMEARING_CAVEAT}"
     )
 
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("#### 1. Top-5 MSPC Physical Contributing Sensors")
+        st.subheader("Distance from normal (MSPC)")
         mspc_sensors = [x["sensor"] for x in explanation["mspc_top_sensors"]]
         mspc_vals = [x["contribution"] for x in explanation["mspc_top_sensors"]]
         fig_m = go.Figure(
@@ -816,7 +917,7 @@ def render_drilldown_view(
             )
         )
         fig_m.update_layout(
-            xaxis_title="Combined Standardized MSPC Contribution",
+            xaxis_title="Contribution to the run looking abnormal",
             yaxis=dict(autorange="reversed"),
             margin=dict(l=10, r=10, t=15, b=20),
             height=280,
@@ -829,10 +930,10 @@ def render_drilldown_view(
                 {
                     "Rank": f"#{item['rank']}",
                     "Sensor": item["sensor"],
-                    "Combined Score": round(float(item["contribution"]), 3),
-                    "SPE Share": round(float(item.get("spe_contribution", 0.0)), 2),
-                    "T² Share": round(float(item.get("t2_contribution", 0.0)), 2),
-                    "Correlated Cluster Members (|r| > 0.98)": (
+                    "Contribution": round(float(item["contribution"]), 3),
+                    "From broken pattern (SPE)": round(float(item.get("spe_contribution", 0.0)), 2),
+                    "From overall shift (T²)": round(float(item.get("t2_contribution", 0.0)), 2),
+                    "Near-duplicate sensors": (
                         ", ".join(item["group_members"]) if item["group_members"] else "—"
                     ),
                 }
@@ -840,7 +941,7 @@ def render_drilldown_view(
         st.dataframe(pd.DataFrame(mspc_table_rows), width="stretch", hide_index=True)
 
     with col2:
-        st.markdown("#### 2. Top-5 XGBoost TreeSHAP Attributions (Log-Odds)")
+        st.subheader("What the ML model reacted to (SHAP)")
         shap_sensors = [x["sensor"] for x in explanation["xgb_shap_top_sensors"]]
         shap_vals = [x["shap_value"] for x in explanation["xgb_shap_top_sensors"]]
         colors = ["#dc2626" if v > 0 else "#16a34a" for v in shap_vals]
@@ -855,7 +956,7 @@ def render_drilldown_view(
             )
         )
         fig_s.update_layout(
-            xaxis_title="SHAP Contribution to Failure Log-Odds (Red = Risk ↑, Green = Risk ↓)",
+            xaxis_title="Push on predicted failure risk (red raises, green lowers)",
             yaxis=dict(autorange="reversed"),
             margin=dict(l=10, r=10, t=15, b=20),
             height=280,
@@ -868,9 +969,9 @@ def render_drilldown_view(
                 {
                     "Rank": f"#{item['rank']}",
                     "Sensor": item["sensor"],
-                    "SHAP Value": f"{float(item['shap_value']):+.4f}",
-                    "Risk Direction": "Increases Fail Risk 🔴" if item["shap_value"] > 0 else "Decreases Fail Risk 🟢",
-                    "Correlated Cluster Members (|r| > 0.98)": (
+                    "SHAP value": f"{float(item['shap_value']):+.4f}",
+                    "Effect": "Raises failure risk" if item["shap_value"] > 0 else "Lowers failure risk",
+                    "Near-duplicate sensors": (
                         ", ".join(item["group_members"]) if item["group_members"] else "—"
                     ),
                 }
@@ -883,11 +984,20 @@ def render_alarm_budget_view(
     labels_df: pd.DataFrame | None,
     bundle: LoadedBundle,
 ) -> None:
-    st.subheader("4. Alarm-Budget Performance & Official Holdout Benchmark Audit")
-    st.markdown(
-        "**Purpose:** Compare all candidate detectors (`E02` through `E08`) under fixed engineering review capacities: "
-        "**2, 5 (primary), and 10 false alarms per 100 passing runs**. Thresholds ($\\tau$) were calibrated on development "
-        "block `D5` (235 runs) and frozen prior to holdout evaluation."
+    render_view_intro(
+        "Results: how well does it work?",
+        "Every detector gets the same allowance of 2, 5 or 10 alarms per 100 runs, so they can be compared fairly. "
+        "Two questions matter: of the runs that really failed, **how many were flagged** (recall)? And of the alarms "
+        "raised, **how many were real** (precision)?",
+        [
+            "**Comparison table and chart**: every loaded run, including the runs the detectors learned from. "
+            "Use it to compare detectors, not as a final score.",
+            "**Final test scorecard** (further down): the fair test, on real runs no detector had seen.",
+            "Higher recall and precision are better. Alarms per 100 runs should sit near the budget.",
+            "★ marks the chosen detector. Each detector is explained in the sidebar.",
+        ],
+        "Cutoffs (τ) for budgets 2, 5 and 10 were calibrated on development block D5 and frozen before the holdout "
+        "was opened. An alarm is raised when score > cutoff. Budget 5 is the primary operating point.",
     )
 
     n_runs = len(scored_df)
@@ -902,7 +1012,7 @@ def render_alarm_budget_view(
         n_fails = None
 
     budget_filter = st.radio(
-        "Filter Comparison Table & Chart by Review Budget:",
+        "Alarm budget to show",
         ["All Budgets (2, 5, 10)", "Budget 5 per 100 (Primary)", "Budget 2 per 100 (Strict)", "Budget 10 per 100 (High Sensitivity)"],
         index=0,
         horizontal=True,
@@ -931,11 +1041,11 @@ def render_alarm_budget_view(
 
             row: dict[str, Any] = {
                 "Detector": det_info["name"],
-                "Family": det_info["family"],
-                "Budget": f"{b} per 100",
-                "Threshold (τ)": round(float(tau), 4),
-                "Total Alarms": alarms_count,
-                "Realised Rate (/100)": round(realised_rate, 2),
+                "Type": det_info["family"],
+                "Alarm budget": f"{b} per 100",
+                "Score cutoff": round(float(tau), 4),
+                "Alarms raised": alarms_count,
+                "Alarms per 100 runs": round(realised_rate, 2),
             }
 
             if has_labels and y_true is not None:
@@ -944,8 +1054,8 @@ def render_alarm_budget_view(
                 false_alarms = int(np.sum((flags == 1) & (y_true == 0)))
                 recall = float(true_alarms / n_fails) if n_fails and n_fails > 0 else 0.0
                 precision = float(true_alarms / alarms_count) if alarms_count > 0 else 0.0
-                row["True Alarms (Caught Fails)"] = true_alarms
-                row["False Alarms"] = false_alarms
+                row["Real failures caught"] = true_alarms
+                row["False alarms"] = false_alarms
                 row["Precision (%)"] = round(precision * 100.0, 1)
                 row["Recall (%)"] = round(recall * 100.0, 1)
 
@@ -970,192 +1080,286 @@ def render_alarm_budget_view(
 
         fig_cmp = go.Figure()
         fig_cmp.add_trace(
-            go.Bar(name="Fault Recall (% of Fails Caught)", x=b5_names, y=b5_recalls, marker_color="#0f766e")
+            go.Bar(name="Recall: % of failed runs flagged", x=b5_names, y=b5_recalls, marker_color="#0f766e")
         )
         fig_cmp.add_trace(
-            go.Bar(name="Realised Alarm Rate (Alarms per 100 Runs)", x=b5_names, y=b5_rates, marker_color="#f59e0b")
+            go.Bar(name="Alarms raised per 100 runs", x=b5_names, y=b5_rates, marker_color="#f59e0b")
         )
         fig_cmp.update_layout(
-            title="Detector Comparison at Primary Budget (5 Alarms / 100 Runs)",
+            title="Detectors compared at the main budget (5 alarms per 100 runs)",
             barmode="group",
-            yaxis_title="Percentage (%) / Rate per 100 Runs",
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
-            margin=dict(l=20, r=20, t=55, b=20),
-            height=340,
+            yaxis_title="Percent, or alarms per 100 runs",
+            legend=dict(orientation="h", yanchor="top", y=-0.22, xanchor="left", x=0),
+            margin=dict(l=20, r=20, t=50, b=20),
+            height=380,
         )
         st.plotly_chart(fig_cmp, width="stretch")
 
-    # Show structured holdout metrics & drift summary if available
-    holdout_metrics_p = Path("reports/holdout_metrics.json")
-    if holdout_metrics_p.exists():
+    # Frozen holdout verdicts and drift summary, shown once the final evaluation exists
+    h_data = load_json_report("reports/holdout_metrics.json")
+    if h_data is not None:
+        n_hold = int(h_data["n_holdout_runs"])
+        n_hold_fails = int(h_data["n_holdout_fails"])
+        prevalence = float(h_data["holdout_fail_prevalence"])
         st.divider()
-        st.markdown("### 🏆 Official One-Shot Holdout Evaluation Scorecard (392 Unseen Runs)")
-        st.caption(
-            "Evaluated once post-freeze (`reports/holdout_metrics.json`). Predictions were written and SHA-256 hashed "
-            "before opening `labels_holdout.parquet`. All figures are offline benchmark results, not financial or yield savings."
+        st.subheader(f"Final test: {n_hold} unseen runs from the real SECOM data")
+        st.markdown(
+            f"The most recent {n_hold} runs ({n_hold_fails} failed, {prevalence * 100:.1f}%) were locked away until "
+            "every setting was frozen, then scored exactly once. The targets below were written down before any "
+            "detector was built, and misses are reported as measured."
         )
-        h_data = json.loads(holdout_metrics_p.read_text(encoding="utf-8"))
-        cols = st.columns(4)
-        cols[0].metric("Holdout Runs", h_data["n_holdout_runs"])
-        cols[1].metric("Holdout Fails", h_data["n_holdout_fails"])
-        cols[2].metric("Holdout Prevalence", f"{h_data['holdout_fail_prevalence'] * 100:.2f}%")
-        cols[3].metric("Primary Detector", f"{h_data['primary_detector']} (SPC Individuals)")
+        render_headline_findings(h_data)
 
         obj = h_data.get("objectives", {})
         o1 = obj.get("O1_ranking_pr_auc", {})
         o2 = obj.get("O2_recall_at_5_far", {})
         o3 = obj.get("O3_alarm_budget_stability", {})
         o4 = obj.get("O4_spc_vs_ml_comparison", {})
+        verdict_text = {"PASS": "Met", "MISS": "Missed", "REPORTED": "Reported"}
 
+        o1_ci = o1.get("wider_95_ci", [0.0384, 0.1514])
+        o2_ci = o2.get("wider_95_ci", [0.0, 0.1765])
+        o4_ci = o4.get("wider_95_ci_dev_pair", [-0.0470, 0.0910])
         scorecard_rows = [
             {
-                "Objective": "O1 — Fault Ranking PR-AUC",
-                "Predeclared Target": f"PR-AUC ≥ 2× prevalence ({o1.get('target_min_pr_auc_2x_prevalence', 0.1224):.4f})",
-                "Measured Holdout Result": f"{o1.get('actual_pr_auc', 0.0724):.4f} (Prevalence: 0.0612)",
-                "95% Wider Bootstrap CI": f"[{o1.get('wider_95_ci', [0.0384, 0.1514])[0]:.4f}, {o1.get('wider_95_ci', [0.0384, 0.1514])[1]:.4f}]",
-                "Verdict": f"{o1.get('verdict', 'MISS')} 🔴",
-                "Engineering Interpretation": "Above chance (0.0612), but severe temporal sensor drift prevented reaching 2× lift.",
+                "Goal": "O1: rank failed runs above good ones (PR-AUC)",
+                "Target set in advance": f"At least 2× the failure rate ({o1.get('target_min_pr_auc_2x_prevalence', 0.1224):.4f})",
+                "Measured": f"{o1.get('actual_pr_auc', 0.0724):.4f} (random guessing: {o1.get('chance_prevalence', prevalence):.4f})",
+                "95% uncertainty range": f"{o1_ci[0]:.4f} to {o1_ci[1]:.4f}",
+                "Verdict": verdict_text.get(o1.get("verdict", "MISS"), "Missed"),
+                "What it means": "No detector beat chance: the 95% range includes the 6.12% failure rate, well short of the 2× target.",
             },
             {
-                "Objective": "O2 — Recall @ 5% False Alarm Rate",
-                "Predeclared Target": "Recall ≥ 20.0% at 5 FAR / 100 passing runs",
-                "Measured Holdout Result": f"{o2.get('actual_recall_at_5_far', 0.0417) * 100:.2f}% (1 / 24 fails; 12.5% @ 10 FAR)",
-                "95% Wider Bootstrap CI": f"[{o2.get('wider_95_ci', [0.0, 0.1765])[0] * 100:.1f}%, {o2.get('wider_95_ci', [0.0, 0.1765])[1] * 100:.1f}%]",
-                "Verdict": f"{o2.get('verdict', 'MISS')} 🔴",
-                "Engineering Interpretation": "High-dimensional sensor noise without spatial wafer coordinates limits low-FAR recall.",
+                "Goal": "O2: failed runs caught at 5 false alarms per 100 good runs (recall)",
+                "Target set in advance": f"At least {o2.get('target_min_recall', 0.2) * 100:.0f}%",
+                "Measured": (
+                    f"{o2.get('actual_recall_at_5_far', 0.0417) * 100:.1f}% "
+                    f"({o2.get('recall_at_10_far', 0.125) * 100:.1f}% at 10 per 100)"
+                ),
+                "95% uncertainty range": f"{o2_ci[0] * 100:.1f}% to {o2_ci[1] * 100:.1f}%",
+                "Verdict": verdict_text.get(o2.get("verdict", "MISS"), "Missed"),
+                "What it means": f"1 of 24 fails caught — indistinguishable from random guessing ({o2.get('chance_recall', 0.05) * 100:.0f}%).",
             },
             {
-                "Objective": "O3 — Alarm Budget Stability",
-                "Predeclared Target": "Realised alarm rate within [2.0, 8.0] per 100 runs",
-                "Measured Holdout Result": f"{o3.get('realised_alarms_per_100', 3.06):.2f} per 100 ({o3.get('alarms', 12)} alarms / 392 runs)",
-                "95% Wider Bootstrap CI": "Deterministic count on holdout",
-                "Verdict": f"{o3.get('verdict', 'PASS')} 🟢",
-                "Engineering Interpretation": "D5 quantile threshold successfully bounded operator review workload on unseen future runs.",
+                "Goal": "O3: alarm workload stays near the budget",
+                "Target set in advance": "Between 2 and 8 alarms per 100 runs",
+                "Measured": f"{o3.get('realised_alarms_per_100', 3.06):.2f} per 100 ({o3.get('alarms', 12)} alarms: 0 TP, 12 FP)",
+                "95% uncertainty range": "Exact count",
+                "Verdict": verdict_text.get(o3.get("verdict", "PASS"), "Met"),
+                "What it means": "The frozen cutoff kept the alarm count within [2, 8] per 100, but all 12 alarms were false alarms (0 TP, 12 FP).",
             },
             {
-                "Objective": "O4 — SPC vs ML Comparison",
-                "Predeclared Target": "Report paired difference (E08 XGBoost − E02 SPC) & 95% CI",
-                "Measured Holdout Result": f"{o4.get('diff_ml_minus_spc_dev_pair', 0.0153):+.4f} (E08: 0.0877 vs E02: 0.0724)",
-                "95% Wider Bootstrap CI": f"[{o4.get('wider_95_ci_dev_pair', [-0.0470, 0.0910])[0]:+.4f}, {o4.get('wider_95_ci_dev_pair', [-0.0470, 0.0910])[1]:+.4f}]",
-                "Verdict": f"{o4.get('verdict', 'REPORTED')} 🔵",
-                "Engineering Interpretation": "CI spans zero on holdout too—confirming Rule 4 parsimony choice of E02 over XGBoost.",
+                "Goal": "O4: machine learning vs. classic charts (PR-AUC difference)",
+                "Target set in advance": "No target; report the difference and its range",
+                "Measured": f"{o4.get('diff_ml_minus_spc_dev_pair', 0.0153):+.4f} (XGBoost E08 minus SPC E02)",
+                "95% uncertainty range": f"{o4_ci[0]:+.4f} to {o4_ci[1]:+.4f}",
+                "Verdict": verdict_text.get(o4.get("verdict", "REPORTED"), "Reported"),
+                "What it means": "The range includes zero: no reliable advantage for machine learning.",
             },
             {
-                "Objective": "O5 — Sensor Attribution Accuracy",
-                "Predeclared Target": "Injected 5σ single-sensor fault ranked in Top-3 ≥ 90%",
-                "Measured Holdout Result": "100.0% in Top-3 (100% Top-1 MSPC, 96% SPE)",
-                "95% Wider Bootstrap CI": "100 synthetic trials",
-                "Verdict": "PASS 🟢",
-                "Engineering Interpretation": "MSPC contribution decomposition reliably isolates localized sensor excursions.",
+                "Goal": "O5: sensor ranking finds a planted fault",
+                "Target set in advance": "Planted 5σ single-sensor fault in the top 3 at least 90% of the time",
+                "Measured": "100.0% in top 3 (100% top 1 by MSPC, 96% by SPE)",
+                "95% uncertainty range": "100 synthetic trials",
+                "Verdict": "Met",
+                "What it means": "When one sensor clearly misbehaves, the ranking points at it.",
             },
             {
-                "Objective": "O6 & O7 — Reproducibility & API Parity",
-                "Predeclared Target": "Score delta ≤ 1e-6 (O6); CLI/API parity ≤ 1e-9 (O7)",
-                "Measured Holdout Result": "0.0 max score difference; warm p95 latency 63.8 ms",
-                "95% Wider Bootstrap CI": "100 benchmark trials",
-                "Verdict": "PASS 🟢",
-                "Engineering Interpretation": "Shared validation & cleaning pipeline guarantees bit-exact training/serving parity.",
+                "Goal": "O6 and O7: same answer every time, on every interface",
+                "Target set in advance": "Score difference ≤ 1e-6 on re-run; ≤ 1e-9 between command line and API",
+                "Measured": "0.0 difference; 63.8 ms per request (warm, 95th percentile)",
+                "95% uncertainty range": "100 benchmark trials",
+                "Verdict": "Met",
+                "What it means": "Training, command line, API and this dashboard share one scoring path.",
             },
         ]
-        st.dataframe(pd.DataFrame(scorecard_rows), width="stretch", hide_index=True)
+        scorecard_columns = ["Goal", "Verdict", "Measured", "Target set in advance", "What it means", "95% uncertainty range"]
+        st.dataframe(pd.DataFrame(scorecard_rows)[scorecard_columns], width="stretch", hide_index=True)
+        st.caption(
+            "Source: `reports/holdout_metrics.json`. Predictions were saved and hashed before the test labels were "
+            "opened. Uncertainty ranges are the wider of two bootstrap methods."
+        )
 
-        # Drift explanation card if drift summary exists
-        drift_p = Path("reports/drift/drift_summary.json")
-        if drift_p.exists():
-            d_data = json.loads(drift_p.read_text(encoding="utf-8"))
-            st.markdown(
-                f"""
-                <div class="yg-card">
-                    <h4>📉 Why Did Holdout PR-AUC Drop? Evidence from Evidently Data Drift Monitoring</h4>
-                    <p style="margin:0; font-size:0.9rem;">
-                        Comparing the 940 Phase I–IV reference runs against the 392 unseen holdout runs (`reports/drift/drift_summary.json`) reveals
-                        severe non-stationarity across the 2008 manufacturing timeline:
-                        <strong>{d_data.get('number_of_drifted_columns', 237)} of {d_data.get('number_of_columns', 274)} retained sensors
-                        ({d_data.get('share_of_drifted_columns', 0.865) * 100:.1f}%) drifted significantly</strong> (Two-sample K-S test, $p < 0.05$),
-                        and <strong>{d_data.get('missing_rate_summary', {}).get('columns_with_missingness_change_gt_5pct', 48)} sensors</strong> shifted
-                        in missingness by more than $\\pm 5\\%$ (up to $+61.0\\%$ on `f247`, `f112`, `f385`). Despite this drift, the calibrated
-                        <strong>E02 alarm budget held steady at 3.06 alarms / 100 runs (Target O3 PASS)</strong>.
-                    </p>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+        d_data = load_json_report("reports/drift/drift_summary.json")
+        if d_data is not None:
+            n_cols = int(d_data.get("number_of_columns", 0))
+            n_drifted = int(d_data.get("number_of_drifted_columns", 0))
+            n_missing_shift = d_data.get("missing_rate_summary", {}).get("columns_with_missingness_change_gt_5pct")
+            with st.container(border=True):
+                st.markdown(
+                    "**A likely reason for the weak results: the process changed over time**\n\n"
+                    f"Comparing the {d_data.get('reference_count', 0)} training runs with the "
+                    f"{d_data.get('current_count', 0)} unseen runs, **{n_drifted} of {n_cols} sensors "
+                    f"({float(d_data.get('share_of_drifted_columns', 0.0)) * 100:.1f}%) behaved measurably "
+                    "differently**"
+                    + (
+                        f", and {n_missing_shift} sensors changed how often their readings were missing by more "
+                        "than 5 percentage points"
+                        if n_missing_shift is not None
+                        else ""
+                    )
+                    + ". A detector tuned on the earlier period is being asked about equipment that has moved on. "
+                    "This is an observed pattern, not proof of cause."
+                )
+                st.caption("Source: `reports/drift/drift_summary.json` (Evidently data-drift preset, one statistical test per sensor).")
 
 
 def render_project_overview_view(bundle: LoadedBundle) -> None:
-    """Render comprehensive educational overview of YieldGuard architecture, methodology, and detectors."""
-    st.subheader("5. Project Overview, Chronological Protocol & Detector Glossary")
+    """Render the plain-language landing page: the problem, the method, the findings and a glossary."""
+    q = bundle.quality
+    n_raw = len(q.input_columns)
+    n_after_missing = n_raw - len(q.dropped_high_missing)
+    n_after_constant = n_after_missing - len(q.dropped_constant)
+    n_retained = len(q.retained_columns)
+    budget = float(bundle.policy.get("primary_alarm_budget_per_100", 5.0))
+
+    st.header("Start here: what is YieldGuard?")
+
+    st.subheader("The problem")
     st.markdown(
-        "This reference page explains the engineering architecture, leakage-free data splitting, and statistical "
-        "foundations of **YieldGuard** so any reviewer or process engineer can understand the system end-to-end."
+        "Computer chips are built on silicon discs called **wafers**, and a wafer is only fully tested at the end "
+        "of production. During every production **run**, hundreds of sensors record what the equipment is doing. "
+        "If those readings could warn that a run is going wrong, engineers could step in before more wafers are "
+        "wasted.\n\n"
+        "The catch is attention. A system that raises an alarm on most runs gets ignored. So YieldGuard works to an "
+        f"**alarm budget** of about {budget:g} alarms per 100 runs and asks one question: "
+        "*within that budget, how many of the truly bad runs can we catch?*"
     )
 
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown("#### 1. Chronological Split & Zero-Leakage Guarantee")
+    st.subheader("How it works")
+    steps = [
+        (
+            "1. Learn what normal looks like",
+            f"Use the earliest runs to learn each sensor's usual range. Drop sensors that are mostly empty, never "
+            f"change or duplicate another one ({n_raw} sensors become {n_retained}).",
+        ),
+        (
+            "2. Score every run",
+            "Eight detectors each give a run an 'unusualness' score. Some are classic factory control charts "
+            "(SPC), some are machine-learning models.",
+        ),
+        (
+            "3. Set the alarm line",
+            f"Pick each detector's cutoff so it raises about {budget:g} alarms per 100 runs, using a separate "
+            "block of runs kept for that purpose.",
+        ),
+        (
+            "4. Test once on unseen runs",
+            "The most recent quarter of the runs stayed locked away until everything was frozen, then was scored "
+            "a single time. Runs are split by time, never shuffled, because a real system must predict the future "
+            "from the past.",
+        ),
+    ]
+    for col, (step_title, step_text) in zip(st.columns(4), steps):
+        with col, st.container(border=True):
+            st.markdown(f"**{step_title}**")
+            st.markdown(step_text)
+
+    holdout = load_json_report("reports/holdout_metrics.json")
+    if holdout is not None:
+        st.subheader("What we found")
+        render_headline_findings(holdout)
         st.markdown(
-            "Semiconductor manufacturing tools experience maintenance cycles, recipe adjustments, and sensor drift over time. "
-            "**Random row shuffling or standard $k$-fold cross-validation leaks future chamber states into past training runs.** "
-            "YieldGuard enforces a strict timestamp-ordered split across all 1,567 SECOM wafer runs:"
+            "**Bottom line:** on this dataset, no detector predicted failing runs much better than chance. What the "
+            "project demonstrates is a fair, leak-free way to compare detectors under a fixed alarm budget, with "
+            "every missed target reported as measured. The **Results** page has the full numbers and a likely "
+            "reason: the process changed over time."
+        )
+
+    st.subheader("Where to look next")
+    st.markdown(
+        "Use the menu on the left. Each page answers one question:\n\n"
+        "| Page | Question it answers |\n"
+        "|---|---|\n"
+        "| **Single-sensor trends** | Is one particular sensor drifting away from its normal range? |\n"
+        "| **All sensors at once** | Did a run look abnormal overall, even if no single sensor stood out? |\n"
+        "| **Why was a run flagged?** | For a flagged run, which sensors made it stand out? |\n"
+        "| **Results** | How do the eight detectors compare, and did they meet their targets? |"
+    )
+
+    st.subheader("Key terms")
+    st.markdown(
+        "| Term | Meaning |\n|---|---|\n" + "\n".join(f"| **{term}** | {meaning} |" for term, meaning in GLOSSARY)
+    )
+
+    st.subheader("Technical reference")
+    with st.expander("How the runs were split by time (D1–D5 and holdout)"):
+        st.markdown(
+            "Equipment goes through maintenance, recipe changes and sensor drift. Shuffling rows or using standard "
+            "k-fold cross-validation would leak future equipment states into training, so the 1,567 SECOM runs are "
+            "split strictly by timestamp:"
         )
         split_rows = [
-            {"Block": "D1 (Dev Block 1)", "Runs": 235, "Fails": "32 (13.62%)", "Role in Protocol": "Phase I Training (Fold 1, 2, 3)"},
-            {"Block": "D2 (Dev Block 2)", "Runs": 235, "Fails": "26 (11.06%)", "Role in Protocol": "Phase I Training (Fold 1, 2, 3)"},
-            {"Block": "D3 (Dev Block 3)", "Runs": 235, "Fails": "8 (3.40%)", "Role in Protocol": "Fold 1 Validation / Fold 2 & 3 Training"},
-            {"Block": "D4 (Dev Block 4)", "Runs": 235, "Fails": "10 (4.26%)", "Role in Protocol": "Fold 2 Validation / Fold 3 (Final Staging) Training"},
-            {"Block": "D5 (Calibration)", "Runs": 235, "Fails": "4 (1.70%)", "Role in Protocol": "Fold 3 Validation & Alarm-Budget Threshold Calibration"},
-            {"Block": "Holdout (Sealed)", "Runs": 392, "Fails": "24 (6.12%)", "Role in Protocol": "One-Shot Final Evaluation (Opened Once Post-Freeze)"},
+            {"Block": "D1", "Runs": 235, "Fails": "32 (13.62%)", "Role": "Training (folds 1, 2, 3)"},
+            {"Block": "D2", "Runs": 235, "Fails": "26 (11.06%)", "Role": "Training (folds 1, 2, 3)"},
+            {"Block": "D3", "Runs": 235, "Fails": "8 (3.40%)", "Role": "Fold 1 validation; training for folds 2 and 3"},
+            {"Block": "D4", "Runs": 235, "Fails": "10 (4.26%)", "Role": "Fold 2 validation; training for fold 3"},
+            {"Block": "D5", "Runs": 235, "Fails": "4 (1.70%)", "Role": "Fold 3 validation and alarm-cutoff calibration"},
+            {"Block": "Holdout", "Runs": 392, "Fails": "24 (6.12%)", "Role": "Final test, opened once after the freeze"},
         ]
         st.dataframe(pd.DataFrame(split_rows), width="stretch", hide_index=True)
 
-    with c2:
-        st.markdown("#### 2. Four-Stage Train-Only Feature Cleaning")
+    with st.expander(f"How the sensors were cleaned ({n_raw} to {n_retained})"):
         st.markdown(
-            "Fitted strictly on the 940 runs of `D1`–`D4` (`models/v0.1.0/quality.joblib`) and applied identically to batch CSVs, "
-            "FastAPI requests, and dashboard views:"
+            f"Every rule is fitted on the {q.n_train_runs} training runs only and then applied identically to batch "
+            "files, API requests and this dashboard."
         )
         clean_rows = [
-            {"Stage": "1. Raw Ingestion", "Rule": "Verify 590 numeric channels (`f000`–`f589`), canonicalize NaNs, reject ±Inf", "Columns Remaining": 590},
-            {"Stage": "2. Missingness Pruning", "Rule": "Drop sensors with > 50% missing values on training runs", "Columns Remaining": 566},
-            {"Stage": "3. Zero-Variance Pruning", "Rule": "Drop constant flatline sensors (std = 0 on training runs)", "Columns Remaining": 440},
-            {"Stage": "4. Collinear Deduplication", "Rule": "Cluster sensors with |r| > 0.98; keep 1 representative, log allies in group_map", "Columns Remaining": 274},
-            {"Stage": "5. Imputation & Scaling", "Rule": "Impute missing values with training medians; fit passing-run Z-score scaler", "Columns Remaining": 274},
+            {"Step": "1. Load", "Rule": "Check all sensor columns are numeric; reject infinite values", "Sensors left": n_raw},
+            {
+                "Step": "2. Remove mostly-empty sensors",
+                "Rule": f"More than {q.max_missing_fraction * 100:.0f}% of training readings missing",
+                "Sensors left": n_after_missing,
+            },
+            {
+                "Step": "3. Remove sensors that never change",
+                "Rule": f"One value makes up at least {q.max_constant_dominant_fraction * 100:.0f}% of training readings",
+                "Sensors left": n_after_constant,
+            },
+            {
+                "Step": "4. Remove near-duplicates",
+                "Rule": f"Correlation |r| of at least {q.collinearity_threshold:g} with a kept sensor; duplicates are recorded as its group",
+                "Sensors left": n_retained,
+            },
+            {
+                "Step": "5. Fill gaps and rescale",
+                "Rule": "Missing readings filled with the training median; scaled using passing training runs",
+                "Sensors left": n_retained,
+            },
         ]
         st.dataframe(pd.DataFrame(clean_rows), width="stretch", hide_index=True)
 
-    st.markdown("#### 3. Complete Detector Bank (`E01` – `E08`)")
-    det_rows = []
-    thresholds = bundle.policy.get("thresholds", {})
-    for det_id, info in DETECTOR_CATALOG.items():
-        t_dict = thresholds.get(det_id, {})
-        det_rows.append(
-            {
-                "ID": det_id,
-                "Detector Name": info["name"],
-                "Family": info["family"],
-                "Budget 2 Cutoff": round(float(t_dict.get("budget_2", 0.0)), 4),
-                "Budget 5 Cutoff (Primary)": round(float(t_dict.get("budget_5", 0.0)), 4),
-                "Budget 10 Cutoff": round(float(t_dict.get("budget_10", 0.0)), 4),
-                "Methodology & Mechanism": info["desc"],
-            }
-        )
-    st.dataframe(pd.DataFrame(det_rows), width="stretch", hide_index=True)
+    with st.expander("The eight detectors and their alarm cutoffs"):
+        det_rows = []
+        thresholds = bundle.policy.get("thresholds", {})
+        for det_id, info in DETECTOR_CATALOG.items():
+            t_dict = thresholds.get(det_id, {})
+            det_rows.append(
+                {
+                    "ID": det_id,
+                    "Detector": info["short"],
+                    "Type": info["family"],
+                    "In plain words": DETECTOR_PLAIN[det_id],
+                    "Cutoff at 2 per 100": round(float(t_dict.get("budget_2", 0.0)), 4),
+                    "Cutoff at 5 per 100": round(float(t_dict.get("budget_5", 0.0)), 4),
+                    "Cutoff at 10 per 100": round(float(t_dict.get("budget_10", 0.0)), 4),
+                    "Method": info["desc"],
+                }
+            )
+        st.dataframe(pd.DataFrame(det_rows), width="stretch", hide_index=True)
 
 
 def main() -> None:
     st.set_page_config(
-        page_title="YieldGuard — Semiconductor Process Control",
+        page_title="YieldGuard: Semiconductor Fault Detection",
         page_icon="🔬",
         layout="wide",
         initial_sidebar_state="expanded",
     )
     inject_custom_css()
 
-    st.sidebar.title("🔬 YieldGuard")
-    st.sidebar.markdown(
-        "**Semiconductor Process Control & Fault Detection**\n\n"
-        "Decision-support console for wafer fab yield engineers."
-    )
+    st.sidebar.markdown("## 🔬 YieldGuard")
+    st.sidebar.caption("Early warning for faulty chip-production runs.")
 
     real_available = check_real_data_available()
     mode_options = (
@@ -1164,15 +1368,17 @@ def main() -> None:
         else ["Synthetic Demo Data"]
     )
     selected_mode = st.sidebar.selectbox(
-        "Data Mode",
+        "Data",
         mode_options,
         index=0,
-        help="Switch between the real UCI SECOM benchmark dataset (1,567 runs) and an on-the-fly synthetic wafer dataset (100 runs).",
+        help="Real: the public UCI SECOM dataset (1,567 production runs). Synthetic: 100 made-up runs for a quick demo.",
     )
     is_synthetic = (selected_mode == "Synthetic Demo Data") or not real_available
 
     if is_synthetic:
-        st.warning("⚠️ Running in SYNTHETIC DEMO MODE (Synthetic SECOM-like generated data).")
+        st.warning(
+            "⚠️ Running in SYNTHETIC DEMO MODE. The runs on screen are computer-generated, not real factory data."
+        )
 
     bundle_dir = "models/v0.1.0" if Path("models/v0.1.0").exists() else "models/staging"
     scored_df, labels_df, bundle, synthetic_active = load_data_and_scores(
@@ -1182,55 +1388,50 @@ def main() -> None:
 
     if bundle is None:
         st.error(
-            "No valid model bundle found in models/v0.1.0 or models/staging. Run training first."
+            "No trained model was found in models/v0.1.0 or models/staging. Run the training command first "
+            "(see docs/07_OPERATIONS_AND_COMMANDS.md)."
         )
         return
 
-    # View navigation (preserving exact first 4 view strings for AppTest compatibility)
-    views = [
-        "1. Univariate EWMA & Run Rules",
-        "2. Multivariate SPC (T² & SPE)",
-        "3. Flagged-Run Drill-Down",
-        "4. Alarm-Budget Performance",
-        "5. Project Overview & Architecture",
-    ]
+    # Option values stay as the original view names (tests select by them); labels are plain-language.
+    views = [VIEW_OVERVIEW, VIEW_EWMA, VIEW_MSPC, VIEW_DRILLDOWN, VIEW_BUDGET]
     active_view = st.sidebar.radio(
-        "Dashboard View",
+        "Pages",
         views,
         index=0,
-        help="Navigate between process control charts, flagged-run root-cause explanations, and benchmark evaluations.",
+        format_func=lambda v: VIEW_LABELS[v][0],
+        captions=[VIEW_LABELS[v][1] for v in views],
     )
 
     st.sidebar.divider()
-    with st.sidebar.expander("🗂️ Quick Detector Legend (E01–E08)", expanded=False):
+    with st.sidebar.expander("The eight detectors (E01–E08)", expanded=False):
+        primary_id = bundle.policy.get("primary_detector", "E02")
         st.markdown(
-            "- **E01**: Chance Baseline\n"
-            "- **E02 ★**: Univariate SPC (Individuals)\n"
-            "- **E03**: Univariate SPC (EWMA)\n"
-            "- **E04**: Hotelling $T^2$ (50-PCA)\n"
-            "- **E05**: Squared Prediction Error ($SPE$)\n"
-            "- **E06**: Combined MSPC Index\n"
-            "- **E07**: Isolation Forest\n"
-            "- **E08**: Class-Weighted XGBoost"
+            "\n".join(
+                f"- **{det_id}{' ★' if det_id == primary_id else ''} {info['short']}**: {DETECTOR_PLAIN[det_id]}"
+                for det_id, info in DETECTOR_CATALOG.items()
+            )
         )
+    with st.sidebar.expander("Key terms", expanded=False):
+        st.markdown("\n".join(f"- **{term}**: {meaning}" for term, meaning in GLOSSARY))
     st.sidebar.caption(
-        f"**Release Bundle:** `{bundle.version}`  \n"
-        "**Claims Boundary:** Offline benchmark results on UCI SECOM (CC BY 4.0); not measured fab yield or financial savings."
+        f"Model version `{bundle.version}`  \n"
+        "Results are offline benchmarks on the public UCI SECOM dataset (CC BY 4.0), "
+        "not measured factory yield or cost savings."
     )
 
-    # Render global context header & KPI strip
     render_top_header_and_kpis(scored_df, labels_df, bundle, is_synthetic)
 
-    if active_view == "1. Univariate EWMA & Run Rules":
-        render_ewma_view(scored_df, bundle)
-    elif active_view == "2. Multivariate SPC (T² & SPE)":
-        render_mspc_view(scored_df, bundle)
-    elif active_view == "3. Flagged-Run Drill-Down":
-        render_drilldown_view(scored_df, labels_df, bundle)
-    elif active_view == "4. Alarm-Budget Performance":
-        render_alarm_budget_view(scored_df, labels_df, bundle)
-    elif active_view == "5. Project Overview & Architecture":
+    if active_view == VIEW_OVERVIEW:
         render_project_overview_view(bundle)
+    elif active_view == VIEW_EWMA:
+        render_ewma_view(scored_df, bundle)
+    elif active_view == VIEW_MSPC:
+        render_mspc_view(scored_df, bundle)
+    elif active_view == VIEW_DRILLDOWN:
+        render_drilldown_view(scored_df, labels_df, bundle)
+    elif active_view == VIEW_BUDGET:
+        render_alarm_budget_view(scored_df, labels_df, bundle)
 
 
 if __name__ == "__main__":

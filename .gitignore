@@ -56,8 +56,16 @@ reports/*
 !reports/staging_manifest_sha256.json
 !reports/validation_metrics.json
 !reports/model_comparison.csv
+!reports/holdout_metrics.json
+!reports/holdout_predictions.csv
+!reports/runtime.json
 !reports/explanations/
 !reports/explanations/**
+!reports/exploratory/
+!reports/exploratory/secom_phase2_diagnostics.json
+!reports/v0_2/
+!reports/v0_2/secom_exploratory_prequential.json
+!reports/v0_2/wafer_confirmatory_metrics.json
 mlruns/
 mlruns.db
 .system_generated/

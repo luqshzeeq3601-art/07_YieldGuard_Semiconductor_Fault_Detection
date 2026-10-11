@@ -135,13 +135,13 @@
 - Acceptance check: three controls pass; reference-versus-holdout HTML and JSON written with sample sizes, method and missing-rate table.
 
 ### T17: Docker
-- [x] Complete T17 (11 October 2026; Dockerfile, .dockerignore, scripts/smoke_api.py implemented and verified against live API; local Docker daemon offline so container build is marked unverified).
+- [x] Complete T17 (12 October 2026; `docker build -t yieldguard:ci .` and container smoke test via `scripts/smoke_api.py` verified locally).
 - Dependencies: T14.
 - Files: `Dockerfile`, `.dockerignore`, `scripts/smoke_api.py`.
 - Acceptance check: image builds from the lock; runs as nonroot; `/ready` returns 200; smoke script gets a valid `/score` response; no raw data or MLflow store in the image. If Docker is unavailable locally, marked unverified, not passed.
 
 ### T18: CI and runtime
-- [x] Complete T18 (11 October 2026; CI workflow defined with test and docker-smoke jobs; runtime and reproducibility benchmarks saved to reports/runtime.json; remote CI stated as unverified until GitHub runs it).
+- [x] Complete T18 (12 October 2026; CI workflow defined with test and docker-smoke jobs; both equivalent local checks verified and passed; remote CI stated as unverified until GitHub runs it).
 - Dependencies: T17.
 - Files: `.github/workflows/ci.yml`, `scripts/benchmark_runtime.py`, `reports/runtime.json`.
 - Acceptance check: `test` job (ruff, pytest on synthetic data, no download) and `docker-smoke` job (build, readiness, real scoring request) defined; equivalent commands pass locally; latency measured for O7; remote run status stated as unverified until GitHub runs it.
@@ -153,12 +153,50 @@
 - Acceptance check: every number in README and model card traces to a file in `reports/`; fail counts and intervals beside every headline figure; statement that results are offline benchmark results, not yield or cost savings; missed targets listed; dataset attribution and licence present; Markdown links resolve.
 
 ### Checkpoint C5
-- [x] Complete Checkpoint C5 (11 October 2026; Local MVP complete; Docker container runtime and remote CI marked unverified).
+- [x] Complete Checkpoint C5 (12 October 2026; Local MVP and local Docker smoke test complete; remote GitHub Actions CI marked unverified until pushed).
 
 ## 9. Backlog, outside this MVP
 
-- Regularised logistic baseline.
 - Probability calibration.
 - Public hosting.
-- A second fab dataset.
 - Multi-stream charts if tool identifiers become available.
+
+## 10. Post-MVP Phase 1–4: v0.1.0 Closeout, SECOM Diagnostics & v0.2 Confirmatory Protocol
+
+### T20: Phase 1 — Close out v0.1.0 (Dashboard commit, README & Model Card audit, Docker/CI verification)
+- [x] Complete T20 (12 October 2026).
+- Dependencies: Checkpoint C5.
+- Files: `app/dashboard.py`, `README.md`, `docs/MODEL_CARD.md`, `Dockerfile`, `.github/workflows/ci.yml`.
+- Acceptance check: `app/dashboard.py` committed; `README.md` and `docs/MODEL_CARD.md` state "no detector beat chance" and report `0 TP, 12 FP` for O3 with zero discrepancies against `reports/holdout_metrics.json` and `reports/validation_metrics.json`; Docker build & smoke test verified (`yieldguard:ci` + `smoke_api.py` PASS).
+
+### T21: Phase 2 — Exploratory SECOM diagnostics (Per-block drift/fail clustering, Oracle upper bound, E02 ties)
+- [x] Complete T21 (12 October 2026; `oracle_beats_chance=True`, `oracle_xgb_depth3` mean fold PR-AUC `0.2055`, 95% CI `[0.1316, 0.2353]`, gate decision `PROCEED_SECOM_AND_WAFER`).
+- Dependencies: T20.
+- Files: `src/yieldguard/diagnostics.py`, `scripts/diagnose_secom.py`, `tests/test_diagnostics.py`, `reports/exploratory/secom_phase2_diagnostics.json`.
+- Acceptance check: All Phase 2 outputs explicitly labelled `exploratory_post_holdout`; per-block fail clustering and K-S sensor drift quantified; 5-fold stratified random-split oracle upper bound evaluated for XGBoost, Logistic Regression, and Random Forest; E02 score ties decomposed by winning sensor; stopping gate (`oracle_beats_chance`) evaluated and recorded.
+
+### T22: Phase 3 — Write and freeze v0.2 prequential drift-adaptive protocol
+- [x] Complete T22 (12 October 2026).
+- Dependencies: T21.
+- Files: `docs/11_PROTOCOL_V02.md`, `configs/v0_2.yaml`, `docs/08_DECISIONS_LOG.md`.
+- Acceptance check: `v0.2` protocol written and frozen with prequential rolling-origin blocks, rolling Phase I SPC/PCA windows, unlabelled recent-window threshold calibration, median/MAD robust scaling with deterministic top-3 RMS tie-breaking, E09 L2-regularised logistic baseline, and predeclared targets `O1_v2`–`O6_v2` before any `v0.2` run.
+
+### T23: Phase 3 — Implement v0.2 prequential engine, adaptive detectors, robust scaling, and E09 logistic baseline
+- [x] Complete T23 (12 October 2026; `src/yieldguard/prequential.py`, `cli.py`, and `tests/test_prequential.py` implemented and verified; exploratory SECOM prequential evaluation saved to `reports/v0_2/secom_exploratory_prequential.json`).
+- Dependencies: T22.
+- Files: `src/yieldguard/prequential.py`, `src/yieldguard/cli.py`, `tests/test_prequential.py`.
+- Acceptance check: Unit tests on synthetic data verify median/MAD scaling, deterministic tie-breaking, rolling Phase I refits, unlabelled rolling threshold calibration, E09 regularised logistic baseline, and strict temporal causality across prequential blocks.
+
+### T24: Phase 4 — Acquire Semiconductor Wafer Etch dataset and run one-shot confirmatory v0.2 evaluation
+- [x] Complete T24 (12 October 2026; Wafer Etch dataset verified in `data/wafer_source_manifest.json`; one-shot confirmatory evaluation passed `O1_v2` [0.9729], `O2_v2` [0.9970], `O3_v2` [5.55/100, 344 TP / 4 FP], and `O4_v2` [+0.6715] in `reports/v0_2/wafer_confirmatory_metrics.json`).
+- Dependencies: T23.
+- Files: `scripts/download_wafer_data.py`, `src/yieldguard/wafer_data.py`, `tests/test_wafer_data.py`, `data/wafer_source_manifest.json`, `reports/v0_2/wafer_confirmatory_metrics.json`.
+- Acceptance check: Wafer Etch dataset (7,164 runs, 152 sensor readings, ~10.64% fault rate) downloaded with pinned SHA-256 hashes; frozen `v0.2` prequential pipeline executed once with predictions hashed before evaluation; all `O1_v2`–`O6_v2` verdicts and bootstrap CIs recorded in `reports/v0_2/wafer_confirmatory_metrics.json`.
+
+### T25: Phase 4 — Final documentation, model card, and progress log update for v0.2
+- [x] Complete T25 (12 October 2026).
+- Dependencies: T24.
+- Files: `README.md`, `docs/MODEL_CARD.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `tasks/todo.md`.
+- Acceptance check: `README.md` and `docs/MODEL_CARD.md` present both the `v0.1.0` negative SECOM result, Phase 2 diagnostic root-cause analysis, and Phase 4 confirmatory `v0.2` Wafer Etch benchmark results with full traceability.
+
+

@@ -72,6 +72,22 @@ def main(argv: list[str] | None = None) -> int:
     p_dctrl.add_argument("--bundle", type=str, default="models/v0.1.0", help="Frozen bundle directory.")
     p_dctrl.add_argument("--output", type=str, default="reports/drift/controls", help="Output directory.")
 
+    # prequential (v0.2 protocol)
+    p_preq = subparsers.add_parser(
+        "prequential",
+        help="Run v0.2 prequential (rolling-origin) drift-adaptive evaluation.",
+    )
+    p_preq.add_argument("--config", type=str, default="configs/v0_2.yaml", help="Path to v0.2 YAML config.")
+    p_preq.add_argument(
+        "--dataset",
+        type=str,
+        choices=["secom", "wafer"],
+        required=True,
+        help="Dataset to evaluate (secom=exploratory, wafer=confirmatory).",
+    )
+    p_preq.add_argument("--output", type=str, required=True, help="Output JSON metrics report path.")
+    p_preq.add_argument("--predictions", type=str, default=None, help="Optional output CSV path for scored runs.")
+
     args = parser.parse_args(argv)
 
     if args.command == "prepare":
@@ -152,6 +168,73 @@ def main(argv: list[str] | None = None) -> int:
 
         res = run_cli_drift_controls(args.bundle, args.output)
         print(json.dumps(res, indent=2))
+        return 0
+
+    if args.command == "prequential":
+        from pathlib import Path
+
+        import pandas as pd
+        import yaml
+
+        from yieldguard.prequential import run_prequential_evaluation
+
+        cfg = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
+        preq_cfg = cfg.get("prequential", {})
+        ds_cfg = preq_cfg.get(args.dataset, {})
+
+        if args.dataset == "secom":
+            import numpy as np
+
+            runs_df = pd.read_parquet("data/processed/runs.parquet")
+            dev_labels = pd.read_parquet("data/processed/labels_dev.parquet")
+            holdout_labels = pd.read_parquet("data/processed/labels_holdout.parquet")
+            all_labels = pd.concat([dev_labels, holdout_labels], ignore_index=True)
+            df = runs_df.merge(all_labels[["run_id", "label_fail"]], on="run_id", how="inner")
+            df = df.sort_values(["timestamp", "run_id"]).reset_index(drop=True)
+            df["label"] = np.where(df["label_fail"].to_numpy(dtype=np.int64) == 1, 1, -1)
+            sensor_cols = [c for c in df.columns if c.startswith("f") and c[1:].isdigit()]
+            dataset_id = "SECOM"
+            eval_type = ds_cfg.get("evaluation_type", "exploratory_post_holdout")
+            n_blocks = int(ds_cfg.get("n_blocks", 8))
+            win_runs = int(ds_cfg.get("rolling_window_runs", 470))
+            cal_runs = int(ds_cfg.get("calibration_window_runs", 235))
+        else:
+            from yieldguard.wafer_data import load_wafer_runs
+
+            df, sensor_cols = load_wafer_runs()
+            dataset_id = "WAFER_ETCH"
+            eval_type = ds_cfg.get("evaluation_type", "confirmatory_one_shot")
+            n_blocks = int(ds_cfg.get("n_blocks", 8))
+            win_runs = int(ds_cfg.get("rolling_window_runs", 1800))
+            cal_runs = int(ds_cfg.get("calibration_window_runs", 895))
+
+        pred_csv = args.predictions or f"reports/v0_2/{args.dataset}_prequential_predictions.csv"
+        rep = run_prequential_evaluation(
+            df=df,
+            sensor_cols=sensor_cols,
+            dataset_id=dataset_id,
+            evaluation_type=eval_type,
+            n_blocks=n_blocks,
+            rolling_window_runs=win_runs,
+            calibration_window_runs=cal_runs,
+            predictions_csv_path=pred_csv,
+            output_json_path=args.output,
+            overwrite=(args.dataset == "secom"),
+        )
+        print(
+            json.dumps(
+                {
+                    "status": "completed",
+                    "dataset_id": dataset_id,
+                    "evaluation_type": eval_type,
+                    "primary_detector": rep["selection"]["primary_detector"],
+                    "best_overall_detector": rep["selection"]["best_overall_detector"],
+                    "target_outcomes_v0_2": rep["target_outcomes_v0_2"],
+                    "output": args.output,
+                },
+                indent=2,
+            )
+        )
         return 0
 
     return 1
