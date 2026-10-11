@@ -179,4 +179,22 @@
   - `.\.venv\Scripts\python.exe scripts/smoke_api.py --url http://127.0.0.1:8000` -> `smoke_passed`
 - Checkpoint C5 status: **PASS** (Local MVP complete; Docker container build and remote CI marked unverified).
 
+## 11. Session: 11 October 2026, Dashboard UI/UX & Explainability Polish
 
+- Date/time: 2026-10-11 23:52 (Asia/Kuala_Lumpur)
+- Task: Polish `app/dashboard.py` for end-user readability, plain-English project onboarding, and multi-detector transparency without changing frozen model outputs or `AppTest` contracts.
+- Changed files:
+  - `app/dashboard.py`
+  - `tests/test_dashboard.py`
+  - `docs/09_PROGRESS_LOG.md`
+- Key improvements:
+  - Added executive header banner, plain-English expandable onboarding guide, and 4-column top KPI summary strip.
+  - Added `DETECTOR_CATALOG` (`E01`–`E08` human-readable titles, families, and physical explanations) and sidebar detector quick legend.
+  - Enhanced **View 1 (EWMA & Run Rules)** with sensor rank/correlation selector, optional raw reading trace overlay, 4-rule Western Electric violation summary table, and expandable 10-sensor Phase I table.
+  - Enhanced **View 2 (MSPC $T^2$ & $SPE$)** with physical explanation cards ($T^2$ in-model distance vs $SPE$ correlation breakdown), logarithmic Y-axis toggle, and red alarm markers.
+  - Enhanced **View 3 (Flagged-Run Drill-Down)** with wafer status banner (ground-truth test outcome, block, timestamp, missing sensor count), cross-method consensus box, and horizontal bar charts + tables for MSPC & TreeSHAP sensor attributions.
+  - Enhanced **View 4 (Alarm-Budget Performance)** with budget filter radio, Precision/Recall comparison table, grouped bar chart, formatted **Official One-Shot Holdout Scorecard (O1–O7)**, and **Evidently Data Drift Post-Mortem Card** (86.5% drifted columns).
+  - Added **View 5 (Project Overview & Architecture)** documenting the chronological split (`D1`–`D5` + `Holdout`), 5-stage train-only cleaning funnel (`590 -> 274` sensors), and full detector architecture table.
+- Verification evidence:
+  - `.\.venv\Scripts\ruff.exe check app/dashboard.py tests/test_dashboard.py` -> `All checks passed!`
+  - `.\.venv\Scripts\pytest.exe -q` -> `74 passed`
