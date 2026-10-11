@@ -27,6 +27,7 @@ def test_dashboard_apptest_runs_all_views_without_exceptions() -> None:
         "2. Multivariate SPC (T² & SPE)",
         "3. Flagged-Run Drill-Down",
         "4. Alarm-Budget Performance",
+        "5. Project Overview & Architecture",
     ]
 
     for view_name in views:
