@@ -63,4 +63,20 @@ Verification or follow-up task:
 - **Documents changed:** `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `docs/05_EXPERIMENT_PLAN.md`, `src/yieldguard/evaluate.py`, `src/yieldguard/train.py`, `reports/staging_manifest_sha256.json`, `.gitignore`.
 - **Verification or follow-up task:** T12 holdout evaluation.
 
+## 2026-10-11: D014 - Post-holdout MVP implementation, drift monitoring, and release packaging (T12-T19)
+
+- **Context:** Following user approval at Checkpoint C3, tasks T12-T19 were executed to complete the end-to-end local MVP.
+- **Decision:**
+  1. Immutable model bundle `models/v0.1.0/` frozen with SHA-256 checksums and schema validation before opening holdout labels.
+  2. One-shot holdout evaluation completed and recorded without overwrite: E02 holdout PR-AUC 0.0724 (O1 MISS), recall at 5 FAR 0.0417 (O2 MISS), realised alarm rate at budget 5 is 3.06 per 100 (O3 PASS), paired ML - SPC diff +0.0153 (O4 REPORTED). Missed targets recorded openly without protocol changes.
+  3. Batch scoring and explanation CLI implemented for time-ordered CSV processing with collinear group map tracking.
+  4. FastAPI service implemented with strict 2 MiB request body limits, 503 missing bundle handling, and TestClient verification.
+  5. Streamlit dashboard implemented with 4 views (EWMA + run rules, MSPC T²/SPE, flagged drill-down, alarm budget table) and synthetic demo data fallback.
+  6. Evidently data drift monitoring implemented with 100-run batch threshold, missing-rate table, and 3 verification controls (no-change, shifted sensors, insufficient data) passing 100%.
+  7. Container runtime (`Dockerfile`, `.dockerignore`, `scripts/smoke_api.py`) and CI workflow (`.github/workflows/ci.yml`) defined; container execution marked unverified locally due to offline host Docker daemon.
+  8. Model card (`docs/MODEL_CARD.md`) and `README.md` published with all figures traced to `reports/`, fail counts, bootstrap CIs, and mandatory offline benchmark disclaimer.
+- **Effect on requirements/data/protocol:** Satisfies all requirements across PRD and technical design to Checkpoint C5.
+- **Documents changed:** `tasks/todo.md`, `docs/06_VALIDATION_AND_RELEASE.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `docs/MODEL_CARD.md`, `README.md`.
+- **Verification or follow-up task:** Checkpoint C5 reached.
+
 

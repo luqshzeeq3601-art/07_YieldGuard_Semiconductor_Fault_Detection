@@ -49,3 +49,15 @@ All required pytest tests run on synthetic data without requiring the SECOM down
 | `reports/runtime.json` | Reproducibility check (O6), warm `/score` latency p95 (O7) and container verification status |
 | `docs/MODEL_CARD.md` | Intended use, dataset attribution, limitations, development and holdout metrics, target verdicts |
 | `README.md` | Reproduction commands and measured figures linked to `reports/`, with offline benchmark disclaimer |
+
+## 4. Final release gate outcomes (Checkpoint C5)
+
+| Gate | Criterion | Measured Evidence | Gate Outcome |
+|---|---|---|---|
+| **G1 Data** | UCI SECOM hashes, licence, schema, split manifest | `data/source_manifest.json`, `data/processed/split_manifest.json` | **PASS** |
+| **G2 Leakage** | Chronological split, train-only cleaning, sealed holdout labels | `src/yieldguard/splits.py`, `src/yieldguard/evaluate.py` | **PASS** |
+| **G3 Detection & policy** | One-shot holdout evaluation; predeclared targets O1-O4 | `reports/holdout_metrics.json` (O1 MISS, O2 MISS, O3 PASS, O4 REPORTED) | **RECORDED (O1/O2 MISS, O3 PASS)** |
+| **G4 Explanations** | Synthetic 5-$\sigma$ fault in top-3 $\ge 90\%$; TreeSHAP additivity | `reports/explanations/o5_synthetic_verification.json` (100.0%) | **PASS** |
+| **G5 Engineering** | Reproducibility $\le 10^{-6}$ (O6), parity $\le 10^{-9}$ (O7), warm latency | `reports/runtime.json` (0.0 diff; direct p95: 63.8 ms; local Docker daemon offline) | **PASS (Docker unverified locally)** |
+| **G6 Monitoring** | 3 drift controls pass; reference vs holdout drift HTML/JSON | `reports/drift/controls/control_results.json`, `reports/drift/drift_summary.json` | **PASS** |
+| **G7 Evidence** | Single holdout record, model card, README with fail counts and CIs | `reports/`, `docs/MODEL_CARD.md`, `README.md` | **COMPLETE** |

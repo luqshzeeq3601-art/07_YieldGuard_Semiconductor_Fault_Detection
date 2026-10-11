@@ -196,7 +196,7 @@ def rank_sensors_for_run(
     direct_overlap = sorted(mspc_sensor_set & xgb_sensor_set)
 
     return {
-        "run_id": int(df_one.iloc[0]["run_id"]) if "run_id" in df_one.columns else 0,
+        "run_id": str(df_one.iloc[0]["run_id"]) if "run_id" in df_one.columns else "run_0",
         "top_k": k,
         "mspc_summary": {
             "t2": t2_val,

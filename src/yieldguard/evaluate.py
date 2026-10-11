@@ -857,9 +857,9 @@ def run_holdout_evaluation(
         }
 
     # Textbook SPC limits on holdout
-    t2_lim_99 = float(bundle.mspc_model["t2_limit_99"])
-    spe_lim_99 = float(bundle.mspc_model["spe_limit_99"])
-    ewma_l = float(bundle.spc_model["ewma_l"])
+    t2_lim_99 = float(bundle.mspc_model.t2_limit_99 if hasattr(bundle.mspc_model, "t2_limit_99") else bundle.mspc_model["t2_limit_99"])
+    spe_lim_99 = float(bundle.mspc_model.spe_limit_99 if hasattr(bundle.mspc_model, "spe_limit_99") else bundle.mspc_model["spe_limit_99"])
+    ewma_l = float(bundle.spc_model.ewma_l if hasattr(bundle.spc_model, "ewma_l") else bundle.spc_model["ewma_l"])
     textbook_holdout = {
         "E02_individuals_3sigma": evaluate_at_threshold(
             y_true, merged["e02_score"].to_numpy(), 3.0, budget_per_100=0.27

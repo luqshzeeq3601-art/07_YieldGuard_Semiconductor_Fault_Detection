@@ -145,4 +145,38 @@
   - `.\.venv\Scripts\python.exe -m ruff check src scripts tests` -> `All checks passed!`
 - Next ready task: **T12** (Bundle, freeze, one-shot holdout evaluation) — **awaiting user approval at Checkpoint C3**.
 
+## 10. Session: 11 October 2026, T12–T19, Checkpoints C4 & C5 (Full MVP Complete)
+
+- Date/time: 2026-10-11 20:45 (Asia/Kuala_Lumpur)
+- Task IDs completed: T12, Checkpoint C4, T13, T14, T15, T16, T17, T18, T19, Checkpoint C5.
+- Changed/created files:
+  - `src/yieldguard/artifacts.py`, `src/yieldguard/predict.py`, `src/yieldguard/monitoring.py`
+  - `api/schemas.py`, `api/main.py`, `app/dashboard.py`
+  - `scripts/smoke_api.py`, `scripts/benchmark_runtime.py`, `.github/workflows/ci.yml`, `Dockerfile`, `.dockerignore`, `LICENSE`, `README.md`, `docs/MODEL_CARD.md`
+  - `tests/test_artifacts.py`, `tests/test_holdout.py`, `tests/test_batch.py`, `tests/test_api.py`, `tests/test_dashboard.py`, `tests/test_monitoring.py`
+  - `reports/holdout_predictions.csv`, `reports/holdout_metrics.json`, `reports/runtime.json`, `reports/drift/`
+- Verification evidence:
+  - **T12 (Bundle freeze & holdout evaluation):**
+    - Frozen release bundle `models/v0.1.0/` created with SHA-256 verification and tamper refusal.
+    - Holdout predictions written and hashed (`reports/holdout_predictions.csv`, SHA-256: `678f6268c4b3952a30d4e17273a039649dafd77229310d539a61b8f2201ee36a`) before opening `data/processed/labels_holdout.parquet`.
+    - Single-shot holdout evaluation executed across 392 runs (24 fails, prevalence 6.12%):
+      - **Target O1**: PR-AUC = `0.0724`, 95% stratified CI `[0.0559, 0.1173]`, 95% moving-block CI `[0.0384, 0.1514]`. Verdict: **MISS** (below $2\times$ prevalence 0.1224).
+      - **Target O2**: Recall @ 5 FAR = `0.0417` (1 TP / 24 fails), 95% wider CI `[0.0000, 0.1765]`. Verdict: **MISS** (below 0.20; chance recall is 0.05).
+      - **Target O3**: Realised alarms at budget 5 = `3.06 per 100` (12 alarms on 392 runs, 0 TP, 12 FP). Verdict: **PASS** (within $[2.0, 8.0]$ per 100).
+      - **Target O4**: Paired ML − SPC difference (E08 − E02) = `+0.0153`, 95% stratified CI `[-0.0308, +0.0910]`, 95% moving-block CI `[-0.0470, +0.0839]`. Verdict: **REPORTED** (confidence interval spans zero; no statistically significant ML advantage over SPC).
+    - Overwrite refusal verified; holdout labels cannot be reopened for re-tuning.
+  - **Checkpoint C4:** Freeze manifest and one-shot holdout metrics recorded in `reports/holdout_metrics.json`.
+  - **T13 (CLI batch scoring):** `score_csv_file` handles column checks, non-numeric validation, and chronological ordering. Verified via `tests/test_batch.py` (3 tests pass).
+  - **T14 (FastAPI service):** Implemented `/health`, `/ready`, `/model-info`, `/score`, `/spc` with 256 KiB and 2 MiB body limits, 503 missing bundle handling, and clean JSON errors. Verified via `tests/test_api.py` (12 tests pass).
+  - **T15 (Streamlit dashboard):** Implemented 4 views (EWMA + Western Electric run rules, MSPC $T^2$/$SPE$, flagged drill-down with TreeSHAP/MSPC bars and collinear groups, alarm budget table) with synthetic demo fallback mode. Verified via `tests/test_dashboard.py` (2 tests pass).
+  - **T16 (Drift check):** Evidently data drift preset + missing rate table implemented. Three controls (no-change, +2$\sigma$ sensor shifts, insufficient data < 100 runs) passed 100%. Holdout vs reference report written to `reports/drift/`. Verified via `tests/test_monitoring.py` (3 tests pass).
+  - **T17 (Docker):** `Dockerfile` (non-root `appuser`, pinned lock), `.dockerignore`, and `scripts/smoke_api.py` implemented and verified against running API server. Local Docker daemon offline; marked unverified locally as required by project protocol.
+  - **T18 (CI & runtime):** `.github/workflows/ci.yml` defined with `test` and `docker-smoke` jobs. `scripts/benchmark_runtime.py` executed: Target O6 reproducibility delta = `0.0` (PASS); Target O7 parity delta = `0.0` (PASS); warm score latency p95 = `63.8 ms`. Output saved to `reports/runtime.json`.
+  - **T19 (Model card, README, evidence audit):** `docs/MODEL_CARD.md`, `README.md`, `LICENSE`, `docs/06_VALIDATION_AND_RELEASE.md`, and `docs/08_DECISIONS_LOG.md` completed. All numbers trace to `reports/` with fail counts, bootstrap CIs, and explicit offline benchmark disclaimer.
+- Commands and verification:
+  - `.\.venv\Scripts\python.exe -m pytest -v` -> `74 passed`
+  - `.\.venv\Scripts\python.exe -m ruff check src api app scripts tests` -> `All checks passed!`
+  - `.\.venv\Scripts\python.exe scripts/smoke_api.py --url http://127.0.0.1:8000` -> `smoke_passed`
+- Checkpoint C5 status: **PASS** (Local MVP complete; Docker container build and remote CI marked unverified).
+
 

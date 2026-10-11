@@ -1,0 +1,78 @@
+{
+  "policy_version": "1.0",
+  "primary_detector": "E02",
+  "primary_alarm_budget_per_100": 5.0,
+  "alarm_budgets_per_100": [
+    2.0,
+    5.0,
+    10.0
+  ],
+  "score_direction": "higher_is_more_anomalous",
+  "alarm_rule": "score > threshold",
+  "calibration_block": "D5",
+  "n_calibration_runs": 235,
+  "thresholds": {
+    "E01": {
+      "budget_2": 0.08085106382978724,
+      "budget_5": 0.08085106382978724,
+      "budget_10": 0.08085106382978724
+    },
+    "E02": {
+      "budget_2": 7.244515304783514,
+      "budget_5": 6.282155287621238,
+      "budget_10": 6.036827979759588
+    },
+    "E03": {
+      "budget_2": 15.7971569249413,
+      "budget_5": 15.060185663664004,
+      "budget_10": 14.411544883793406
+    },
+    "E04": {
+      "budget_2": 99.42866508127483,
+      "budget_5": 80.15931006296829,
+      "budget_10": 67.45556470834421
+    },
+    "E05": {
+      "budget_2": 496.271714150373,
+      "budget_5": 319.9308521186239,
+      "budget_10": 237.40080907397765
+    },
+    "E06": {
+      "budget_2": 4.344764962182668,
+      "budget_5": 2.8461701835146886,
+      "budget_10": 2.399143971392746
+    },
+    "E07": {
+      "budget_2": 0.452017116489574,
+      "budget_5": 0.44594618698951477,
+      "budget_10": 0.4346777055976155
+    },
+    "E08": {
+      "budget_2": 0.45949692368507383,
+      "budget_5": 0.41731845736503576,
+      "budget_10": 0.37821871042251587
+    }
+  },
+  "selection": {
+    "primary_detector": "E02",
+    "best_spc_detector": "E02",
+    "best_spc_mean_fold_pr_auc": 0.11527690375829473,
+    "best_ml_detector": "E08",
+    "best_ml_mean_fold_pr_auc": 0.17905676877292312,
+    "paired_diff_ml_minus_spc": 0.06377986501462839,
+    "paired_diff_95_ci": [
+      -0.08985589009741377,
+      0.21608783201575835
+    ],
+    "ci_contains_zero": true,
+    "selection_rule_reason": "Selected best SPC detector (E02, mean fold PR-AUC=0.115277) over best ML detector (E08, mean fold PR-AUC=0.179057): paired bootstrap difference (ML - SPC) = +0.063780 with 95% CI [-0.089856, 0.216088] (contains zero).",
+    "paired_diff_moving_block_95_ci": [
+      -0.12732469224423243,
+      0.23236723355931602
+    ],
+    "paired_diff_wider_95_ci": [
+      -0.12732469224423243,
+      0.23236723355931602
+    ]
+  }
+}

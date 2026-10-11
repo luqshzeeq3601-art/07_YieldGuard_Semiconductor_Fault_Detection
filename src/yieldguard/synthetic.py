@@ -72,10 +72,15 @@ def generate_synthetic_secom(
     base_data[:, drift_indices] += t_norm * 2.0
 
     # 3. Assign failing runs across time so every chronological block has fails
-    n_fails = max(5, round(n_runs * fail_rate))
-    fail_positions = np.linspace(5, n_runs - 2, n_fails, dtype=int)
     labels_raw = [-1] * n_runs
     single_sensor_fault_runs: dict[int, str] = {}
+    if n_runs <= 2:
+        fail_positions = np.array([], dtype=int)
+    else:
+        n_fails = max(1, min(n_runs - 1, round(n_runs * fail_rate)))
+        start_pos = 1 if n_runs < 10 else 5
+        end_pos = max(start_pos, n_runs - 1)
+        fail_positions = np.linspace(start_pos, end_pos, n_fails, dtype=int)
 
     for k, r_idx in enumerate(fail_positions):
         labels_raw[int(r_idx)] = 1

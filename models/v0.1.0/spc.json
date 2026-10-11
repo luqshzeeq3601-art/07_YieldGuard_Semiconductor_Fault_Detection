@@ -1,0 +1,133 @@
+{
+  "monitored_sensors": [
+    "f059",
+    "f021",
+    "f103",
+    "f205",
+    "f000",
+    "f122",
+    "f033",
+    "f028",
+    "f460",
+    "f127"
+  ],
+  "sensor_specs": {
+    "f059": {
+      "sensor": "f059",
+      "mu0": 4.871960581395348,
+      "sigma0": 6.632388807701516,
+      "training_missing_fraction": 0.00425531914893617,
+      "rank_biserial": 0.4692625458996329,
+      "abs_rank_biserial": 0.4692625458996329,
+      "p_value": 1.1361511629507184e-11,
+      "bh_adjusted_p_value": 2.919908488783346e-09,
+      "group_members": []
+    },
+    "f021": {
+      "sensor": "f021",
+      "mu0": -5717.450173812283,
+      "sigma0": 540.2425190469139,
+      "training_missing_fraction": 0.002127659574468085,
+      "rank_biserial": 0.2661259173426034,
+      "abs_rank_biserial": 0.2661259173426034,
+      "p_value": 0.00012986525431435043,
+      "bh_adjusted_p_value": 0.012637467018879045,
+      "group_members": []
+    },
+    "f103": {
+      "sensor": "f103",
+      "mu0": -0.008997337962962962,
+      "sigma0": 0.001999663058931815,
+      "training_missing_fraction": 0.0,
+      "rank_biserial": 0.25756883528265107,
+      "abs_rank_biserial": 0.25756883528265107,
+      "p_value": 0.0001939873275065599,
+      "bh_adjusted_p_value": 0.012637467018879045,
+      "group_members": []
+    },
+    "f205": {
+      "sensor": "f205",
+      "mu0": 9.641045296167245,
+      "sigma0": 4.380515009071417,
+      "training_missing_fraction": 0.0031914893617021275,
+      "rank_biserial": 0.2573812580231065,
+      "abs_rank_biserial": 0.2573812580231065,
+      "p_value": 0.0001966920936790513,
+      "bh_adjusted_p_value": 0.012637467018879045,
+      "group_members": []
+    },
+    "f000": {
+      "sensor": "f000",
+      "mu0": 3011.6462354312357,
+      "sigma0": 63.96896232114336,
+      "training_missing_fraction": 0.006382978723404255,
+      "rank_biserial": -0.2508587903324745,
+      "abs_rank_biserial": 0.2508587903324745,
+      "p_value": 0.00028524873858089056,
+      "bh_adjusted_p_value": 0.014661785163057774,
+      "group_members": []
+    },
+    "f122": {
+      "sensor": "f122",
+      "mu0": 3.9605990675990674,
+      "sigma0": 0.3383235267343612,
+      "training_missing_fraction": 0.006382978723404255,
+      "rank_biserial": -0.2327475156422525,
+      "abs_rank_biserial": 0.2327475156422525,
+      "p_value": 0.000761394129086041,
+      "bh_adjusted_p_value": 0.030393207956734673,
+      "group_members": []
+    },
+    "f033": {
+      "sensor": "f033",
+      "mu0": 8.976155040556199,
+      "sigma0": 0.5776319091342912,
+      "training_missing_fraction": 0.0010638297872340426,
+      "rank_biserial": 0.23109410257974017,
+      "abs_rank_biserial": 0.23109410257974017,
+      "p_value": 0.0008278305669149522,
+      "bh_adjusted_p_value": 0.030393207956734673,
+      "group_members": []
+    },
+    "f028": {
+      "sensor": "f028",
+      "mu0": 68.44721251448435,
+      "sigma0": 2.3119573892152507,
+      "training_missing_fraction": 0.002127659574468085,
+      "rank_biserial": -0.215032831208961,
+      "abs_rank_biserial": 0.215032831208961,
+      "p_value": 0.0019881812279919447,
+      "bh_adjusted_p_value": 0.06387032194924122,
+      "group_members": []
+    },
+    "f460": {
+      "sensor": "f460",
+      "mu0": 29.265474855156434,
+      "sigma0": 11.886917691003935,
+      "training_missing_fraction": 0.0010638297872340426,
+      "rank_biserial": 0.2111971702140636,
+      "abs_rank_biserial": 0.2111971702140636,
+      "p_value": 0.0022477339902904534,
+      "bh_adjusted_p_value": 0.06418529283384962,
+      "group_members": []
+    },
+    "f127": {
+      "sensor": "f127",
+      "mu0": 0.6587103729603729,
+      "sigma0": 0.054946436108145695,
+      "training_missing_fraction": 0.006382978723404255,
+      "rank_biserial": -0.20804195804195802,
+      "abs_rank_biserial": 0.20804195804195802,
+      "p_value": 0.00262020341314135,
+      "bh_adjusted_p_value": 0.06609890247550873,
+      "group_members": []
+    }
+  },
+  "ewma_lambda": 0.2,
+  "ewma_l": 3.0,
+  "mr_d2": 1.128,
+  "n_screened_columns": 257,
+  "n_train_runs": 940,
+  "n_passing_train_runs": 864,
+  "n_failing_train_runs": 76
+}
