@@ -199,4 +199,10 @@
 - Files: `README.md`, `docs/MODEL_CARD.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `tasks/todo.md`.
 - Acceptance check: `README.md` and `docs/MODEL_CARD.md` present both the `v0.1.0` negative SECOM result, Phase 2 diagnostic root-cause analysis, and Phase 4 confirmatory `v0.2` Wafer Etch benchmark results with full traceability.
 
+### T26: Dashboard — Add dynamic Wafer Etch confirmatory benchmark view
+- [x] Complete T26 (12 October 2026).
+- Dependencies: T24, T25.
+- Files: `app/dashboard.py`, `tests/test_dashboard.py`.
+- Acceptance check: Dedicated View 6 ("Wafer Etch benchmark") implemented in Streamlit dashboard; dynamic display of confirmatory scorecard (`O1_v2`–`O4_v2`), interactive 152-channel sensor trace inspector vs normal baseline, and detector comparison table/chart across alarm budgets 2, 5, 10; synthetic demo fallback tested; AppTest and full pytest suite pass cleanly (81 tests, 0 failures).
+
 

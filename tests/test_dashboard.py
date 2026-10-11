@@ -28,6 +28,7 @@ def test_dashboard_apptest_runs_all_views_without_exceptions() -> None:
         "3. Flagged-Run Drill-Down",
         "4. Alarm-Budget Performance",
         "5. Project Overview & Architecture",
+        "6. Semiconductor Wafer Etch (v0.2 Benchmark)",
     ]
 
     for view_name in views:
