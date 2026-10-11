@@ -260,5 +260,20 @@
        - **O3_v2 (PASS)**: `E08_v2` realised **5.55 alarms per 100** at budget 5 (**344 TP, 4 FP**, precision **98.85%**, recall **50.89%**); all 8 detectors `E02_v2`–`E09_v2` stayed inside `[4.95, 6.14] per 100`.
        - **O4_v2 (REPORTED)**: `E08_v2` (`0.9729`) minus best SPC `E05_v2` (`0.3014`) = **+0.6715** (`95% CI [+0.6458, +0.6931]`).
 - Unresolved issues: None (remote GitHub Actions CI workflow remains unverified on GitHub until a remote repository is configured and pushed).
-- Next ready task: All tasks `T01`–`T25` complete.
+- Next ready task: none in the MVP tracker; backlog items remain in `tasks/todo.md` section 9.
+
+## 14. Session: 12 October 2026, T26 Dashboard Wafer Etch Confirmatory Benchmark View
+
+- Date/time: 2026-10-12 01:05 (Asia/Kuala_Lumpur)
+- Task completed: `T26`.
+- Changed files:
+  - `app/dashboard.py` (added `VIEW_WAFER`, `VIEW_LABELS` navigation entries, `load_wafer_dashboard_data` with synthetic fallback, `render_wafer_etch_view`, KPI strip for `O1_v2`–`O4_v2`, interactive 152-channel sensor trace inspector with baseline overlay, and detector comparison across budgets 2, 5, 10).
+  - `tests/test_dashboard.py` (added `6. Semiconductor Wafer Etch (v0.2 Benchmark)` to the AppTest test loop).
+  - `tasks/todo.md`, `docs/09_PROGRESS_LOG.md`.
+- Verification evidence:
+  - `.\.venv\Scripts\python.exe -m ruff check app/dashboard.py tests/test_dashboard.py` -> `All checks passed!`
+  - `.\.venv\Scripts\python.exe -m pytest tests/test_dashboard.py -v` -> `2 passed`
+  - `.\.venv\Scripts\python.exe -m pytest -q` -> `81 passed`
+- Unresolved issues: None.
+- Next ready task: All current and backlog dashboard enhancement tasks completed.
 
