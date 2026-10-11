@@ -1,0 +1,50 @@
+{
+  "dataset_id": "SECOM",
+  "source_url": "https://archive.ics.uci.edu/static/public/179/secom.zip",
+  "dataset_page_url": "https://archive.ics.uci.edu/dataset/179/secom",
+  "doi": "10.24432/C54305",
+  "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "licence_verified_date": "2026-10-11",
+  "citation": "McCann, M. & Johnston, A. (2008). SECOM [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C54305.",
+  "download_timestamp_utc": "2026-10-11T10:53:40.855143+00:00",
+  "archive_sha256": "eea568baf3c2229096d7d294cf0b096b5502bd96d92c0b80a65b84714059be8e",
+  "files": {
+    "secom.data": {
+      "sha256": "20f0e7ee434f7dcbae0eea9ffff009a2b57f42d6b0dc9a5bd4f00782c0a3374c",
+      "size_bytes": 5389983,
+      "path": "data/raw/secom/secom.data"
+    },
+    "secom_labels.data": {
+      "sha256": "126884cf453705c9e61a903fe906f0665a3b45ce3639e621edc5c93c89627e03",
+      "size_bytes": 40638,
+      "path": "data/raw/secom/secom_labels.data"
+    },
+    "secom.names": {
+      "sha256": "6d91b0b46cdee03064ee3e3112f937c1b3f7fcd9933575794ec07974e6f1ea59",
+      "size_bytes": 4223,
+      "path": "data/raw/secom/secom.names"
+    }
+  },
+  "hash_checks": {
+    "archive": {
+      "expected_sha256": "eea568baf3c2229096d7d294cf0b096b5502bd96d92c0b80a65b84714059be8e",
+      "actual_sha256": "eea568baf3c2229096d7d294cf0b096b5502bd96d92c0b80a65b84714059be8e",
+      "matches": true
+    },
+    "secom.data": {
+      "expected_sha256": "20f0e7ee434f7dcbae0eea9ffff009a2b57f42d6b0dc9a5bd4f00782c0a3374c",
+      "actual_sha256": "20f0e7ee434f7dcbae0eea9ffff009a2b57f42d6b0dc9a5bd4f00782c0a3374c",
+      "matches": true
+    },
+    "secom_labels.data": {
+      "expected_sha256": "126884cf453705c9e61a903fe906f0665a3b45ce3639e621edc5c93c89627e03",
+      "actual_sha256": "126884cf453705c9e61a903fe906f0665a3b45ce3639e621edc5c93c89627e03",
+      "matches": true
+    },
+    "secom.names": {
+      "expected_sha256": "6d91b0b46cdee03064ee3e3112f937c1b3f7fcd9933575794ec07974e6f1ea59",
+      "actual_sha256": "6d91b0b46cdee03064ee3e3112f937c1b3f7fcd9933575794ec07974e6f1ea59",
+      "matches": true
+    }
+  }
+}

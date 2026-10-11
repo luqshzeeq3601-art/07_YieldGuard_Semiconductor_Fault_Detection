@@ -1,0 +1,75 @@
+# YieldGuard default configuration
+
+project:
+  name: "YieldGuard"
+  version: "0.1.0"
+  seed: 42
+
+data:
+  dataset_id: "SECOM"
+  raw_dir: "data/raw/secom"
+  processed_dir: "data/processed"
+  source_manifest: "data/source_manifest.json"
+  quality_report: "reports/data_quality.json"
+  split_manifest: "data/processed/split_manifest.json"
+  runs_parquet: "data/processed/runs.parquet"
+  labels_dev_parquet: "data/processed/labels_dev.parquet"
+  labels_holdout_parquet: "data/processed/labels_holdout.parquet"
+  timestamp_format: "%d/%m/%Y %H:%M:%S"
+  verify_uci_counts: true
+
+splits:
+  dev_fraction: 0.75
+  n_dev_blocks: 5
+
+quality:
+  max_missing_fraction: 0.50
+  max_constant_dominant_fraction: 0.99
+  collinearity_threshold: 0.95
+
+spc:
+  n_monitored_sensors: 10
+  max_sensor_missing_fraction: 0.05
+  ewma_lambda: 0.20
+  ewma_l: 3.0
+  mr_d2: 1.128
+
+mspc:
+  variance_explained_target: 0.80
+  max_components: 50
+  phase1_trim_alpha: 0.999
+  limit_alpha: 0.99
+
+anomaly:
+  n_estimators: 200
+  max_samples: "auto"
+  seed: 42
+
+xgboost:
+  max_configs: 20
+  seed: 42
+
+policy:
+  primary_alarm_budget_per_100: 5.0
+  alarm_budgets_per_100: [2.0, 5.0, 10.0]
+  false_alarm_rates_per_100: [2.0, 5.0, 10.0]
+  n_bootstraps: 2000
+  block_bootstrap_length: 20
+
+targets:
+  o1_pr_auc_min_prevalence_multiple: 2.0
+  o1_require_ci_lower_above_prevalence: true
+  o2_min_recall_at_5_far: 0.20
+  o3_alarm_rate_min_per_100: 2.0
+  o3_alarm_rate_max_per_100: 8.0
+  o4_paired_bootstrap_reported: true
+  o5_synthetic_top3_hit_rate_min: 0.90
+  o5_shap_additivity_tol: 0.0001
+  o6_reproducibility_tol: 0.000001
+  o7_cli_api_parity_tol: 0.000000001
+  o7_warm_score_p95_max_ms: 200.0
+
+models:
+  staging_dir: "models/staging"
+  tracking_uri: "sqlite:///mlruns.db"
+  reports_dir: "reports"
