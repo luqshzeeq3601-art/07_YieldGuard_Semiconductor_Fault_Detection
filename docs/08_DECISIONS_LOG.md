@@ -53,12 +53,14 @@ Verification or follow-up task:
 - **Question:** How are the 4 pre-T12 audit findings resolved and recorded before opening holdout labels?
 - **Evidence examined:** User code review audit notes: (1) repo lacked initial commit and tracked hashes; (2) E02 tied scores on D5 calibration block yield 6 alarms (2.55 per 100 runs) at budget 5 instead of ~12; (3) moving-block bootstrap previously pooled D3-D5 across fold models; (4) PCA 50-component cap binds on training data explaining 61.97% variance.
 - **Decision and alternatives:**
-  1. Record explicit SHA-256 hashes in git-tracked `reports/staging_manifest_sha256.json` and create initial git commit before T12.
-  2. Keep strict `>` threshold comparison rule as predeclared; record 2.55 alarms per 100 on D5 as a known limitation without post-hoc tie alteration.
+  1. Record explicit SHA-256 hashes in git-tracked `reports/staging_manifest_sha256.json`, track `models/staging/policy.json`, and commit to Git before T12.
+  2. Keep strict `>` threshold comparison rule as predeclared; record 2.55 alarms per 100 on D5 (and 2.13 per 100 at budget 2) as a known limitation without post-hoc tie alteration.
   3. Recompute moving-block bootstrap strictly within folds: E03 moving-block 95% CI is `[0.0295, 0.2185]` (contains 0.1046 point estimate). Paired within-fold moving-block difference (E08 - E02) is `[-0.1273, +0.2324]`, confirming Rule 4 retains E02 under both bootstrap methods.
   4. Explicitly label PCA diagnostics with actual cumulative variance explained (~62%) and note the 50-component cap.
-- **Effect on requirements/data/protocol:** Preserves integrity of frozen protocol without post-hoc alterations; confirms E02 selection.
-- **Documents changed:** `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `docs/05_EXPERIMENT_PLAN.md`, `src/yieldguard/evaluate.py`, `src/yieldguard/train.py`, `reports/staging_manifest_sha256.json`.
+  5. Enforce strict single-shot evaluation per §10.4 by permanently removing the `allow_overwrite` flag from `run_holdout_evaluation`. Once executed, holdout evaluation output cannot be rewritten.
+  6. Enforce strict Target O1 verification per §7.3 by requiring the lower bound of the wider confidence interval (the wider of stratified and moving-block bootstrap) to satisfy the bound, rather than the stratified interval alone. Decided and frozen prior to opening holdout labels.
+- **Effect on requirements/data/protocol:** Strengthens protocol tamper-resistance and makes Target O1 evaluation criterion strict and unambiguous before holdout evaluation. Confirms E02 primary selection.
+- **Documents changed:** `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `docs/05_EXPERIMENT_PLAN.md`, `src/yieldguard/evaluate.py`, `src/yieldguard/train.py`, `reports/staging_manifest_sha256.json`, `.gitignore`.
 - **Verification or follow-up task:** T12 holdout evaluation.
 
 

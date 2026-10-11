@@ -47,6 +47,8 @@ data/raw/
 data/processed/*
 !data/processed/split_manifest.json
 models/*
+!models/staging/
+models/staging/*
 !models/staging/policy.json
 !models/v0.1.0/
 !models/v0.1.0/**
