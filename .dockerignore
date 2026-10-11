@@ -1,0 +1,14 @@
+.venv
+.pytest-tmp
+__pycache__
+*.pyc
+.git
+.github
+data
+reports
+mlruns.db
+mlruns
+models/*
+!models/v0.1.0
+.coverage
+htmlcov

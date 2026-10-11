@@ -98,30 +98,30 @@
 - Acceptance check: SHAP additivity within 1e-4; synthetic single-sensor 5-sigma fault in top 3 MSPC contributions in >= 90% of cases (O5 verdict recorded either way); group members attached; output names map to raw sensor names.
 
 ### T12: Bundle, freeze, holdout evaluation
-- [ ] Complete T12.
+- [x] Complete T12 (11 October 2026).
 - Dependencies: T11.
 - Files: `src/yieldguard/artifacts.py`, `predict.py`, `tests/test_artifacts.py`, `tests/test_holdout.py`.
 - Acceptance check: bundle round-trips with checksum and schema checks; tampered file refused; predictions hashed before labels open; `reports/holdout_metrics.json` holds all metrics, intervals and O1-O4 verdicts; second run of the command refuses to overwrite.
 
 ### Checkpoint C4
-- [ ] One holdout record; all verdicts visible, including misses.
+- [x] One holdout record; all verdicts visible, including misses (11 October 2026).
 
 ## 7. Inference surfaces
 
 ### T13: CLI batch scoring
-- [ ] Complete T13.
+- [x] Complete T13 (11 October 2026).
 - Dependencies: T12.
 - Files: `src/yieldguard/cli.py`, `tests/test_batch.py`.
 - Acceptance check: `score` on a CSV returns one row per run in time order with all scores and flags; invalid run fails the whole file with a named error; `explain` writes rankings for flagged runs.
 
 ### T14: FastAPI
-- [ ] Complete T14.
+- [x] Complete T14 (11 October 2026).
 - Dependencies: T13.
 - Files: `api/main.py`, `api/schemas.py`, `tests/test_api.py`.
 - Acceptance check: TestClient cases for valid run, nulls, 589 and 591 values, string value, infinity, unknown field, oversized body and missing bundle (503); `/score` equals CLI within 1e-9 with identical flags; `/spc` equals `spc.py` on the same sequence.
 
 ### T15: Streamlit dashboard
-- [ ] Complete T15.
+- [x] Complete T15 (11 October 2026).
 - Dependencies: T14.
 - Files: `app/dashboard.py`, `tests/test_dashboard.py`.
 - Acceptance check: `streamlit.testing.v1.AppTest` runs all four views on synthetic data without exceptions; manual check in the browser on the real bundle; chart values equal package outputs for one sensor and one run; synthetic mode is labelled on screen.
@@ -129,31 +129,31 @@
 ## 8. Operations and handoff
 
 ### T16: Drift check
-- [ ] Complete T16.
+- [x] Complete T16 (11 October 2026).
 - Dependencies: T13.
 - Files: `src/yieldguard/monitoring.py`, `tests/test_monitoring.py`.
 - Acceptance check: three controls pass; reference-versus-holdout HTML and JSON written with sample sizes, method and missing-rate table.
 
 ### T17: Docker
-- [ ] Complete T17.
+- [x] Complete T17 (11 October 2026; Dockerfile, .dockerignore, scripts/smoke_api.py implemented and verified against live API; local Docker daemon offline so container build is marked unverified).
 - Dependencies: T14.
 - Files: `Dockerfile`, `.dockerignore`, `scripts/smoke_api.py`.
 - Acceptance check: image builds from the lock; runs as nonroot; `/ready` returns 200; smoke script gets a valid `/score` response; no raw data or MLflow store in the image. If Docker is unavailable locally, marked unverified, not passed.
 
 ### T18: CI and runtime
-- [ ] Complete T18.
+- [x] Complete T18 (11 October 2026; CI workflow defined with test and docker-smoke jobs; runtime and reproducibility benchmarks saved to reports/runtime.json; remote CI stated as unverified until GitHub runs it).
 - Dependencies: T17.
 - Files: `.github/workflows/ci.yml`, `scripts/benchmark_runtime.py`, `reports/runtime.json`.
 - Acceptance check: `test` job (ruff, pytest on synthetic data, no download) and `docker-smoke` job (build, readiness, real scoring request) defined; equivalent commands pass locally; latency measured for O7; remote run status stated as unverified until GitHub runs it.
 
 ### T19: Model card, README, evidence audit
-- [ ] Complete T19.
+- [x] Complete T19 (11 October 2026; MODEL_CARD.md, README.md, LICENSE, docs/06, docs/08, docs/09 complete and verified).
 - Dependencies: T15, T16, T18.
 - Files: `docs/MODEL_CARD.md`, `README.md`, `docs/06`, `docs/09`.
 - Acceptance check: every number in README and model card traces to a file in `reports/`; fail counts and intervals beside every headline figure; statement that results are offline benchmark results, not yield or cost savings; missed targets listed; dataset attribution and licence present; Markdown links resolve.
 
 ### Checkpoint C5
-- [ ] Local MVP complete; unverified items marked as such.
+- [x] Complete Checkpoint C5 (11 October 2026; Local MVP complete; Docker container runtime and remote CI marked unverified).
 
 ## 9. Backlog, outside this MVP
 
