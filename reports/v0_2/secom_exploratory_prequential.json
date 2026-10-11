@@ -1,0 +1,1349 @@
+{
+  "protocol_version": "0.2.0",
+  "dataset_id": "SECOM",
+  "evaluation_type": "exploratory_post_holdout",
+  "generated_at_utc": "2026-10-11T16:44:29.502042+00:00",
+  "seed": 42,
+  "predictions_sha256": "dc781e47b1a68c158e321d12dfc46cdd37fd2d627c3afe18523d344c02d717fb",
+  "prequential_summary": {
+    "n_total_blocks": 8,
+    "n_evaluated_blocks": 7,
+    "n_evaluated_runs": 1371,
+    "n_evaluated_fails": 75,
+    "evaluated_prevalence": 0.05470459518599562,
+    "rolling_window_runs": 470,
+    "calibration_window_runs": 235
+  },
+  "selection": {
+    "primary_detector": "E03_v2",
+    "best_overall_detector": "E08_v2",
+    "best_spc_detector": "E03_v2",
+    "best_ml_detector": "E08_v2",
+    "diff_best_ml_minus_best_spc": 0.020637061412397115,
+    "diff_95_ci": [
+      -0.0344484178975225,
+      0.07832686142642228
+    ]
+  },
+  "target_outcomes_v0_2": {
+    "O1_v2_prequential_pr_auc": {
+      "verdict": "MISS",
+      "primary_detector": "E03_v2",
+      "actual_pr_auc": 0.0842938357910373,
+      "best_detector": "E08_v2",
+      "best_detector_pr_auc": 0.10493089720343442,
+      "wider_95_ci": [
+        0.05635233605315402,
+        0.12907528540940008
+      ],
+      "target_min_pr_auc_2x_prevalence": 0.10940919037199125,
+      "chance_prevalence": 0.05470459518599562,
+      "n_fails": 75
+    },
+    "O2_v2_recall_at_5_far": {
+      "verdict": "MISS",
+      "primary_detector": "E03_v2",
+      "actual_recall_at_5_far": 0.10666666666666667,
+      "best_detector": "E08_v2",
+      "best_detector_recall_at_5_far": 0.13333333333333333,
+      "wider_95_ci": [
+        0.03487369687249398,
+        0.2
+      ],
+      "target_min_recall": 0.2,
+      "chance_recall": 0.05,
+      "n_fails": 75
+    },
+    "O3_v2_adaptive_alarm_budget": {
+      "verdict": "MISS",
+      "primary_detector": "E03_v2",
+      "target_budget_per_100": 5.0,
+      "allowed_range_per_100": [
+        2.0,
+        8.0
+      ],
+      "realised_alarms_per_100": 12.399708242159008,
+      "alarms": 170,
+      "true_alarms": 15,
+      "false_alarms": 155,
+      "precision": 0.08823529411764706,
+      "recall": 0.2,
+      "n_runs": 1371
+    },
+    "O4_v2_spc_vs_ml_comparison": {
+      "verdict": "REPORTED",
+      "best_ml_detector": "E08_v2",
+      "best_spc_detector": "E03_v2",
+      "best_ml_pr_auc": 0.10493089720343442,
+      "best_spc_pr_auc": 0.0842938357910373,
+      "e09_logreg_pr_auc": 0.07634269965321169,
+      "diff_ml_minus_spc": 0.020637061412397115,
+      "stratified_95_ci_diff": [
+        -0.0344484178975225,
+        0.07832686142642228
+      ],
+      "n_fails": 75
+    }
+  },
+  "detectors": {
+    "E01_v2": {
+      "pooled_pr_auc": 0.08126289412389498,
+      "mean_block_pr_auc": 0.05463931765599641,
+      "pooled_roc_auc": 0.5484670781893004,
+      "lift_over_prevalence": 1.4854857045848002,
+      "stratified_95_ci_pr_auc": [
+        0.06194312388014591,
+        0.10773164723776442
+      ],
+      "moving_block_95_ci_pr_auc": [
+        0.04996012799558067,
+        0.12890373050189488
+      ],
+      "wider_95_ci_pr_auc": [
+        0.04996012799558067,
+        0.12890373050189488
+      ],
+      "recall_at_2_far": 0.02,
+      "recall_at_5_far": 0.05,
+      "recall_at_10_far": 0.1,
+      "stratified_95_ci_recall_at_5_far": [
+        0.05,
+        0.05
+      ],
+      "moving_block_95_ci_recall_at_5_far": [
+        0.05,
+        0.05
+      ],
+      "wider_95_ci_recall_at_5_far": [
+        0.05,
+        0.05
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "target_budget_per_100": 2.0,
+          "alarms": 0,
+          "realised_alarms_per_100": 0.0,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "within_2_to_8_band": null
+        },
+        "budget_5": {
+          "target_budget_per_100": 5.0,
+          "alarms": 0,
+          "realised_alarms_per_100": 0.0,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "within_2_to_8_band": false
+        },
+        "budget_10": {
+          "target_budget_per_100": 10.0,
+          "alarms": 0,
+          "realised_alarms_per_100": 0.0,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "within_2_to_8_band": null
+        }
+      }
+    },
+    "E02_v2": {
+      "pooled_pr_auc": 0.07675460981738294,
+      "mean_block_pr_auc": 0.1277369223421936,
+      "pooled_roc_auc": 0.5308024691358024,
+      "lift_over_prevalence": 1.4030742674617602,
+      "stratified_95_ci_pr_auc": [
+        0.05745071295693234,
+        0.11747618994121516
+      ],
+      "moving_block_95_ci_pr_auc": [
+        0.05201482889682191,
+        0.13095740085936136
+      ],
+      "wider_95_ci_pr_auc": [
+        0.05201482889682191,
+        0.13095740085936136
+      ],
+      "recall_at_2_far": 0.06666666666666667,
+      "recall_at_5_far": 0.13333333333333333,
+      "recall_at_10_far": 0.2,
+      "stratified_95_ci_recall_at_5_far": [
+        0.05333333333333334,
+        0.22666666666666666
+      ],
+      "moving_block_95_ci_recall_at_5_far": [
+        0.04054054054054054,
+        0.25758797653958937
+      ],
+      "wider_95_ci_recall_at_5_far": [
+        0.04054054054054054,
+        0.25758797653958937
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "target_budget_per_100": 2.0,
+          "alarms": 30,
+          "realised_alarms_per_100": 2.1881838074398248,
+          "true_alarms": 5,
+          "false_alarms": 25,
+          "precision": 0.16666666666666666,
+          "recall": 0.06666666666666667,
+          "within_2_to_8_band": null
+        },
+        "budget_5": {
+          "target_budget_per_100": 5.0,
+          "alarms": 85,
+          "realised_alarms_per_100": 6.199854121079504,
+          "true_alarms": 11,
+          "false_alarms": 74,
+          "precision": 0.12941176470588237,
+          "recall": 0.14666666666666667,
+          "within_2_to_8_band": true
+        },
+        "budget_10": {
+          "target_budget_per_100": 10.0,
+          "alarms": 151,
+          "realised_alarms_per_100": 11.013858497447119,
+          "true_alarms": 15,
+          "false_alarms": 136,
+          "precision": 0.09933774834437085,
+          "recall": 0.2,
+          "within_2_to_8_band": null
+        }
+      }
+    },
+    "E03_v2": {
+      "pooled_pr_auc": 0.0842938357910373,
+      "mean_block_pr_auc": 0.07768083805933672,
+      "pooled_roc_auc": 0.5987448559670782,
+      "lift_over_prevalence": 1.5408913182601618,
+      "stratified_95_ci_pr_auc": [
+        0.06551915036731094,
+        0.12788968574227894
+      ],
+      "moving_block_95_ci_pr_auc": [
+        0.05635233605315402,
+        0.12907528540940008
+      ],
+      "wider_95_ci_pr_auc": [
+        0.05635233605315402,
+        0.12907528540940008
+      ],
+      "recall_at_2_far": 0.06666666666666667,
+      "recall_at_5_far": 0.10666666666666667,
+      "recall_at_10_far": 0.16,
+      "stratified_95_ci_recall_at_5_far": [
+        0.04,
+        0.2
+      ],
+      "moving_block_95_ci_recall_at_5_far": [
+        0.03487369687249398,
+        0.2
+      ],
+      "wider_95_ci_recall_at_5_far": [
+        0.03487369687249398,
+        0.2
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "target_budget_per_100": 2.0,
+          "alarms": 72,
+          "realised_alarms_per_100": 5.25164113785558,
+          "true_alarms": 7,
+          "false_alarms": 65,
+          "precision": 0.09722222222222222,
+          "recall": 0.09333333333333334,
+          "within_2_to_8_band": null
+        },
+        "budget_5": {
+          "target_budget_per_100": 5.0,
+          "alarms": 170,
+          "realised_alarms_per_100": 12.399708242159008,
+          "true_alarms": 15,
+          "false_alarms": 155,
+          "precision": 0.08823529411764706,
+          "recall": 0.2,
+          "within_2_to_8_band": false
+        },
+        "budget_10": {
+          "target_budget_per_100": 10.0,
+          "alarms": 272,
+          "realised_alarms_per_100": 19.839533187454414,
+          "true_alarms": 20,
+          "false_alarms": 252,
+          "precision": 0.07352941176470588,
+          "recall": 0.26666666666666666,
+          "within_2_to_8_band": null
+        }
+      }
+    },
+    "E04_v2": {
+      "pooled_pr_auc": 0.0569894727090778,
+      "mean_block_pr_auc": 0.13945962562291123,
+      "pooled_roc_auc": 0.5023456790123457,
+      "lift_over_prevalence": 1.0417675611219421,
+      "stratified_95_ci_pr_auc": [
+        0.04792177411369113,
+        0.08845510120765616
+      ],
+      "moving_block_95_ci_pr_auc": [
+        0.04350100053312043,
+        0.08919814745611607
+      ],
+      "wider_95_ci_pr_auc": [
+        0.04350100053312043,
+        0.08919814745611607
+      ],
+      "recall_at_2_far": 0.013333333333333334,
+      "recall_at_5_far": 0.04,
+      "recall_at_10_far": 0.05333333333333334,
+      "stratified_95_ci_recall_at_5_far": [
+        0.0,
+        0.09333333333333334
+      ],
+      "moving_block_95_ci_recall_at_5_far": [
+        0.0,
+        0.09333333333333334
+      ],
+      "wider_95_ci_recall_at_5_far": [
+        0.0,
+        0.09333333333333334
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "target_budget_per_100": 2.0,
+          "alarms": 26,
+          "realised_alarms_per_100": 1.8964259664478482,
+          "true_alarms": 1,
+          "false_alarms": 25,
+          "precision": 0.038461538461538464,
+          "recall": 0.013333333333333334,
+          "within_2_to_8_band": null
+        },
+        "budget_5": {
+          "target_budget_per_100": 5.0,
+          "alarms": 49,
+          "realised_alarms_per_100": 3.574033552151714,
+          "true_alarms": 1,
+          "false_alarms": 48,
+          "precision": 0.02040816326530612,
+          "recall": 0.013333333333333334,
+          "within_2_to_8_band": true
+        },
+        "budget_10": {
+          "target_budget_per_100": 10.0,
+          "alarms": 92,
+          "realised_alarms_per_100": 6.710430342815463,
+          "true_alarms": 3,
+          "false_alarms": 89,
+          "precision": 0.03260869565217391,
+          "recall": 0.04,
+          "within_2_to_8_band": null
+        }
+      }
+    },
+    "E05_v2": {
+      "pooled_pr_auc": 0.0711605606816513,
+      "mean_block_pr_auc": 0.1375917684708439,
+      "pooled_roc_auc": 0.5219753086419754,
+      "lift_over_prevalence": 1.3008150492605859,
+      "stratified_95_ci_pr_auc": [
+        0.0503647333631156,
+        0.11388633960264842
+      ],
+      "moving_block_95_ci_pr_auc": [
+        0.04600436333769684,
+        0.11309472723923128
+      ],
+      "wider_95_ci_pr_auc": [
+        0.04600436333769684,
+        0.11388633960264842
+      ],
+      "recall_at_2_far": 0.02666666666666667,
+      "recall_at_5_far": 0.05333333333333334,
+      "recall_at_10_far": 0.09333333333333334,
+      "stratified_95_ci_recall_at_5_far": [
+        0.013333333333333334,
+        0.12
+      ],
+      "moving_block_95_ci_recall_at_5_far": [
+        0.011761285909712722,
+        0.11766640866873054
+      ],
+      "wider_95_ci_recall_at_5_far": [
+        0.011761285909712722,
+        0.12
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "target_budget_per_100": 2.0,
+          "alarms": 90,
+          "realised_alarms_per_100": 6.564551422319475,
+          "true_alarms": 5,
+          "false_alarms": 85,
+          "precision": 0.05555555555555555,
+          "recall": 0.06666666666666667,
+          "within_2_to_8_band": null
+        },
+        "budget_5": {
+          "target_budget_per_100": 5.0,
+          "alarms": 351,
+          "realised_alarms_per_100": 25.601750547045953,
+          "true_alarms": 19,
+          "false_alarms": 332,
+          "precision": 0.05413105413105413,
+          "recall": 0.25333333333333335,
+          "within_2_to_8_band": false
+        },
+        "budget_10": {
+          "target_budget_per_100": 10.0,
+          "alarms": 640,
+          "realised_alarms_per_100": 46.68125455871627,
+          "true_alarms": 37,
+          "false_alarms": 603,
+          "precision": 0.0578125,
+          "recall": 0.49333333333333335,
+          "within_2_to_8_band": null
+        }
+      }
+    },
+    "E06_v2": {
+      "pooled_pr_auc": 0.06125665921367699,
+      "mean_block_pr_auc": 0.13283956735160105,
+      "pooled_roc_auc": 0.5294547325102881,
+      "lift_over_prevalence": 1.1197717304260153,
+      "stratified_95_ci_pr_auc": [
+        0.05057053186263295,
+        0.10009777064069944
+      ],
+      "moving_block_95_ci_pr_auc": [
+        0.04583928977952123,
+        0.09919791785340423
+      ],
+      "wider_95_ci_pr_auc": [
+        0.04583928977952123,
+        0.10009777064069944
+      ],
+      "recall_at_2_far": 0.02666666666666667,
+      "recall_at_5_far": 0.05333333333333334,
+      "recall_at_10_far": 0.09333333333333334,
+      "stratified_95_ci_recall_at_5_far": [
+        0.013333333333333334,
+        0.10666666666666667
+      ],
+      "moving_block_95_ci_recall_at_5_far": [
+        0.010201504844361987,
+        0.11428571428571428
+      ],
+      "wider_95_ci_recall_at_5_far": [
+        0.010201504844361987,
+        0.11428571428571428
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "target_budget_per_100": 2.0,
+          "alarms": 72,
+          "realised_alarms_per_100": 5.25164113785558,
+          "true_alarms": 3,
+          "false_alarms": 69,
+          "precision": 0.041666666666666664,
+          "recall": 0.04,
+          "within_2_to_8_band": null
+        },
+        "budget_5": {
+          "target_budget_per_100": 5.0,
+          "alarms": 160,
+          "realised_alarms_per_100": 11.670313639679067,
+          "true_alarms": 8,
+          "false_alarms": 152,
+          "precision": 0.05,
+          "recall": 0.10666666666666667,
+          "within_2_to_8_band": false
+        },
+        "budget_10": {
+          "target_budget_per_100": 10.0,
+          "alarms": 329,
+          "realised_alarms_per_100": 23.99708242159008,
+          "true_alarms": 17,
+          "false_alarms": 312,
+          "precision": 0.05167173252279635,
+          "recall": 0.22666666666666666,
+          "within_2_to_8_band": null
+        }
+      }
+    },
+    "E07_v2": {
+      "pooled_pr_auc": 0.06883758913243429,
+      "mean_block_pr_auc": 0.12468613918924895,
+      "pooled_roc_auc": 0.5572736625514403,
+      "lift_over_prevalence": 1.2583511293408989,
+      "stratified_95_ci_pr_auc": [
+        0.05454687427928235,
+        0.1089448377543933
+      ],
+      "moving_block_95_ci_pr_auc": [
+        0.04950057625342172,
+        0.11044672669159801
+      ],
+      "wider_95_ci_pr_auc": [
+        0.04950057625342172,
+        0.11044672669159801
+      ],
+      "recall_at_2_far": 0.02666666666666667,
+      "recall_at_5_far": 0.04,
+      "recall_at_10_far": 0.09333333333333334,
+      "stratified_95_ci_recall_at_5_far": [
+        0.0,
+        0.09333333333333334
+      ],
+      "moving_block_95_ci_recall_at_5_far": [
+        0.0,
+        0.09461068211068203
+      ],
+      "wider_95_ci_recall_at_5_far": [
+        0.0,
+        0.09461068211068203
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "target_budget_per_100": 2.0,
+          "alarms": 101,
+          "realised_alarms_per_100": 7.366885485047411,
+          "true_alarms": 6,
+          "false_alarms": 95,
+          "precision": 0.0594059405940594,
+          "recall": 0.08,
+          "within_2_to_8_band": null
+        },
+        "budget_5": {
+          "target_budget_per_100": 5.0,
+          "alarms": 223,
+          "realised_alarms_per_100": 16.2654996353027,
+          "true_alarms": 11,
+          "false_alarms": 212,
+          "precision": 0.04932735426008968,
+          "recall": 0.14666666666666667,
+          "within_2_to_8_band": false
+        },
+        "budget_10": {
+          "target_budget_per_100": 10.0,
+          "alarms": 353,
+          "realised_alarms_per_100": 25.74762946754194,
+          "true_alarms": 19,
+          "false_alarms": 334,
+          "precision": 0.053824362606232294,
+          "recall": 0.25333333333333335,
+          "within_2_to_8_band": null
+        }
+      }
+    },
+    "E08_v2": {
+      "pooled_pr_auc": 0.10493089720343442,
+      "mean_block_pr_auc": 0.15648360919544088,
+      "pooled_roc_auc": 0.6181584362139918,
+      "lift_over_prevalence": 1.9181368008787811,
+      "stratified_95_ci_pr_auc": [
+        0.07364838785789697,
+        0.16236543272818346
+      ],
+      "moving_block_95_ci_pr_auc": [
+        0.06745617827038301,
+        0.16914532344483185
+      ],
+      "wider_95_ci_pr_auc": [
+        0.06745617827038301,
+        0.16914532344483185
+      ],
+      "recall_at_2_far": 0.06666666666666667,
+      "recall_at_5_far": 0.13333333333333333,
+      "recall_at_10_far": 0.18666666666666668,
+      "stratified_95_ci_recall_at_5_far": [
+        0.06666666666666667,
+        0.21333333333333335
+      ],
+      "moving_block_95_ci_recall_at_5_far": [
+        0.05263157894736842,
+        0.2321612035225048
+      ],
+      "wider_95_ci_recall_at_5_far": [
+        0.05263157894736842,
+        0.2321612035225048
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "target_budget_per_100": 2.0,
+          "alarms": 73,
+          "realised_alarms_per_100": 5.324580598103574,
+          "true_alarms": 12,
+          "false_alarms": 61,
+          "precision": 0.1643835616438356,
+          "recall": 0.16,
+          "within_2_to_8_band": null
+        },
+        "budget_5": {
+          "target_budget_per_100": 5.0,
+          "alarms": 143,
+          "realised_alarms_per_100": 10.430342815463165,
+          "true_alarms": 18,
+          "false_alarms": 125,
+          "precision": 0.1258741258741259,
+          "recall": 0.24,
+          "within_2_to_8_band": false
+        },
+        "budget_10": {
+          "target_budget_per_100": 10.0,
+          "alarms": 208,
+          "realised_alarms_per_100": 15.171407731582786,
+          "true_alarms": 22,
+          "false_alarms": 186,
+          "precision": 0.10576923076923077,
+          "recall": 0.29333333333333333,
+          "within_2_to_8_band": null
+        }
+      }
+    },
+    "E09_v2": {
+      "pooled_pr_auc": 0.07634269965321169,
+      "mean_block_pr_auc": 0.12112749188962178,
+      "pooled_roc_auc": 0.5669238683127572,
+      "lift_over_prevalence": 1.3955445496607097,
+      "stratified_95_ci_pr_auc": [
+        0.057675885779816874,
+        0.12528747959048542
+      ],
+      "moving_block_95_ci_pr_auc": [
+        0.05438487475457045,
+        0.12218822497863027
+      ],
+      "wider_95_ci_pr_auc": [
+        0.05438487475457045,
+        0.12528747959048542
+      ],
+      "recall_at_2_far": 0.04,
+      "recall_at_5_far": 0.09333333333333334,
+      "recall_at_10_far": 0.12,
+      "stratified_95_ci_recall_at_5_far": [
+        0.02666666666666667,
+        0.17333333333333334
+      ],
+      "moving_block_95_ci_recall_at_5_far": [
+        0.03125,
+        0.18075027382256284
+      ],
+      "wider_95_ci_recall_at_5_far": [
+        0.02666666666666667,
+        0.18075027382256284
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "target_budget_per_100": 2.0,
+          "alarms": 89,
+          "realised_alarms_per_100": 6.491611962071481,
+          "true_alarms": 8,
+          "false_alarms": 81,
+          "precision": 0.0898876404494382,
+          "recall": 0.10666666666666667,
+          "within_2_to_8_band": null
+        },
+        "budget_5": {
+          "target_budget_per_100": 5.0,
+          "alarms": 131,
+          "realised_alarms_per_100": 9.555069292487236,
+          "true_alarms": 9,
+          "false_alarms": 122,
+          "precision": 0.06870229007633588,
+          "recall": 0.12,
+          "within_2_to_8_band": false
+        },
+        "budget_10": {
+          "target_budget_per_100": 10.0,
+          "alarms": 238,
+          "realised_alarms_per_100": 17.35959153902261,
+          "true_alarms": 14,
+          "false_alarms": 224,
+          "precision": 0.058823529411764705,
+          "recall": 0.18666666666666668,
+          "within_2_to_8_band": null
+        }
+      }
+    }
+  },
+  "per_block_summaries": [
+    {
+      "block": "B2",
+      "n_history_runs": 196,
+      "n_window_runs": 196,
+      "n_calibration_runs": 196,
+      "n_eval_runs": 196,
+      "n_eval_fails": 24,
+      "eval_prevalence": 0.12244897959183673,
+      "n_retained_sensors": 274,
+      "monitored_spc_sensors": [
+        "f205",
+        "f345",
+        "f489",
+        "f336",
+        "f248",
+        "f333",
+        "f000",
+        "f151",
+        "f037",
+        "f439"
+      ],
+      "detectors": {
+        "E01_v2": {
+          "pr_auc": 0.12244897959183673,
+          "threshold_budget_5": 1.1479591836734695,
+          "alarms_budget_5": 0,
+          "realised_alarms_per_100_b5": 0.0,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 0
+        },
+        "E02_v2": {
+          "pr_auc": 0.10306582519109195,
+          "threshold_budget_5": 7.825877812827759,
+          "alarms_budget_5": 11,
+          "realised_alarms_per_100_b5": 5.612244897959184,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 11
+        },
+        "E03_v2": {
+          "pr_auc": 0.15148127559196337,
+          "threshold_budget_5": 15.965992332439518,
+          "alarms_budget_5": 47,
+          "realised_alarms_per_100_b5": 23.979591836734695,
+          "true_alarms_b5": 7,
+          "false_alarms_b5": 40
+        },
+        "E04_v2": {
+          "pr_auc": 0.10314832537670587,
+          "threshold_budget_5": 47.55285866654291,
+          "alarms_budget_5": 3,
+          "realised_alarms_per_100_b5": 1.530612244897959,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 3
+        },
+        "E05_v2": {
+          "pr_auc": 0.09414312911238575,
+          "threshold_budget_5": 440.4936483382393,
+          "alarms_budget_5": 66,
+          "realised_alarms_per_100_b5": 33.673469387755105,
+          "true_alarms_b5": 5,
+          "false_alarms_b5": 61
+        },
+        "E06_v2": {
+          "pr_auc": 0.09318374407754128,
+          "threshold_budget_5": 1.8169670788717325,
+          "alarms_budget_5": 42,
+          "realised_alarms_per_100_b5": 21.428571428571427,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 40
+        },
+        "E07_v2": {
+          "pr_auc": 0.09061043522974227,
+          "threshold_budget_5": 0.4582855143519267,
+          "alarms_budget_5": 41,
+          "realised_alarms_per_100_b5": 20.918367346938776,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 40
+        },
+        "E08_v2": {
+          "pr_auc": 0.17325048473107332,
+          "threshold_budget_5": 0.487306647002697,
+          "alarms_budget_5": 19,
+          "realised_alarms_per_100_b5": 9.693877551020408,
+          "true_alarms_b5": 5,
+          "false_alarms_b5": 14
+        },
+        "E09_v2": {
+          "pr_auc": 0.11987326866969514,
+          "threshold_budget_5": 0.7769013435040555,
+          "alarms_budget_5": 25,
+          "realised_alarms_per_100_b5": 12.755102040816327,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 23
+        }
+      }
+    },
+    {
+      "block": "B3",
+      "n_history_runs": 392,
+      "n_window_runs": 392,
+      "n_calibration_runs": 235,
+      "n_eval_runs": 196,
+      "n_eval_fails": 10,
+      "eval_prevalence": 0.05102040816326531,
+      "n_retained_sensors": 263,
+      "monitored_spc_sensors": [
+        "f022",
+        "f021",
+        "f181",
+        "f076",
+        "f000",
+        "f126",
+        "f122",
+        "f521",
+        "f090",
+        "f037"
+      ],
+      "detectors": {
+        "E01_v2": {
+          "pr_auc": 0.05102040816326531,
+          "threshold_budget_5": 1.135204081632653,
+          "alarms_budget_5": 0,
+          "realised_alarms_per_100_b5": 0.0,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 0
+        },
+        "E02_v2": {
+          "pr_auc": 0.07646581950224943,
+          "threshold_budget_5": 4.344694547997225,
+          "alarms_budget_5": 14,
+          "realised_alarms_per_100_b5": 7.142857142857143,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 12
+        },
+        "E03_v2": {
+          "pr_auc": 0.10485450050948553,
+          "threshold_budget_5": 4.802043511890019,
+          "alarms_budget_5": 21,
+          "realised_alarms_per_100_b5": 10.714285714285714,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 20
+        },
+        "E04_v2": {
+          "pr_auc": 0.06899672421315041,
+          "threshold_budget_5": 53.98264568627465,
+          "alarms_budget_5": 11,
+          "realised_alarms_per_100_b5": 5.612244897959184,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 11
+        },
+        "E05_v2": {
+          "pr_auc": 0.07020750065623754,
+          "threshold_budget_5": 397.01570708248846,
+          "alarms_budget_5": 78,
+          "realised_alarms_per_100_b5": 39.795918367346935,
+          "true_alarms_b5": 4,
+          "false_alarms_b5": 74
+        },
+        "E06_v2": {
+          "pr_auc": 0.06601217317910263,
+          "threshold_budget_5": 2.072989841215327,
+          "alarms_budget_5": 31,
+          "realised_alarms_per_100_b5": 15.816326530612244,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 30
+        },
+        "E07_v2": {
+          "pr_auc": 0.05025234538438059,
+          "threshold_budget_5": 0.4441887521496878,
+          "alarms_budget_5": 48,
+          "realised_alarms_per_100_b5": 24.489795918367346,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 47
+        },
+        "E08_v2": {
+          "pr_auc": 0.15571129799844025,
+          "threshold_budget_5": 0.5631425738334656,
+          "alarms_budget_5": 5,
+          "realised_alarms_per_100_b5": 2.5510204081632653,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 4
+        },
+        "E09_v2": {
+          "pr_auc": 0.1786783408479377,
+          "threshold_budget_5": 0.8790842068666248,
+          "alarms_budget_5": 14,
+          "realised_alarms_per_100_b5": 7.142857142857143,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 12
+        }
+      }
+    },
+    {
+      "block": "B4",
+      "n_history_runs": 588,
+      "n_window_runs": 470,
+      "n_calibration_runs": 235,
+      "n_eval_runs": 196,
+      "n_eval_fails": 4,
+      "eval_prevalence": 0.02040816326530612,
+      "n_retained_sensors": 266,
+      "monitored_spc_sensors": [
+        "f166",
+        "f125",
+        "f267",
+        "f126",
+        "f128",
+        "f169",
+        "f132",
+        "f090",
+        "f064",
+        "f167"
+      ],
+      "detectors": {
+        "E01_v2": {
+          "pr_auc": 0.02040816326530612,
+          "threshold_budget_5": 1.1071428571428572,
+          "alarms_budget_5": 0,
+          "realised_alarms_per_100_b5": 0.0,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 0
+        },
+        "E02_v2": {
+          "pr_auc": 0.06380168179433786,
+          "threshold_budget_5": 4.545688113161749,
+          "alarms_budget_5": 15,
+          "realised_alarms_per_100_b5": 7.653061224489796,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 14
+        },
+        "E03_v2": {
+          "pr_auc": 0.01914502076219998,
+          "threshold_budget_5": 6.989856325680628,
+          "alarms_budget_5": 46,
+          "realised_alarms_per_100_b5": 23.46938775510204,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 46
+        },
+        "E04_v2": {
+          "pr_auc": 0.572447013487476,
+          "threshold_budget_5": 67.86659610044804,
+          "alarms_budget_5": 1,
+          "realised_alarms_per_100_b5": 0.5102040816326531,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 0
+        },
+        "E05_v2": {
+          "pr_auc": 0.45304487179487174,
+          "threshold_budget_5": 701.860274143604,
+          "alarms_budget_5": 11,
+          "realised_alarms_per_100_b5": 5.612244897959184,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 9
+        },
+        "E06_v2": {
+          "pr_auc": 0.4968480138169257,
+          "threshold_budget_5": 2.7628330693013847,
+          "alarms_budget_5": 4,
+          "realised_alarms_per_100_b5": 2.0408163265306123,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 2
+        },
+        "E07_v2": {
+          "pr_auc": 0.3048262319502988,
+          "threshold_budget_5": 0.4469512178928774,
+          "alarms_budget_5": 11,
+          "realised_alarms_per_100_b5": 5.612244897959184,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 10
+        },
+        "E08_v2": {
+          "pr_auc": 0.07823082332576003,
+          "threshold_budget_5": 0.41782337725162494,
+          "alarms_budget_5": 2,
+          "realised_alarms_per_100_b5": 1.0204081632653061,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 2
+        },
+        "E09_v2": {
+          "pr_auc": 0.03438758862572185,
+          "threshold_budget_5": 0.7330040233820752,
+          "alarms_budget_5": 28,
+          "realised_alarms_per_100_b5": 14.285714285714286,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 27
+        }
+      }
+    },
+    {
+      "block": "B5",
+      "n_history_runs": 784,
+      "n_window_runs": 470,
+      "n_calibration_runs": 235,
+      "n_eval_runs": 195,
+      "n_eval_fails": 9,
+      "eval_prevalence": 0.046153846153846156,
+      "n_retained_sensors": 273,
+      "monitored_spc_sensors": [
+        "f203",
+        "f337",
+        "f166",
+        "f059",
+        "f200",
+        "f471",
+        "f197",
+        "f255",
+        "f171",
+        "f198"
+      ],
+      "detectors": {
+        "E01_v2": {
+          "pr_auc": 0.046153846153846156,
+          "threshold_budget_5": 1.0854591836734695,
+          "alarms_budget_5": 0,
+          "realised_alarms_per_100_b5": 0.0,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 0
+        },
+        "E02_v2": {
+          "pr_auc": 0.13093810597335884,
+          "threshold_budget_5": 9.362198388173676,
+          "alarms_budget_5": 8,
+          "realised_alarms_per_100_b5": 4.102564102564102,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 6
+        },
+        "E03_v2": {
+          "pr_auc": 0.049499312212628384,
+          "threshold_budget_5": 13.224669286246607,
+          "alarms_budget_5": 2,
+          "realised_alarms_per_100_b5": 1.0256410256410255,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 2
+        },
+        "E04_v2": {
+          "pr_auc": 0.05367169913871779,
+          "threshold_budget_5": 55.32026429363322,
+          "alarms_budget_5": 8,
+          "realised_alarms_per_100_b5": 4.102564102564102,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 8
+        },
+        "E05_v2": {
+          "pr_auc": 0.0401533971716932,
+          "threshold_budget_5": 544.8697688042373,
+          "alarms_budget_5": 78,
+          "realised_alarms_per_100_b5": 40.0,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 76
+        },
+        "E06_v2": {
+          "pr_auc": 0.04310662889180894,
+          "threshold_budget_5": 2.2340328746382254,
+          "alarms_budget_5": 25,
+          "realised_alarms_per_100_b5": 12.820512820512821,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 25
+        },
+        "E07_v2": {
+          "pr_auc": 0.05256939788068348,
+          "threshold_budget_5": 0.4445199566310256,
+          "alarms_budget_5": 52,
+          "realised_alarms_per_100_b5": 26.666666666666668,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 50
+        },
+        "E08_v2": {
+          "pr_auc": 0.4653230153402697,
+          "threshold_budget_5": 0.23400312662124628,
+          "alarms_budget_5": 44,
+          "realised_alarms_per_100_b5": 22.564102564102566,
+          "true_alarms_b5": 4,
+          "false_alarms_b5": 40
+        },
+        "E09_v2": {
+          "pr_auc": 0.16291228554301748,
+          "threshold_budget_5": 0.4286879903248538,
+          "alarms_budget_5": 37,
+          "realised_alarms_per_100_b5": 18.974358974358974,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 35
+        }
+      }
+    },
+    {
+      "block": "B6",
+      "n_history_runs": 979,
+      "n_window_runs": 470,
+      "n_calibration_runs": 235,
+      "n_eval_runs": 196,
+      "n_eval_fails": 4,
+      "eval_prevalence": 0.02040816326530612,
+      "n_retained_sensors": 273,
+      "monitored_spc_sensors": [
+        "f059",
+        "f197",
+        "f332",
+        "f203",
+        "f199",
+        "f207",
+        "f471",
+        "f336",
+        "f067",
+        "f198"
+      ],
+      "detectors": {
+        "E01_v2": {
+          "pr_auc": 0.02040816326530612,
+          "threshold_budget_5": 1.0776302349336058,
+          "alarms_budget_5": 0,
+          "realised_alarms_per_100_b5": 0.0,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 0
+        },
+        "E02_v2": {
+          "pr_auc": 0.030653146081717507,
+          "threshold_budget_5": 7.237557484268542,
+          "alarms_budget_5": 2,
+          "realised_alarms_per_100_b5": 1.0204081632653061,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 2
+        },
+        "E03_v2": {
+          "pr_auc": 0.03306892831139226,
+          "threshold_budget_5": 10.326804072098199,
+          "alarms_budget_5": 0,
+          "realised_alarms_per_100_b5": 0.0,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 0
+        },
+        "E04_v2": {
+          "pr_auc": 0.04319226850727337,
+          "threshold_budget_5": 66.75886474655967,
+          "alarms_budget_5": 5,
+          "realised_alarms_per_100_b5": 2.5510204081632653,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 5
+        },
+        "E05_v2": {
+          "pr_auc": 0.12981116584564859,
+          "threshold_budget_5": 482.3588982222223,
+          "alarms_budget_5": 33,
+          "realised_alarms_per_100_b5": 16.836734693877553,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 31
+        },
+        "E06_v2": {
+          "pr_auc": 0.07383504936427379,
+          "threshold_budget_5": 2.216781287795543,
+          "alarms_budget_5": 10,
+          "realised_alarms_per_100_b5": 5.1020408163265305,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 9
+        },
+        "E07_v2": {
+          "pr_auc": 0.20150084446491628,
+          "threshold_budget_5": 0.4455806106375008,
+          "alarms_budget_5": 14,
+          "realised_alarms_per_100_b5": 7.142857142857143,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 12
+        },
+        "E08_v2": {
+          "pr_auc": 0.03870560908777469,
+          "threshold_budget_5": 0.41103321313858016,
+          "alarms_budget_5": 7,
+          "realised_alarms_per_100_b5": 3.5714285714285716,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 7
+        },
+        "E09_v2": {
+          "pr_auc": 0.02314273926480935,
+          "threshold_budget_5": 0.5928676821809528,
+          "alarms_budget_5": 11,
+          "realised_alarms_per_100_b5": 5.612244897959184,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 11
+        }
+      }
+    },
+    {
+      "block": "B7",
+      "n_history_runs": 1175,
+      "n_window_runs": 470,
+      "n_calibration_runs": 235,
+      "n_eval_runs": 197,
+      "n_eval_fails": 20,
+      "eval_prevalence": 0.10152284263959391,
+      "n_retained_sensors": 275,
+      "monitored_spc_sensors": [
+        "f197",
+        "f203",
+        "f332",
+        "f199",
+        "f059",
+        "f471",
+        "f064",
+        "f138",
+        "f207",
+        "f345"
+      ],
+      "detectors": {
+        "E01_v2": {
+          "pr_auc": 0.10152284263959391,
+          "threshold_budget_5": 1.0680851063829788,
+          "alarms_budget_5": 0,
+          "realised_alarms_per_100_b5": 0.0,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 0
+        },
+        "E02_v2": {
+          "pr_auc": 0.17053102655481175,
+          "threshold_budget_5": 4.758717290209758,
+          "alarms_budget_5": 28,
+          "realised_alarms_per_100_b5": 14.213197969543147,
+          "true_alarms_b5": 5,
+          "false_alarms_b5": 23
+        },
+        "E03_v2": {
+          "pr_auc": 0.15583911721311197,
+          "threshold_budget_5": 5.615020540758507,
+          "alarms_budget_5": 49,
+          "realised_alarms_per_100_b5": 24.873096446700508,
+          "true_alarms_b5": 7,
+          "false_alarms_b5": 42
+        },
+        "E04_v2": {
+          "pr_auc": 0.10818991841450935,
+          "threshold_budget_5": 58.840387013402,
+          "alarms_budget_5": 7,
+          "realised_alarms_per_100_b5": 3.553299492385787,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 7
+        },
+        "E05_v2": {
+          "pr_auc": 0.10732138967519793,
+          "threshold_budget_5": 453.50726370994175,
+          "alarms_budget_5": 26,
+          "realised_alarms_per_100_b5": 13.197969543147208,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 25
+        },
+        "E06_v2": {
+          "pr_auc": 0.10335854359873638,
+          "threshold_budget_5": 2.0816890714747265,
+          "alarms_budget_5": 17,
+          "realised_alarms_per_100_b5": 8.629441624365482,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 17
+        },
+        "E07_v2": {
+          "pr_auc": 0.14647079413770436,
+          "threshold_budget_5": 0.4436094208801264,
+          "alarms_budget_5": 18,
+          "realised_alarms_per_100_b5": 9.137055837563452,
+          "true_alarms_b5": 3,
+          "false_alarms_b5": 15
+        },
+        "E08_v2": {
+          "pr_auc": 0.13334049878154358,
+          "threshold_budget_5": 0.24898598939180372,
+          "alarms_budget_5": 57,
+          "realised_alarms_per_100_b5": 28.934010152284262,
+          "true_alarms_b5": 8,
+          "false_alarms_b5": 49
+        },
+        "E09_v2": {
+          "pr_auc": 0.13999766005208134,
+          "threshold_budget_5": 0.610362042392383,
+          "alarms_budget_5": 7,
+          "realised_alarms_per_100_b5": 3.553299492385787,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 7
+        }
+      }
+    },
+    {
+      "block": "B8",
+      "n_history_runs": 1372,
+      "n_window_runs": 470,
+      "n_calibration_runs": 235,
+      "n_eval_runs": 195,
+      "n_eval_fails": 4,
+      "eval_prevalence": 0.020512820512820513,
+      "n_retained_sensors": 272,
+      "monitored_spc_sensors": [
+        "f129",
+        "f124",
+        "f425",
+        "f103",
+        "f121",
+        "f510",
+        "f123",
+        "f100",
+        "f433",
+        "f571"
+      ],
+      "detectors": {
+        "E01_v2": {
+          "pr_auc": 0.020512820512820513,
+          "threshold_budget_5": 1.0728862973760933,
+          "alarms_budget_5": 0,
+          "realised_alarms_per_100_b5": 0.0,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 0
+        },
+        "E02_v2": {
+          "pr_auc": 0.318702851297788,
+          "threshold_budget_5": 6.545271687308392,
+          "alarms_budget_5": 7,
+          "realised_alarms_per_100_b5": 3.58974358974359,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 6
+        },
+        "E03_v2": {
+          "pr_auc": 0.029877711814575637,
+          "threshold_budget_5": 10.437042008522345,
+          "alarms_budget_5": 5,
+          "realised_alarms_per_100_b5": 2.5641025641025643,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 5
+        },
+        "E04_v2": {
+          "pr_auc": 0.026571430222545843,
+          "threshold_budget_5": 51.939669115453654,
+          "alarms_budget_5": 14,
+          "realised_alarms_per_100_b5": 7.17948717948718,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 14
+        },
+        "E05_v2": {
+          "pr_auc": 0.0684609250398724,
+          "threshold_budget_5": 436.0275960987868,
+          "alarms_budget_5": 59,
+          "realised_alarms_per_100_b5": 30.256410256410255,
+          "true_alarms_b5": 3,
+          "false_alarms_b5": 56
+        },
+        "E06_v2": {
+          "pr_auc": 0.053532818532818535,
+          "threshold_budget_5": 2.2237137151902675,
+          "alarms_budget_5": 31,
+          "realised_alarms_per_100_b5": 15.897435897435898,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 29
+        },
+        "E07_v2": {
+          "pr_auc": 0.026572925277016914,
+          "threshold_budget_5": 0.4455076028391718,
+          "alarms_budget_5": 39,
+          "realised_alarms_per_100_b5": 20.0,
+          "true_alarms_b5": 1,
+          "false_alarms_b5": 38
+        },
+        "E08_v2": {
+          "pr_auc": 0.05082353510322439,
+          "threshold_budget_5": 0.5285281360149383,
+          "alarms_budget_5": 9,
+          "realised_alarms_per_100_b5": 4.615384615384615,
+          "true_alarms_b5": 0,
+          "false_alarms_b5": 9
+        },
+        "E09_v2": {
+          "pr_auc": 0.18890056022408963,
+          "threshold_budget_5": 0.8050895475107891,
+          "alarms_budget_5": 9,
+          "realised_alarms_per_100_b5": 4.615384615384615,
+          "true_alarms_b5": 2,
+          "false_alarms_b5": 7
+        }
+      }
+    }
+  ]
+}

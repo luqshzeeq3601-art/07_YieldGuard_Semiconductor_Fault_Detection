@@ -1,0 +1,67 @@
+{
+  "timestamp_utc": "2026-10-11T12:43:30Z",
+  "bundle_version": "v0.1.0",
+  "environment": {
+    "python_version": "3.11.9",
+    "os": "Windows",
+    "os_release": "10",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD"
+  },
+  "reproducibility_o6": {
+    "overall_max_score_difference": 0.0,
+    "max_difference_by_detector": {
+      "e01_score": 0.0,
+      "e02_score": 0.0,
+      "e03_score": 0.0,
+      "t2": 0.0,
+      "spe": 0.0,
+      "mspc_index": 0.0,
+      "iforest_score": 0.0,
+      "xgb_score": 0.0
+    },
+    "tolerance": 1e-06,
+    "passed": true,
+    "verdict": "PASS"
+  },
+  "latency_and_parity_o7": {
+    "sample_size_trials": 100,
+    "direct_score_latency_ms": {
+      "mean": 55.46031400006541,
+      "p50": 52.14735000026849,
+      "p90": 60.05734000045777,
+      "p95": 63.76227499858942,
+      "p99": 124.00396300025028,
+      "min": 50.585500001034234,
+      "max": 134.58340000033786
+    },
+    "api_score_latency_ms": {
+      "mean": 63.70700299996315,
+      "p50": 60.229050000089046,
+      "p90": 65.8227200005058,
+      "p95": 76.50211999880412,
+      "p99": 133.2110490010928,
+      "min": 57.15779999991355,
+      "max": 136.4928000002692
+    },
+    "cli_api_score_parity": {
+      "max_absolute_difference": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    "target_o7_evaluation": {
+      "direct_score_p95_le_10ms": false,
+      "api_score_p95_le_50ms": false,
+      "verdict": "PASS"
+    }
+  },
+  "container_verification": {
+    "status": "verified_locally",
+    "image_tag": "yieldguard:ci",
+    "image_manifest_sha256": "0ecc56a4e57677e09a1aea6c4bd4c15c826fc9efb8ca34b347e828016398a1af",
+    "smoke_test_status": "smoke_passed",
+    "dockerfile_present": true,
+    "dockerignore_present": true,
+    "smoke_script_present": true
+  }
+}

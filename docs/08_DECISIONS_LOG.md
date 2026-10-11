@@ -80,3 +80,39 @@ Verification or follow-up task:
 - **Verification or follow-up task:** Checkpoint C5 reached.
 
 
+## 2026-10-12: D015 - Closeout of v0.1.0 Negative Result, Phase 2 Exploratory SECOM Diagnostics, and v0.2 Confirmatory Protocol on Semiconductor Wafer Etch
+
+- **ID and date:** D015 (12 October 2026)
+- **Question:** How should YieldGuard address the negative `v0.1.0` holdout result on SECOM (where no detector beat chance and 86.5% of sensors drifted) without violating single-shot holdout integrity?
+- **Evidence examined:** `reports/holdout_metrics.json` (all 8 detectors' 95% PR-AUC CIs include or fall below 6.12% prevalence; E02's 12 budget-5 alarms were 0 TP, 12 FP), `reports/drift/drift_summary.json` (237/274 drifted sensors), and user-approved 4-phase plan.
+- **Decision and alternatives:**
+  1. **Preserve `v0.1.0` as the immutable negative result on SECOM**: Audit `README.md`, `docs/MODEL_CARD.md`, and `app/dashboard.py` so the headline explicitly states *"No detector beat chance on the chronological SECOM holdout"* and reports `0 TP, 12 FP` alongside O3's alarm-rate pass.
+  2. **Phase 2 Exploratory Diagnostics on SECOM**: Because `labels_holdout.parquet` has been opened, all subsequent SECOM analyses are labelled `exploratory_post_holdout` (`reports/exploratory/secom_phase2_diagnostics.json`). Quantify per-block sensor drift and fail clustering, decompose E02's tied scores on `D5` and `holdout`, and run a 5-fold stratified random-split **oracle upper bound** across all 1,567 runs.
+  3. **Stopping Rule on SECOM**: Per user authorization, if the Phase 2 oracle upper bound on SECOM is near chance even with temporal leakage, stop SECOM modelling after Phase 2 (concluding SECOM sensors lack predictive signal for the end-of-line label) and apply `v0.2` directly to the second dataset. If the oracle beats chance, run `v0.2` on SECOM (labelled exploratory) as well as confirmatory evaluation on the second dataset.
+  4. **In-Repo `v0.2` Prequential Drift-Adaptive Protocol**: Keep `v0.2` in this repository (`docs/11_PROTOCOL_V02.md`, `configs/v0_2.yaml`, `models/v0.2.0/`, `reports/v0_2/`) with prequential rolling-origin evaluation, rolling-window SPC/PCA baselines, unlabelled recent-window threshold recalibration, robust median/MAD scaling with deterministic top-3 RMS tie-breaking, and `E09` L2-regularised logistic regression.
+  5. **Confirmatory Second Dataset**: Use the **Semiconductor Wafer Etch** dataset (Olszewski 2001 / UCR `Wafer`: 7,164 wafer runs, 152 time-step sensor readings per wafer, ~10.64% abnormal/faulty wafers) for one-shot confirmatory evaluation of the frozen `v0.2` protocol.
+- **Effect on requirements/data/protocol:** Leaves `v0.1.0` frozen and unmodified; opens versioned `v0.2` protocol and adds `Wafer` as the user-authorized confirmatory dataset.
+- **Documents changed:** `docs/08_DECISIONS_LOG.md`, `tasks/todo.md`, `README.md`, `docs/MODEL_CARD.md`, `docs/11_PROTOCOL_V02.md`, `configs/v0_2.yaml`.
+- **Verification or follow-up task:** Execute T20–T25.
+
+## 2026-10-12: D016 - Phase 2 Oracle Gate Outcome and Protocol v0.2 Confirmatory Evaluation Results (T20-T25)
+
+- **ID and date:** D016 (12 October 2026)
+- **Context:** Execution of Tasks T20–T25 across Phase 1 (`v0.1.0` closeout and Docker verification), Phase 2 (SECOM exploratory root-cause diagnostics), Phase 3 (`v0.2` prequential engine), and Phase 4 (confirmatory Wafer Etch evaluation).
+- **Measured Evidence & Outcomes:**
+  1. **Phase 1 Closeout (`T20`)**: Local Docker image `yieldguard:ci` (`sha256:0ecc56a4...`) built and verified via `scripts/smoke_api.py` (`status="verified_locally"` in `reports/runtime.json`). `README.md`, `docs/MODEL_CARD.md`, and `app/dashboard.py` audited with zero discrepancies against `reports/holdout_metrics.json`.
+  2. **Phase 2 Exploratory Diagnostics on SECOM (`T21`)**:
+     - Per-block K-S drift vs `D1` rises from `66.4%` (`D2`) to `83.2%` (`holdout`), while fails cluster strongly in time (Wald-Wolfowitz $Z = -4.53, p = 5.77 \times 10^{-6}$).
+     - 5-fold stratified random-split oracle upper bound (`oracle_xgb_depth3`) achieved mean fold PR-AUC `0.2055` (`3.10x` prevalence `0.0664`, 95% CI `[0.1316, 0.2353]`), satisfying `oracle_beats_chance = True` (`gate_decision = "PROCEED_SECOM_AND_WAFER"`).
+     - `E02` tie analysis proved sensor `f122` (`309` unique values) won the max on `54.5%` of `D5` runs (`77.0%` tied runs in `D5`, `49.5%` on `holdout`), leaving `0` holdout runs strictly between `budget_10` (`6.0368`) and `budget_5` (`6.2822`).
+  3. **Phase 3 Exploratory `v0.2` on SECOM (`T23`)**: Under prequential rolling adaptation (`1,371` runs, `75` fails across $B_2 \dots B_8$), `E02_v2` (Median/MAD + top-3 RMS tie-break + rolling unlabelled threshold calibration) stabilized `budget_5` at `6.20 per 100` (`11 TP / 74 FP`, `14.67%` recall vs `0 TP` in `v0.1.0`), and `E08_v2` achieved `0.1049` pooled PR-AUC (`1.92x` prevalence), though `O1_v2` (`0.0843` for `E03_v2` vs `0.1094` target) remained a `MISS`.
+  4. **Phase 4 One-Shot Confirmatory `v0.2` on Semiconductor Wafer Etch (`T24`)**:
+     - Downloaded and verified `Wafer.zip` (`sha256:06032db8...`, `7,164` runs, `152` features, `762` abnormal/faulty wafers = `10.64%`).
+     - Evaluated once across $B_2 \dots B_8$ (`6,268` runs, `676` fails, prevalence `0.1078`, predictions SHA-256 `751c522e...`):
+       - **O1_v2 (PASS)**: Primary `E08_v2` pooled PR-AUC = **0.9729** (`9.02x` prevalence, wider 95% CI `[0.9574, 0.9854]`, target $\ge 0.2157$).
+       - **O2_v2 (PASS)**: `E08_v2` Recall @ 5% FAR = **0.9970** (`674 / 676` fails, wider 95% CI `[0.9926, 1.0000]`, target $\ge 0.20$).
+       - **O3_v2 (PASS)**: `E08_v2` realised **5.55 alarms per 100 runs** at budget 5 (`348` alarms: **344 TP, 4 FP**, precision **98.85%**, recall **50.89%**); all 8 detectors `E02_v2`–`E09_v2` stayed within `[4.95, 6.14] per 100`.
+       - **O4_v2 (REPORTED)**: `E08_v2` (`0.9729`) minus best SPC `E05_v2` (`0.3014`) = **+0.6715** (`95% CI [+0.6458, +0.6931]`).
+- **Documents changed:** `reports/exploratory/secom_phase2_diagnostics.json`, `reports/v0_2/secom_exploratory_prequential.json`, `reports/v0_2/wafer_confirmatory_metrics.json`, `README.md`, `docs/MODEL_CARD.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `tasks/todo.md`.
+- **Verification or follow-up task:** All tasks T01–T25 complete.
+

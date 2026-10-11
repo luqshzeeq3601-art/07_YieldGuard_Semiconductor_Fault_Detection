@@ -198,3 +198,67 @@
 - Verification evidence:
   - `.\.venv\Scripts\ruff.exe check app/dashboard.py tests/test_dashboard.py` -> `All checks passed!`
   - `.\.venv\Scripts\pytest.exe -q` -> `74 passed`
+
+## 12. Session: 12 October 2026, Dashboard plain-language pass
+
+- Date/time: 2026-10-12 (Asia/Kuala_Lumpur)
+- Task: Make `app/dashboard.py` understandable to readers with no SPC or ML background, without changing model outputs, thresholds or the `AppTest` contracts.
+- Changed files:
+  - `app/dashboard.py`
+  - `docs/04_TECHNICAL_DESIGN.md` (section 8: landing page noted)
+  - `docs/09_PROGRESS_LOG.md`
+- Changes:
+  - Landing page is now **Start here** (the former view 5): the problem, a four-step method, the frozen holdout findings as three verdict cards, a page guide and a 15-term glossary. Technical tables moved into expanders.
+  - Sidebar navigation shows plain-language page names with the technical name as a caption. Radio option values are unchanged, so tests still select views by the original strings.
+  - Every view opens with a one-paragraph summary and a visible "How to read this page" box; method detail sits in a collapsed "Technical details" expander. Chart titles, legends, axes, table columns and metric labels reworded.
+  - Header shortened to one plain sentence; KPI labels no longer truncate; misleading delta arrows removed.
+  - Single-sensor view: chart now full width with controls above and supporting numbers below; legends moved under all plots so they no longer overlap titles on narrow screens.
+  - Results view states that the comparison table includes runs the detectors learned from, and that the holdout scorecard is the fair test. Scorecard columns reordered so the verdict is visible without horizontal scrolling.
+- Corrections to on-screen facts (previously hardcoded, now read from the bundle or reports):
+  - Cleaning table showed 440 sensors after the constant-sensor step, "std = 0" and "|r| > 0.98". The bundle records 444, a dominant-value fraction of 0.99 and a collinearity threshold of 0.95.
+  - Raw HTML cards displayed LaTeX and backticks literally (`$r_{rb}$`, `$T^2$`); replaced with native bordered containers.
+  - Removed scorecard interpretations that asserted causes not measured by the project; the drift card now says "likely reason" and "observed pattern, not proof of cause". Removed the "K-S test" claim (the report records only the Evidently preset).
+  - Fixed a stray French word in a tooltip.
+- Verification evidence:
+  - `.\.venv\Scripts\ruff.exe check src api app scripts tests` -> `All checks passed!`
+  - `.\.venv\Scripts\python.exe -m pytest -q` -> `74 passed` (a first run reported 4 transient `PermissionError` setup errors in `test_splits`, `test_synthetic` and `test_train`; not reproduced on two reruns)
+  - Manual browser check of all five pages on the real bundle at 1440 px, and Start here and Single-sensor trends at about 800 px.
+- Unresolved: O5, O6 and O7 scorecard values are still hardcoded text in the dashboard rather than read from `reports/`.
+- Next ready task: none in the MVP tracker; backlog items remain in `tasks/todo.md` section 9.
+
+## 13. Session: 12 October 2026, Phase 1–4 Execution (v0.1.0 Closeout, SECOM Diagnostics & v0.2 Confirmatory Wafer Etch Benchmark)
+
+- Date/time: 2026-10-12 00:49 (Asia/Kuala_Lumpur)
+- Tasks completed: `T20`, `T21`, `T22`, `T23`, `T24`, `T25` (plus local Docker verification of `T17`, `T18`, `C5`).
+- Changed / added files:
+  - `app/dashboard.py` (fixed `E06` additive formula text `T²/τ_T² + SPE/τ_SPE` and clarified `O1`/`O3` `0 TP, 12 FP` holdout scorecard text)
+  - `README.md`, `docs/MODEL_CARD.md`, `docs/06_VALIDATION_AND_RELEASE.md`, `reports/runtime.json`
+  - `src/yieldguard/diagnostics.py`, `scripts/diagnose_secom.py`, `tests/test_diagnostics.py`, `reports/exploratory/secom_phase2_diagnostics.json`
+  - `docs/11_PROTOCOL_V02.md`, `configs/v0_2.yaml`
+  - `src/yieldguard/prequential.py`, `src/yieldguard/cli.py`, `tests/test_prequential.py`, `reports/v0_2/secom_exploratory_prequential.json`
+  - `src/yieldguard/wafer_data.py`, `scripts/download_wafer_data.py`, `tests/test_wafer_data.py`, `data/wafer_source_manifest.json`, `reports/v0_2/wafer_confirmatory_metrics.json`
+  - `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `tasks/todo.md`
+- Commands & measured evidence:
+  1. **Phase 1 (`T20` — `v0.1.0` Closeout & Docker Verification)**:
+     - `docker build -t yieldguard:ci .` -> `sha256:0ecc56a4e57677e09a1aea6c4bd4c15c826fc9efb8ca34b347e828016398a1af` (PASS).
+     - `docker run -d --name yieldguard-ci -p 127.0.0.1:18000:8000 yieldguard:ci` + `.\.venv\Scripts\python.exe scripts/smoke_api.py --url http://127.0.0.1:18000` -> `"status": "smoke_passed"` (PASS).
+     - Audited `README.md` and `docs/MODEL_CARD.md` against `reports/holdout_metrics.json` (`0 TP, 12 FP` at budget 5 for `E02`, full `E01`–`E08` table, `xgb_c01` parameters, `100/100` `O5` trials, `secom.zip` SHA-256).
+  2. **Phase 2 (`T21` — Exploratory SECOM Diagnostics)**:
+     - `.\.venv\Scripts\python.exe scripts/diagnose_secom.py --config configs/default.yaml --bundle models/v0.1.0 --output reports/exploratory/secom_phase2_diagnostics.json`
+     - Fails cluster strongly in time (Wald-Wolfowitz $Z = -4.535, p = 5.77 \times 10^{-6}$, lag-1 autocorrelation $r = 0.1143$), while K-S sensor drift vs `D1` climbs from `66.4%` (`D2`) to `83.2%` (`holdout`).
+     - 5-fold stratified random-split oracle upper bound (`oracle_xgb_depth3`) achieved mean fold PR-AUC `0.2055` (`3.10x` prevalence `0.0664`, 95% CI `[0.1316, 0.2353]`), satisfying `oracle_beats_chance = True` (`gate_decision = "PROCEED_SECOM_AND_WAFER"`).
+     - `E02` quantization tie analysis showed `f122` (`309` unique values) won the max on `54.5%` of `D5` runs (`77.0%` tied runs in `D5`, `49.5%` on `holdout`), leaving `0` holdout runs strictly between `budget_10` (`6.0368`) and `budget_5` (`6.2822`).
+  3. **Phase 3 (`T22` & `T23` — Protocol `v0.2` Prequential Engine & Exploratory SECOM Run)**:
+     - `.\.venv\Scripts\python.exe -m yieldguard.cli prequential --config configs/v0_2.yaml --dataset secom --output reports/v0_2/secom_exploratory_prequential.json`
+     - On SECOM (`1,371` runs, `75` fails across $B_2 \dots B_8$), `E02_v2` achieved `6.20 alarms per 100` at budget 5 (`11 TP / 74 FP`, `14.67%` recall vs `0 TP` in `v0.1.0`), and `E08_v2` achieved `0.1049` pooled PR-AUC (`1.92x` prevalence), though `O1_v2` (`0.0843` for `E03_v2` vs `0.1094` target) was a `MISS`.
+  4. **Phase 4 (`T24` & `T25` — Confirmatory Semiconductor Wafer Etch Benchmark)**:
+     - `.\.venv\Scripts\python.exe scripts/download_wafer_data.py` -> `Wafer.zip` (`sha256:06032db8...`, `7,164` runs, `152` features, `762` abnormal/faulty wafers = `10.64%`).
+     - `.\.venv\Scripts\python.exe -m yieldguard.cli prequential --config configs/v0_2.yaml --dataset wafer --output reports/v0_2/wafer_confirmatory_metrics.json`
+     - Evaluated once across $B_2 \dots B_8$ (`6,268` runs, `676` fails, prevalence `0.1078`):
+       - **O1_v2 (PASS)**: Primary `E08_v2` pooled PR-AUC = **0.9729** (`9.02x` prevalence, wider 95% CI `[0.9574, 0.9854]`, target $\ge 0.2157$).
+       - **O2_v2 (PASS)**: `E08_v2` Recall @ 5% FAR = **0.9970** (`674 / 676` fails, wider 95% CI `[0.9926, 1.0000]`, target $\ge 0.20$).
+       - **O3_v2 (PASS)**: `E08_v2` realised **5.55 alarms per 100** at budget 5 (**344 TP, 4 FP**, precision **98.85%**, recall **50.89%**); all 8 detectors `E02_v2`–`E09_v2` stayed inside `[4.95, 6.14] per 100`.
+       - **O4_v2 (REPORTED)**: `E08_v2` (`0.9729`) minus best SPC `E05_v2` (`0.3014`) = **+0.6715** (`95% CI [+0.6458, +0.6931]`).
+- Unresolved issues: None (remote GitHub Actions CI workflow remains unverified on GitHub until a remote repository is configured and pushed).
+- Next ready task: All tasks `T01`–`T25` complete.
+

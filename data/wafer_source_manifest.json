@@ -1,0 +1,21 @@
+{
+  "dataset_id": "WAFER_ETCH",
+  "source_url": "https://www.timeseriesclassification.com/aeon-toolkit/Wafer.zip",
+  "downloaded_at_utc": "2026-10-11T16:41:10.717904+00:00",
+  "zip_sha256": "06032db83b3f6f3f39ef4b65433061dde9b2593b956caa1ad1ae9ad260a36be4",
+  "train_file": "Wafer_TRAIN.txt",
+  "train_file_sha256": "3891e4c5581363eefad2e8e5ebf6b1f61fe68152e61322715d2e5ffebda92d43",
+  "test_file": "Wafer_TEST.txt",
+  "test_file_sha256": "60ab323c90031b3cd6cfcfa48444f57b8a60aefbf3fce8803b454df425c5eefc",
+  "processed_parquet": "data\\processed\\wafer_runs.parquet",
+  "processed_parquet_sha256": "923ca3ba1ef2bfc70a537a599e973980d19c16a0944f63c93678cac951bb27e1",
+  "n_total_runs": 7164,
+  "n_train_ucr": 1000,
+  "n_test_ucr": 6164,
+  "n_features": 152,
+  "n_fails_abnormal": 762,
+  "n_passing_normal": 6402,
+  "fail_prevalence": 0.10636515912897822,
+  "citation": "Olszewski, R. T. (2001). Generalized Feature Extraction for Structural Pattern Recognition in Time-Series Data. PhD Thesis, Carnegie Mellon University.",
+  "license": "Public Research Benchmark (UCR Time Series Classification Archive)"
+}

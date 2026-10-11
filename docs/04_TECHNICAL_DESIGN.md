@@ -135,6 +135,8 @@ Development uses `models/staging/` with a run manifest; `freeze` copies validate
 3. Flagged-run drill-down: MSPC contributions and SHAP side by side, with group members.
 4. Alarm-budget table: alarms, false alarms and recall at 2, 5 and 10 per 100.
 
+A plain-language "Start here" page (problem, method, frozen findings, glossary) is the landing page. Each view opens with a jargon-free summary and keeps method detail in a collapsed section.
+
 It reads a bundle and a scored table through the shared package. Without SECOM present it runs on synthetic demo data and says so on screen. Labelled views show development data, and holdout data only after the final evaluation exists.
 
 ## 9. Runtime and monitoring

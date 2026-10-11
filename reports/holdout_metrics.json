@@ -1,0 +1,1254 @@
+{
+  "dataset_id": "SECOM",
+  "release_id": "v0.1.0",
+  "bundle_version": "v0.1.0",
+  "predictions_csv_path": "reports/holdout_predictions.csv",
+  "predictions_sha256_before_labels_opened": "678f6268c4b3952a30d4e17273a039649dafd77229310d539a61b8f2201ee36a",
+  "n_holdout_runs": 392,
+  "n_holdout_fails": 24,
+  "n_holdout_passing": 368,
+  "holdout_fail_prevalence": 0.061224489795918366,
+  "primary_detector": "E02",
+  "detectors": {
+    "E01": {
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "prevalence": 0.061224489795918366,
+      "pr_auc": 0.061224489795918366,
+      "roc_auc": 0.5,
+      "recall_at_far": {
+        "far_2": {
+          "far_target_per_100": 2.0,
+          "threshold": 0.0,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "realised_far_per_100": 2.0,
+          "recall": 0.02,
+          "undefined_reason": null,
+          "note": "theoretical_chance_level"
+        },
+        "far_5": {
+          "far_target_per_100": 5.0,
+          "threshold": 0.0,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "realised_far_per_100": 5.0,
+          "recall": 0.05,
+          "undefined_reason": null,
+          "note": "theoretical_chance_level"
+        },
+        "far_10": {
+          "far_target_per_100": 10.0,
+          "threshold": 0.0,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "realised_far_per_100": 10.0,
+          "recall": 0.1,
+          "undefined_reason": null,
+          "note": "theoretical_chance_level"
+        }
+      },
+      "undefined_reasons": {},
+      "stratified_bootstrap": {
+        "n_bootstraps": 2000,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.061224489795918366,
+          0.061224489795918366
+        ],
+        "recall_at_far_95_ci": [
+          0.05,
+          0.05
+        ]
+      },
+      "moving_block_bootstrap": {
+        "n_bootstraps": 2000,
+        "block_length": 20,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.03316326530612245,
+          0.09445153061224454
+        ],
+        "recall_at_far_95_ci": [
+          0.05,
+          0.05
+        ]
+      },
+      "wider_pr_auc_95_ci": [
+        0.03316326530612245,
+        0.09445153061224454
+      ],
+      "wider_recall_at_5_far_95_ci": [
+        0.05,
+        0.05
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "budget_per_100": 2.0,
+          "threshold": 0.08085106382978724,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 0,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "realised_alarms_per_100": 0.0,
+          "false_alarms_per_100_passing": 0.0,
+          "precision": null,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": null,
+          "undefined_reasons": {
+            "precision": "zero_alarms",
+            "lift_over_prevalence": "zero_alarms"
+          }
+        },
+        "budget_5": {
+          "budget_per_100": 5.0,
+          "threshold": 0.08085106382978724,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 0,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "realised_alarms_per_100": 0.0,
+          "false_alarms_per_100_passing": 0.0,
+          "precision": null,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": null,
+          "undefined_reasons": {
+            "precision": "zero_alarms",
+            "lift_over_prevalence": "zero_alarms"
+          }
+        },
+        "budget_10": {
+          "budget_per_100": 10.0,
+          "threshold": 0.08085106382978724,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 0,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "realised_alarms_per_100": 0.0,
+          "false_alarms_per_100_passing": 0.0,
+          "precision": null,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": null,
+          "undefined_reasons": {
+            "precision": "zero_alarms",
+            "lift_over_prevalence": "zero_alarms"
+          }
+        }
+      }
+    },
+    "E02": {
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "prevalence": 0.061224489795918366,
+      "pr_auc": 0.07235680023948945,
+      "roc_auc": 0.5325520833333333,
+      "recall_at_far": {
+        "far_2": {
+          "far_target_per_100": 2.0,
+          "threshold": 6.767484040200296,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 7,
+          "realised_far_per_100": 1.9021739130434783,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_5": {
+          "far_target_per_100": 5.0,
+          "threshold": 5.226733613957383,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 1,
+          "false_alarms": 19,
+          "realised_far_per_100": 5.163043478260869,
+          "recall": 0.041666666666666664,
+          "undefined_reason": null
+        },
+        "far_10": {
+          "far_target_per_100": 10.0,
+          "threshold": 3.961921058653471,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 3,
+          "false_alarms": 37,
+          "realised_far_per_100": 10.054347826086957,
+          "recall": 0.125,
+          "undefined_reason": null
+        }
+      },
+      "undefined_reasons": {},
+      "stratified_bootstrap": {
+        "n_bootstraps": 2000,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.055898041960304984,
+          0.11726302001305643
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.125
+        ]
+      },
+      "moving_block_bootstrap": {
+        "n_bootstraps": 2000,
+        "block_length": 20,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.03837553681415245,
+          0.15141665253965053
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.17647058823529413
+        ]
+      },
+      "wider_pr_auc_95_ci": [
+        0.03837553681415245,
+        0.15141665253965053
+      ],
+      "wider_recall_at_5_far_95_ci": [
+        0.0,
+        0.17647058823529413
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "budget_per_100": 2.0,
+          "threshold": 7.244515304783514,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 7,
+          "true_alarms": 0,
+          "false_alarms": 7,
+          "realised_alarms_per_100": 1.7857142857142858,
+          "false_alarms_per_100_passing": 1.9021739130434783,
+          "precision": 0.0,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.0,
+          "undefined_reasons": {}
+        },
+        "budget_5": {
+          "budget_per_100": 5.0,
+          "threshold": 6.282155287621238,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 12,
+          "true_alarms": 0,
+          "false_alarms": 12,
+          "realised_alarms_per_100": 3.061224489795918,
+          "false_alarms_per_100_passing": 3.260869565217391,
+          "precision": 0.0,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.0,
+          "undefined_reasons": {}
+        },
+        "budget_10": {
+          "budget_per_100": 10.0,
+          "threshold": 6.036827979759588,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 12,
+          "true_alarms": 0,
+          "false_alarms": 12,
+          "realised_alarms_per_100": 3.061224489795918,
+          "false_alarms_per_100_passing": 3.260869565217391,
+          "precision": 0.0,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.0,
+          "undefined_reasons": {}
+        }
+      }
+    },
+    "E03": {
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "prevalence": 0.061224489795918366,
+      "pr_auc": 0.05470902966321006,
+      "roc_auc": 0.43149909420289856,
+      "recall_at_far": {
+        "far_2": {
+          "far_target_per_100": 2.0,
+          "threshold": 9.81554422764209,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 8,
+          "realised_far_per_100": 2.1739130434782608,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_5": {
+          "far_target_per_100": 5.0,
+          "threshold": 8.75875406594168,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 19,
+          "realised_far_per_100": 5.163043478260869,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_10": {
+          "far_target_per_100": 10.0,
+          "threshold": 8.127787964907114,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 1,
+          "false_alarms": 37,
+          "realised_far_per_100": 10.054347826086957,
+          "recall": 0.041666666666666664,
+          "undefined_reason": null
+        }
+      },
+      "undefined_reasons": {},
+      "stratified_bootstrap": {
+        "n_bootstraps": 2000,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.046074788764728904,
+          0.08189296134090636
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.041666666666666664
+        ]
+      },
+      "moving_block_bootstrap": {
+        "n_bootstraps": 2000,
+        "block_length": 20,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.033010581503056115,
+          0.094659525759906
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.09685483870967698
+        ]
+      },
+      "wider_pr_auc_95_ci": [
+        0.033010581503056115,
+        0.094659525759906
+      ],
+      "wider_recall_at_5_far_95_ci": [
+        0.0,
+        0.09685483870967698
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "budget_per_100": 2.0,
+          "threshold": 15.7971569249413,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 0,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "realised_alarms_per_100": 0.0,
+          "false_alarms_per_100_passing": 0.0,
+          "precision": null,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": null,
+          "undefined_reasons": {
+            "precision": "zero_alarms",
+            "lift_over_prevalence": "zero_alarms"
+          }
+        },
+        "budget_5": {
+          "budget_per_100": 5.0,
+          "threshold": 15.060185663664004,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 0,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "realised_alarms_per_100": 0.0,
+          "false_alarms_per_100_passing": 0.0,
+          "precision": null,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": null,
+          "undefined_reasons": {
+            "precision": "zero_alarms",
+            "lift_over_prevalence": "zero_alarms"
+          }
+        },
+        "budget_10": {
+          "budget_per_100": 10.0,
+          "threshold": 14.411544883793406,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 0,
+          "true_alarms": 0,
+          "false_alarms": 0,
+          "realised_alarms_per_100": 0.0,
+          "false_alarms_per_100_passing": 0.0,
+          "precision": null,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": null,
+          "undefined_reasons": {
+            "precision": "zero_alarms",
+            "lift_over_prevalence": "zero_alarms"
+          }
+        }
+      }
+    },
+    "E04": {
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "prevalence": 0.061224489795918366,
+      "pr_auc": 0.05732126595432588,
+      "roc_auc": 0.4789402173913044,
+      "recall_at_far": {
+        "far_2": {
+          "far_target_per_100": 2.0,
+          "threshold": 551.3229203505766,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 8,
+          "realised_far_per_100": 2.1739130434782608,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_5": {
+          "far_target_per_100": 5.0,
+          "threshold": 154.86366864541932,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 19,
+          "realised_far_per_100": 5.163043478260869,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_10": {
+          "far_target_per_100": 10.0,
+          "threshold": 80.80251695415988,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 37,
+          "realised_far_per_100": 10.054347826086957,
+          "recall": 0.0,
+          "undefined_reason": null
+        }
+      },
+      "undefined_reasons": {},
+      "stratified_bootstrap": {
+        "n_bootstraps": 2000,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.04924067581136729,
+          0.07830973738888727
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "moving_block_bootstrap": {
+        "n_bootstraps": 2000,
+        "block_length": 20,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.031705130123975536,
+          0.10141121250674204
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wider_pr_auc_95_ci": [
+        0.031705130123975536,
+        0.10141121250674204
+      ],
+      "wider_recall_at_5_far_95_ci": [
+        0.0,
+        0.0
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "budget_per_100": 2.0,
+          "threshold": 99.42866508127483,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 28,
+          "true_alarms": 0,
+          "false_alarms": 28,
+          "realised_alarms_per_100": 7.142857142857143,
+          "false_alarms_per_100_passing": 7.608695652173913,
+          "precision": 0.0,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.0,
+          "undefined_reasons": {}
+        },
+        "budget_5": {
+          "budget_per_100": 5.0,
+          "threshold": 80.15931006296829,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 39,
+          "true_alarms": 0,
+          "false_alarms": 39,
+          "realised_alarms_per_100": 9.948979591836734,
+          "false_alarms_per_100_passing": 10.597826086956522,
+          "precision": 0.0,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.0,
+          "undefined_reasons": {}
+        },
+        "budget_10": {
+          "budget_per_100": 10.0,
+          "threshold": 67.45556470834421,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 57,
+          "true_alarms": 1,
+          "false_alarms": 56,
+          "realised_alarms_per_100": 14.540816326530612,
+          "false_alarms_per_100_passing": 15.217391304347826,
+          "precision": 0.017543859649122806,
+          "recall": 0.041666666666666664,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.28654970760233917,
+          "undefined_reasons": {}
+        }
+      }
+    },
+    "E05": {
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "prevalence": 0.061224489795918366,
+      "pr_auc": 0.05944771024357228,
+      "roc_auc": 0.47780797101449274,
+      "recall_at_far": {
+        "far_2": {
+          "far_target_per_100": 2.0,
+          "threshold": 3746.431771723555,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 8,
+          "realised_far_per_100": 2.1739130434782608,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_5": {
+          "far_target_per_100": 5.0,
+          "threshold": 749.641325361407,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 19,
+          "realised_far_per_100": 5.163043478260869,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_10": {
+          "far_target_per_100": 10.0,
+          "threshold": 335.14919818707375,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 1,
+          "false_alarms": 37,
+          "realised_far_per_100": 10.054347826086957,
+          "recall": 0.041666666666666664,
+          "undefined_reason": null
+        }
+      },
+      "undefined_reasons": {},
+      "stratified_bootstrap": {
+        "n_bootstraps": 2000,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.049238011382793434,
+          0.08795322086542884
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "moving_block_bootstrap": {
+        "n_bootstraps": 2000,
+        "block_length": 20,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.034088862790989896,
+          0.09952607569253032
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wider_pr_auc_95_ci": [
+        0.034088862790989896,
+        0.09952607569253032
+      ],
+      "wider_recall_at_5_far_95_ci": [
+        0.0,
+        0.0
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "budget_per_100": 2.0,
+          "threshold": 496.271714150373,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 27,
+          "true_alarms": 0,
+          "false_alarms": 27,
+          "realised_alarms_per_100": 6.887755102040816,
+          "false_alarms_per_100_passing": 7.336956521739131,
+          "precision": 0.0,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.0,
+          "undefined_reasons": {}
+        },
+        "budget_5": {
+          "budget_per_100": 5.0,
+          "threshold": 319.9308521186239,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 40,
+          "true_alarms": 1,
+          "false_alarms": 39,
+          "realised_alarms_per_100": 10.204081632653061,
+          "false_alarms_per_100_passing": 10.597826086956522,
+          "precision": 0.025,
+          "recall": 0.041666666666666664,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.4083333333333334,
+          "undefined_reasons": {}
+        },
+        "budget_10": {
+          "budget_per_100": 10.0,
+          "threshold": 237.40080907397765,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 55,
+          "true_alarms": 3,
+          "false_alarms": 52,
+          "realised_alarms_per_100": 14.03061224489796,
+          "false_alarms_per_100_passing": 14.130434782608695,
+          "precision": 0.05454545454545454,
+          "recall": 0.125,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.8909090909090909,
+          "undefined_reasons": {}
+        }
+      }
+    },
+    "E06": {
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "prevalence": 0.061224489795918366,
+      "pr_auc": 0.0583306453971454,
+      "roc_auc": 0.4746376811594203,
+      "recall_at_far": {
+        "far_2": {
+          "far_target_per_100": 2.0,
+          "threshold": 31.31133951357419,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 8,
+          "realised_far_per_100": 2.1739130434782608,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_5": {
+          "far_target_per_100": 5.0,
+          "threshold": 5.64099623010442,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 19,
+          "realised_far_per_100": 5.163043478260869,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_10": {
+          "far_target_per_100": 10.0,
+          "threshold": 3.321775394932894,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 1,
+          "false_alarms": 37,
+          "realised_far_per_100": 10.054347826086957,
+          "recall": 0.041666666666666664,
+          "undefined_reason": null
+        }
+      },
+      "undefined_reasons": {},
+      "stratified_bootstrap": {
+        "n_bootstraps": 2000,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.04900000981757108,
+          0.08393931986412269
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "moving_block_bootstrap": {
+        "n_bootstraps": 2000,
+        "block_length": 20,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.03438531000967282,
+          0.09781966213837624
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wider_pr_auc_95_ci": [
+        0.03438531000967282,
+        0.09781966213837624
+      ],
+      "wider_recall_at_5_far_95_ci": [
+        0.0,
+        0.0
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "budget_per_100": 2.0,
+          "threshold": 4.344764962182668,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 33,
+          "true_alarms": 0,
+          "false_alarms": 33,
+          "realised_alarms_per_100": 8.418367346938776,
+          "false_alarms_per_100_passing": 8.967391304347826,
+          "precision": 0.0,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.0,
+          "undefined_reasons": {}
+        },
+        "budget_5": {
+          "budget_per_100": 5.0,
+          "threshold": 2.8461701835146886,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 41,
+          "true_alarms": 1,
+          "false_alarms": 40,
+          "realised_alarms_per_100": 10.459183673469388,
+          "false_alarms_per_100_passing": 10.869565217391305,
+          "precision": 0.024390243902439025,
+          "recall": 0.041666666666666664,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.3983739837398374,
+          "undefined_reasons": {}
+        },
+        "budget_10": {
+          "budget_per_100": 10.0,
+          "threshold": 2.399143971392746,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 56,
+          "true_alarms": 2,
+          "false_alarms": 54,
+          "realised_alarms_per_100": 14.285714285714286,
+          "false_alarms_per_100_passing": 14.673913043478262,
+          "precision": 0.03571428571428571,
+          "recall": 0.08333333333333333,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.5833333333333333,
+          "undefined_reasons": {}
+        }
+      }
+    },
+    "E07": {
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "prevalence": 0.061224489795918366,
+      "pr_auc": 0.06093922544925564,
+      "roc_auc": 0.48426177536231885,
+      "recall_at_far": {
+        "far_2": {
+          "far_target_per_100": 2.0,
+          "threshold": 0.45549899367037716,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 8,
+          "realised_far_per_100": 2.1739130434782608,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_5": {
+          "far_target_per_100": 5.0,
+          "threshold": 0.444139568321825,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 0,
+          "false_alarms": 19,
+          "realised_far_per_100": 5.163043478260869,
+          "recall": 0.0,
+          "undefined_reason": null
+        },
+        "far_10": {
+          "far_target_per_100": 10.0,
+          "threshold": 0.4383477715840476,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 1,
+          "false_alarms": 37,
+          "realised_far_per_100": 10.054347826086957,
+          "recall": 0.041666666666666664,
+          "undefined_reason": null
+        }
+      },
+      "undefined_reasons": {},
+      "stratified_bootstrap": {
+        "n_bootstraps": 2000,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.049408759392605583,
+          0.09306322291200304
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "moving_block_bootstrap": {
+        "n_bootstraps": 2000,
+        "block_length": 20,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.034915037303080224,
+          0.10876777342671202
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wider_pr_auc_95_ci": [
+        0.034915037303080224,
+        0.10876777342671202
+      ],
+      "wider_recall_at_5_far_95_ci": [
+        0.0,
+        0.0
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "budget_per_100": 2.0,
+          "threshold": 0.452017116489574,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 11,
+          "true_alarms": 0,
+          "false_alarms": 11,
+          "realised_alarms_per_100": 2.806122448979592,
+          "false_alarms_per_100_passing": 2.989130434782609,
+          "precision": 0.0,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.0,
+          "undefined_reasons": {}
+        },
+        "budget_5": {
+          "budget_per_100": 5.0,
+          "threshold": 0.44594618698951477,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 17,
+          "true_alarms": 0,
+          "false_alarms": 17,
+          "realised_alarms_per_100": 4.336734693877551,
+          "false_alarms_per_100_passing": 4.619565217391305,
+          "precision": 0.0,
+          "recall": 0.0,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 0.0,
+          "undefined_reasons": {}
+        },
+        "budget_10": {
+          "budget_per_100": 10.0,
+          "threshold": 0.4346777055976155,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 59,
+          "true_alarms": 4,
+          "false_alarms": 55,
+          "realised_alarms_per_100": 15.051020408163266,
+          "false_alarms_per_100_passing": 14.945652173913043,
+          "precision": 0.06779661016949153,
+          "recall": 0.16666666666666666,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 1.1073446327683616,
+          "undefined_reasons": {}
+        }
+      }
+    },
+    "E08": {
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "prevalence": 0.061224489795918366,
+      "pr_auc": 0.08768172998567722,
+      "roc_auc": 0.6186594202898551,
+      "recall_at_far": {
+        "far_2": {
+          "far_target_per_100": 2.0,
+          "threshold": 0.5262834012508391,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 1,
+          "false_alarms": 8,
+          "realised_far_per_100": 2.1739130434782608,
+          "recall": 0.041666666666666664,
+          "undefined_reason": null
+        },
+        "far_5": {
+          "far_target_per_100": 5.0,
+          "threshold": 0.469074849784374,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 2,
+          "false_alarms": 19,
+          "realised_far_per_100": 5.163043478260869,
+          "recall": 0.08333333333333333,
+          "undefined_reason": null
+        },
+        "far_10": {
+          "far_target_per_100": 10.0,
+          "threshold": 0.412276616692543,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "true_alarms": 3,
+          "false_alarms": 37,
+          "realised_far_per_100": 10.054347826086957,
+          "recall": 0.125,
+          "undefined_reason": null
+        }
+      },
+      "undefined_reasons": {},
+      "stratified_bootstrap": {
+        "n_bootstraps": 2000,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.06666653796899716,
+          0.16441082951734232
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.20833333333333334
+        ]
+      },
+      "moving_block_bootstrap": {
+        "n_bootstraps": 2000,
+        "block_length": 20,
+        "seed": 42,
+        "pr_auc_95_ci": [
+          0.05540399678370267,
+          0.1567363244012713
+        ],
+        "recall_at_far_95_ci": [
+          0.0,
+          0.2631578947368421
+        ]
+      },
+      "wider_pr_auc_95_ci": [
+        0.05540399678370267,
+        0.16441082951734232
+      ],
+      "wider_recall_at_5_far_95_ci": [
+        0.0,
+        0.2631578947368421
+      ],
+      "alarm_budgets": {
+        "budget_2": {
+          "budget_per_100": 2.0,
+          "threshold": 0.45949692368507383,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 22,
+          "true_alarms": 2,
+          "false_alarms": 20,
+          "realised_alarms_per_100": 5.612244897959184,
+          "false_alarms_per_100_passing": 5.434782608695652,
+          "precision": 0.09090909090909091,
+          "recall": 0.08333333333333333,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 1.4848484848484849,
+          "undefined_reasons": {}
+        },
+        "budget_5": {
+          "budget_per_100": 5.0,
+          "threshold": 0.41731845736503576,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 39,
+          "true_alarms": 3,
+          "false_alarms": 36,
+          "realised_alarms_per_100": 9.948979591836734,
+          "false_alarms_per_100_passing": 9.782608695652174,
+          "precision": 0.07692307692307693,
+          "recall": 0.125,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 1.2564102564102566,
+          "undefined_reasons": {}
+        },
+        "budget_10": {
+          "budget_per_100": 10.0,
+          "threshold": 0.37821871042251587,
+          "n_runs": 392,
+          "n_fails": 24,
+          "n_passing": 368,
+          "alarms": 57,
+          "true_alarms": 5,
+          "false_alarms": 52,
+          "realised_alarms_per_100": 14.540816326530612,
+          "false_alarms_per_100_passing": 14.130434782608695,
+          "precision": 0.08771929824561403,
+          "recall": 0.20833333333333334,
+          "prevalence": 0.061224489795918366,
+          "lift_over_prevalence": 1.4327485380116958,
+          "undefined_reasons": {}
+        }
+      }
+    }
+  },
+  "textbook_spc_limits_holdout": {
+    "E02_individuals_3sigma": {
+      "budget_per_100": 0.27,
+      "threshold": 3.0,
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "alarms": 124,
+      "true_alarms": 8,
+      "false_alarms": 116,
+      "realised_alarms_per_100": 31.632653061224488,
+      "false_alarms_per_100_passing": 31.52173913043478,
+      "precision": 0.06451612903225806,
+      "recall": 0.3333333333333333,
+      "prevalence": 0.061224489795918366,
+      "lift_over_prevalence": 1.053763440860215,
+      "undefined_reasons": {}
+    },
+    "E03_ewma_L3": {
+      "budget_per_100": 0.27,
+      "threshold": 3.0,
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "alarms": 356,
+      "true_alarms": 22,
+      "false_alarms": 334,
+      "realised_alarms_per_100": 90.81632653061224,
+      "false_alarms_per_100_passing": 90.76086956521739,
+      "precision": 0.06179775280898876,
+      "recall": 0.9166666666666666,
+      "prevalence": 0.061224489795918366,
+      "lift_over_prevalence": 1.0093632958801497,
+      "undefined_reasons": {}
+    },
+    "E04_t2_99pct": {
+      "budget_per_100": 1.0,
+      "threshold": 82.57872330157657,
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "alarms": 35,
+      "true_alarms": 0,
+      "false_alarms": 35,
+      "realised_alarms_per_100": 8.928571428571429,
+      "false_alarms_per_100_passing": 9.51086956521739,
+      "precision": 0.0,
+      "recall": 0.0,
+      "prevalence": 0.061224489795918366,
+      "lift_over_prevalence": 0.0,
+      "undefined_reasons": {}
+    },
+    "E05_spe_99pct": {
+      "budget_per_100": 1.0,
+      "threshold": 151.75653431514633,
+      "n_runs": 392,
+      "n_fails": 24,
+      "n_passing": 368,
+      "alarms": 169,
+      "true_alarms": 14,
+      "false_alarms": 155,
+      "realised_alarms_per_100": 43.11224489795919,
+      "false_alarms_per_100_passing": 42.119565217391305,
+      "precision": 0.08284023668639054,
+      "recall": 0.5833333333333334,
+      "prevalence": 0.061224489795918366,
+      "lift_over_prevalence": 1.3530571992110456,
+      "undefined_reasons": {}
+    }
+  },
+  "objectives": {
+    "O1_ranking_pr_auc": {
+      "verdict": "MISS",
+      "primary_detector": "E02",
+      "actual_pr_auc": 0.07235680023948945,
+      "stratified_95_ci": [
+        0.055898041960304984,
+        0.11726302001305643
+      ],
+      "moving_block_95_ci": [
+        0.03837553681415245,
+        0.15141665253965053
+      ],
+      "wider_95_ci": [
+        0.03837553681415245,
+        0.15141665253965053
+      ],
+      "target_min_pr_auc_2x_prevalence": 0.12244897959183673,
+      "chance_prevalence": 0.061224489795918366,
+      "n_fails": 24
+    },
+    "O2_recall_at_5_far": {
+      "verdict": "MISS",
+      "primary_detector": "E02",
+      "actual_recall_at_5_far": 0.041666666666666664,
+      "stratified_95_ci": [
+        0.0,
+        0.125
+      ],
+      "moving_block_95_ci": [
+        0.0,
+        0.17647058823529413
+      ],
+      "wider_95_ci": [
+        0.0,
+        0.17647058823529413
+      ],
+      "target_min_recall": 0.2,
+      "chance_recall": 0.05,
+      "recall_at_2_far": 0.0,
+      "recall_at_10_far": 0.125,
+      "n_fails": 24
+    },
+    "O3_alarm_budget_stability": {
+      "verdict": "PASS",
+      "primary_detector": "E02",
+      "target_budget_per_100": 5.0,
+      "allowed_range_per_100": [
+        2.0,
+        8.0
+      ],
+      "realised_alarms_per_100": 3.061224489795918,
+      "alarms": 12,
+      "true_alarms": 0,
+      "false_alarms": 12,
+      "n_runs": 392
+    },
+    "O4_spc_vs_ml_comparison": {
+      "verdict": "REPORTED",
+      "dev_selected_ml": "E08",
+      "dev_selected_spc": "E02",
+      "diff_ml_minus_spc_dev_pair": 0.015324929746187765,
+      "stratified_95_ci_dev_pair": [
+        -0.03084181812083933,
+        0.09095667172941188
+      ],
+      "moving_block_95_ci_dev_pair": [
+        -0.047020460453118376,
+        0.08391142291359127
+      ],
+      "wider_95_ci_dev_pair": [
+        -0.047020460453118376,
+        0.09095667172941188
+      ],
+      "holdout_best_ml": "E08",
+      "holdout_best_spc": "E02",
+      "diff_ml_minus_spc_holdout_best": 0.015324929746187765,
+      "stratified_95_ci_holdout_best": [
+        -0.03084181812083933,
+        0.09095667172941188
+      ],
+      "n_fails": 24
+    }
+  },
+  "claims_boundary": "Offline benchmark results on the public UCI SECOM dataset. Not measured yield improvement, scrap reduction, or cost savings."
+}
