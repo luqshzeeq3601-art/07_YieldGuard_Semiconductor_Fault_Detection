@@ -183,7 +183,8 @@ The dashboard includes:
 3. **Flagged-Run Drill-Down**: MSPC contribution bars and TreeSHAP waterfall attributions with collinear group maps.
 4. **Alarm-Budget Performance**: Realised alarm rate and precision/recall trade-offs across budgets 2, 5, and 10.
 5. **Synthetic Demo Mode**: Seamless toggle to explore full dashboard functionality on synthetic data without raw data downloads.
-
+6. **Wafer Etch Confirmatory Benchmark**: Independent prequential benchmark evaluation ($O_{1\text{\_v2}}$–$O_{4\text{\_v2}}$), 152 time-step sensor trace viewer, and detector comparison tables.
+ 
 ### 3.4 Batch Scoring, Explanations & Protocol `v0.2` via CLI
 
 ```powershell
@@ -210,7 +211,7 @@ python -m yieldguard.cli prequential --config configs/v0_2.yaml --dataset wafer 
 
 ## 4. Testing & Quality Verification
 
-Run the full automated test suite (all 81+ tests run on synthetic data without requiring SECOM or Wafer downloads):
+Run the full automated test suite (all 82 tests run on synthetic data without requiring SECOM or Wafer downloads):
 
 ```powershell
 # Run code formatting and linter
