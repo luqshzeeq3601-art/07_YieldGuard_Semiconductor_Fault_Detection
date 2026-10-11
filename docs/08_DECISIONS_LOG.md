@@ -123,11 +123,12 @@ Verification or follow-up task:
 - **Evidence examined:** User code review audit notes: (1) data is 1 sensor trace of 152 time steps per wafer (not 152 RF/chemical sensor channels); (2) KPI deltas rendered redundant "PASS (PASS)"; (3) scorecard interpretations and verdicts had hard-coded text; (4) synthetic mode mixed sources without explicit wafer banner; (5) bare exception hid read issues; (6) synthetic timestamps and protocol gates O5_v2/O6_v2 required explicit disclosure across docs.
 - **Decision:**
   1. Updated `app/dashboard.py` labels to "one sensor trace of 152 sequential time steps" and axis label to "Time Step Index (0 to 151)".
-  2. Drove KPI deltas and scorecard table dynamically from loaded JSON metrics without hardcoded numbers, returning `"n/a"` if keys are missing.
+  2. Drove KPI deltas, numbers, targets (using ≥, not >), and scorecard table dynamically from loaded JSON metrics without hardcoded numbers, returning `"n/a"` if keys are missing.
   3. Added an explicit `st.info` banner when running synthetic wafer traces.
   4. Narrowed parquet loading exceptions to `(OSError, ValueError)`.
-  5. Added explicit assertions in `tests/test_dashboard.py` checking View 6 metrics, deltas, and synthetic mode banner.
-  6. Disclosed in `README.md`, `docs/MODEL_CARD.md`, and dashboard technical expander that timestamps are synthesized at 10-minute intervals tracking UCR file order, and clarified that `O5_v2` and `O6_v2` are protocol verification gates.
+  5. Strengthened `tests/test_dashboard.py` verifying View 6 metrics, deltas, and mode selection without silent synthetic fallback.
+  6. Disclosed in `README.md`, `docs/MODEL_CARD.md`, and dashboard technical expander that timestamps are synthesized at 10-minute intervals tracking UCR file order, meaning block order is arbitrary and the benchmark tests prequential evaluation mechanics rather than real process drift.
+  7. Honestly recorded that targets `O5_v2` and `O6_v2` were not measured or recorded in the confirmatory report, rather than asserting unverified gate passes.
 - **Documents changed:** `app/dashboard.py`, `tests/test_dashboard.py`, `README.md`, `docs/MODEL_CARD.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `tasks/todo.md`.
 - **Verification or follow-up task:** T27 verified via `ruff check` and `pytest`.
 

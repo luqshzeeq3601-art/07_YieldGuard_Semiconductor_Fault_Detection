@@ -52,9 +52,22 @@ def test_dashboard_wafer_view_real_data_content_and_scorecard() -> None:
     at.run()
     assert not at.exception
 
-    # Select real data mode if available
+    # Explicitly check if Real Dataset mode option exists and select it
+    select_box = at.sidebar.selectbox[0]
+    if "Real Dataset (SECOM)" in select_box.options:
+        select_box.select("Real Dataset (SECOM)").run()
+        assert not at.exception
+
+    # Select Wafer view
     at.sidebar.radio[0].set_value("6. Semiconductor Wafer Etch (v0.2 Benchmark)").run()
     assert not at.exception
+
+    # If real wafer parquet exists, verify that synthetic info warning is NOT rendered
+    if Path("data/processed/wafer_runs.parquet").exists() and "Real Dataset (SECOM)" in select_box.options:
+        info_texts = [info.value for info in at.info]
+        assert not any("synthetic wafer demo traces" in t for t in info_texts), (
+            "Real wafer parquet path should not display synthetic wafer banner"
+        )
 
     # Metric labels and values must reflect confirmatory scorecard
     metric_labels = [m.label for m in at.metric]

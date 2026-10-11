@@ -1405,26 +1405,37 @@ def render_wafer_etch_view(use_synthetic: bool = False) -> None:
     """Render the Semiconductor Wafer Etch confirmatory benchmark (v0.2 Protocol)."""
     metrics, df_runs = load_wafer_dashboard_data(use_synthetic=use_synthetic)
 
+    summary_text = (
+        "Following the exploratory finding on SECOM that equipment sensor drift was the primary driver "
+        "of false alarms, YieldGuard Protocol v0.2 was frozen and applied to an independent semiconductor "
+        "wafer etch benchmark dataset (7,164 runs, 1 sensor trace of 152 time steps per wafer). "
+        "Chronology limitation: Because original fab equipment timestamps are not included in the public UCR archive, "
+        "timestamps were synthesized at 10-minute intervals in file order; block order is therefore arbitrary, so this "
+        "confirmatory run benchmarks prequential evaluation mechanics rather than real process drift."
+    )
+
+    p_summary = metrics.get("prequential_summary", {}) if metrics else {}
+    n_eval_runs = p_summary.get("n_evaluated_runs", 6268)
+    n_eval_fails = p_summary.get("n_evaluated_fails", 676)
+    n_eval_blocks = p_summary.get("n_evaluated_blocks", 7)
+
+    technical_text = (
+        f"Protocol v0.2 uses rolling-window prequential evaluation over {n_eval_blocks} sequential evaluation blocks "
+        f"comprising {n_eval_runs:,} scored runs and {n_eval_fails:,} real etch faults. Baselines and alarm thresholds are refit "
+        "per block on past data. Confirmatory evaluation was executed strictly once on frozen code. "
+        "Targets O1_v2–O4_v2 are tracked dynamically from the confirmatory metrics report; targets O5_v2 (calibration fidelity) "
+        "and O6_v2 (reproducibility) were not recorded in the metrics report."
+    )
+
     render_view_intro(
         title="Semiconductor Wafer Etch: Confirmatory Benchmark (v0.2)",
-        summary=(
-            "Following the exploratory finding on SECOM that equipment sensor drift was the primary driver "
-            "of false alarms, YieldGuard Protocol v0.2 was frozen and applied to an independent semiconductor "
-            "wafer etch benchmark dataset (7,164 runs, 1 sensor trace of 152 time steps per wafer, 7-block prequential evaluation). "
-            "Note: Timestamps are synthetic 10-minute intervals tracking UCR file order. All confirmatory targets passed."
-        ),
+        summary=summary_text,
         how_to_read=[
-            "**Official Scorecard**: inspect the 4 pre-registered confirmatory targets (O1_v2 to O4_v2).",
+            "**Official Scorecard**: inspect the pre-registered confirmatory targets (O1_v2 to O4_v2).",
             "**Sensor Trace Inspector**: select individual wafer runs to inspect the 152-time-step inline sensor trace compared against the normal mean baseline.",
             "**Detector Comparison**: compare all 9 detectors across the operational alarm budgets (2, 5, 10 alarms per 100 runs).",
         ],
-        technical=(
-            "Protocol v0.2 uses rolling-window prequential evaluation over 7 sequential evaluation blocks (B2–B8) "
-            "comprising 6,268 scored runs and 676 real etch faults. Baselines and alarm thresholds are refit "
-            "per block without look-ahead leakage. Confirmatory evaluation was executed strictly once on frozen code. "
-            "Targets O1_v2–O4_v2 are tracked dynamically from the confirmatory metrics report; targets O5_v2 (calibration fidelity) "
-            "and O6_v2 (reproducibility) are protocol verification gates documented in docs/11_PROTOCOL_V02.md."
-        ),
+        technical=technical_text,
     )
 
     if use_synthetic:
@@ -1446,11 +1457,13 @@ def render_wafer_etch_view(use_synthetic: bool = False) -> None:
         if o1 and "actual_pr_auc" in o1:
             val_str = f"{float(o1['actual_pr_auc']):.4f}"
             delta_str = str(o1.get("verdict", "N/A"))
+            target_str = f"Target ≥ {float(o1.get('target_min_pr_auc_2x_prevalence', 0.2157)):.4f}"
         else:
             val_str = "n/a"
             delta_str = "N/A"
+            target_str = "Target n/a"
         st.metric(
-            label="O1: PR-AUC (Target > 0.2157)",
+            label=f"O1: PR-AUC ({target_str})",
             value=val_str,
             delta=delta_str,
             delta_color="normal",
@@ -1459,11 +1472,13 @@ def render_wafer_etch_view(use_synthetic: bool = False) -> None:
         if o2 and "actual_recall_at_5_far" in o2:
             val_str = f"{float(o2['actual_recall_at_5_far']) * 100:.1f}%"
             delta_str = str(o2.get("verdict", "N/A"))
+            target_str = f"Target ≥ {float(o2.get('target_min_recall', 0.20)) * 100:.0f}%"
         else:
             val_str = "n/a"
             delta_str = "N/A"
+            target_str = "Target n/a"
         st.metric(
-            label="O2: Recall@5% FAR (Target > 20%)",
+            label=f"O2: Recall@5% FAR ({target_str})",
             value=val_str,
             delta=delta_str,
             delta_color="normal",
@@ -1472,11 +1487,14 @@ def render_wafer_etch_view(use_synthetic: bool = False) -> None:
         if o3 and "realised_alarms_per_100" in o3:
             val_str = f"{float(o3['realised_alarms_per_100']):.2f}"
             delta_str = f"{o3.get('verdict', 'N/A')} ({o3.get('true_alarms', 0)} TP, {o3.get('false_alarms', 0)} FP)"
+            rng = o3.get("allowed_range_per_100", [2.0, 8.0])
+            target_str = f"Target [{rng[0]:.0f}, {rng[1]:.0f}]"
         else:
             val_str = "n/a"
             delta_str = "N/A"
+            target_str = "Target n/a"
         st.metric(
-            label="O3: Alarms/100 (Target [2, 8])",
+            label=f"O3: Alarms/100 ({target_str})",
             value=val_str,
             delta=delta_str,
             delta_color="normal",
