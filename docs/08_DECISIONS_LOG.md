@@ -132,3 +132,20 @@ Verification or follow-up task:
 - **Documents changed:** `app/dashboard.py`, `tests/test_dashboard.py`, `README.md`, `docs/MODEL_CARD.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`, `tasks/todo.md`.
 - **Verification or follow-up task:** T27 verified via `ruff check` and `pytest`.
 
+## 2026-10-12: D018 - Measurement of `O5_v2` and `O6_v2` and protocol deviations found (T32)
+
+- **ID and date:** D018 (12 October 2026)
+- **Evidence examined:** `docs/11_PROTOCOL_V02.md` section 6, `configs/v0_2.yaml`, `src/yieldguard/prequential.py`, `reports/v0_2/wafer_confirmatory_metrics.json`.
+- **Decision:**
+  1. `O5_v2` and `O6_v2` are measured by a verification rerun into a temporary directory (`scripts/verify_v0_2_o5_o6.py`). The one-shot confirmatory report is compared against, never overwritten.
+  2. The protocol does not name the detector for `O5_v2`. Fixed before the rerun: the verdict is judged on the pooled calibration-window alarm rate of the primary detector at budget 5, consistent with `O1_v2`–`O3_v2`; all detectors are reported.
+  3. `run_prequential_evaluation` now records `calibration_alarms_b5` and `calibration_alarms_per_100_b5` per block and detector. Additive only; no score, threshold or verdict changes.
+  4. Deviations between the frozen protocol and the executed confirmatory run, found during this work and recorded without rerunning or editing the confirmatory report:
+     - Blocks: protocol and config specify 10 blocks with 2 warmup blocks for Wafer Etch; the run used 8 blocks with 1 warmup block (`configs/v0_2.yaml` has no `prequential` key, so CLI defaults applied).
+     - `O2_v2`: protocol and config require recall >= 0.25; the code checked >= 0.20. Measured 0.9970 meets both.
+     - `O3_v2`: protocol and config require 3.5 to 6.5 alarms per 100; the code checked 2.0 to 8.0. Measured 5.55 meets both.
+     - `O1_v2`: protocol specifies mean block PR-AUC; the code checked pooled PR-AUC. Measured 0.9741 (mean block) and 0.9729 (pooled) both meet the target.
+     - XGBoost and PCA settings in the code differ from `configs/v0_2.yaml` (for example 100 trees against 120, 25 components against 30).
+  5. The `O1_v2`–`O3_v2` verdicts are unchanged under the stricter predeclared criteria. At the user's direction the same day, the README v0.2 table and the model card now state the predeclared targets (0.25 and 3.5–6.5) with a protocol-deviations note, and the dashboard's technical note explains that the targets it reads from the metrics JSON are the looser ones. The code thresholds and the confirmatory report are unchanged so that the stored run stays reproducible.
+- **Documents changed:** `src/yieldguard/prequential.py`, `scripts/verify_v0_2_o5_o6.py`, `tests/test_prequential.py`, `reports/v0_2/wafer_o5_o6_verification.json`, `README.md`, `docs/MODEL_CARD.md`, `app/dashboard.py`, `tasks/todo.md`, `docs/09_PROGRESS_LOG.md`.
+- **Verification or follow-up task:** T32 verified via `ruff check` and `pytest`. Follow-up: none required; aligning `configs/v0_2.yaml` with the executed run is optional.

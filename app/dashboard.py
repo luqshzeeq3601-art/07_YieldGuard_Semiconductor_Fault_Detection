@@ -1424,7 +1424,10 @@ def render_wafer_etch_view(use_synthetic: bool = False) -> None:
         f"comprising {n_eval_runs:,} scored runs and {n_eval_fails:,} real etch faults. Baselines and alarm thresholds are refit "
         "per block on past data. Confirmatory evaluation was executed strictly once on frozen code. "
         "Targets O1_v2–O4_v2 are tracked dynamically from the confirmatory metrics report; targets O5_v2 (calibration fidelity) "
-        "and O6_v2 (reproducibility) were not recorded in the metrics report."
+        "and O6_v2 (reproducibility) were measured afterwards by a separate verification rerun "
+        "(reports/v0_2/wafer_o5_o6_verification.json). The O2_v2 and O3_v2 targets shown here come from the metrics report "
+        "and are looser than the predeclared protocol targets (recall of at least 0.25; 3.5 to 6.5 alarms per 100); "
+        "the measured results meet both."
     )
 
     render_view_intro(

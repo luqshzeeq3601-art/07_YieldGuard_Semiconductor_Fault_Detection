@@ -1,0 +1,73 @@
+{
+  "protocol_version": "0.2.0",
+  "dataset_id": "WAFER_ETCH",
+  "evaluation_type": "post_confirmatory_verification",
+  "generated_at_utc": "2026-10-12T01:21:23.568365+00:00",
+  "compared_against": "reports/v0_2/wafer_confirmatory_metrics.json",
+  "O5_v2_calibration_fidelity": {
+    "verdict": "PASS",
+    "judged_on": "pooled calibration-window alarm rate of the primary detector at budget 5",
+    "primary_detector": "E08_v2",
+    "allowed_range_per_100": [
+      4.5,
+      5.5
+    ],
+    "detectors": {
+      "E01_v2": {
+        "pooled_alarms_per_100": 0.0,
+        "min_block_alarms_per_100": 0.0,
+        "max_block_alarms_per_100": 0.0
+      },
+      "E02_v2": {
+        "pooled_alarms_per_100": 5.027932960893855,
+        "min_block_alarms_per_100": 5.027932960893855,
+        "max_block_alarms_per_100": 5.027932960893855
+      },
+      "E03_v2": {
+        "pooled_alarms_per_100": 5.027932960893855,
+        "min_block_alarms_per_100": 5.027932960893855,
+        "max_block_alarms_per_100": 5.027932960893855
+      },
+      "E04_v2": {
+        "pooled_alarms_per_100": 5.027932960893855,
+        "min_block_alarms_per_100": 5.027932960893855,
+        "max_block_alarms_per_100": 5.027932960893855
+      },
+      "E05_v2": {
+        "pooled_alarms_per_100": 5.027932960893855,
+        "min_block_alarms_per_100": 5.027932960893855,
+        "max_block_alarms_per_100": 5.027932960893855
+      },
+      "E06_v2": {
+        "pooled_alarms_per_100": 5.027932960893855,
+        "min_block_alarms_per_100": 5.027932960893855,
+        "max_block_alarms_per_100": 5.027932960893855
+      },
+      "E07_v2": {
+        "pooled_alarms_per_100": 5.027932960893855,
+        "min_block_alarms_per_100": 5.027932960893855,
+        "max_block_alarms_per_100": 5.027932960893855
+      },
+      "E08_v2": {
+        "pooled_alarms_per_100": 4.980047885075818,
+        "min_block_alarms_per_100": 4.916201117318436,
+        "max_block_alarms_per_100": 5.027932960893855
+      },
+      "E09_v2": {
+        "pooled_alarms_per_100": 5.027932960893855,
+        "min_block_alarms_per_100": 5.027932960893855,
+        "max_block_alarms_per_100": 5.027932960893855
+      }
+    }
+  },
+  "O6_v2_reproducibility": {
+    "verdict": "PASS",
+    "seed": 42,
+    "tolerance": 1e-06,
+    "max_abs_metric_difference": 0.0,
+    "structural_mismatches": [],
+    "stored_predictions_sha256": "751c522efa4817a652a10fa471f4ee6fb29eb365c96cf2dbe9533afadafec481",
+    "rerun_predictions_sha256": "751c522efa4817a652a10fa471f4ee6fb29eb365c96cf2dbe9533afadafec481",
+    "predictions_sha256_match": true
+  }
+}

@@ -309,3 +309,23 @@
 - Unresolved issues: None. All 4 post-MVP roadmap enhancements implemented and verified.
 
 
+## 17. Session: 12 October 2026, Pre-Deployment Wording and Guide Fixes
+
+- Tasks completed: documentation-only corrections before any public hosting; no task ID, no code or model change.
+- Changed files:
+  - `docs/12_DEPLOYMENT_GUIDE.md`: added the claims boundary and the SECOM null result to the introduction; removed "production" wording; corrected "proprietary" to the public UCI SECOM dataset; Cloud Run example now uses `--no-allow-unauthenticated` and `--min-instances 0`; security section states that the API has no authentication or rate limiting and that the dashboard image includes `reports/`.
+  - `Dockerfile`, `Dockerfile.dashboard`: comment corrected to "Install curl for healthchecks" (the step never installed security updates).
+- Verification evidence: `git diff --stat` shows only these three files plus this log; no test references the guide or the Dockerfiles. Tests and Docker builds were not rerun because only prose and comments changed.
+- Unresolved issues: the API still has no authentication or rate limiting (documented, not implemented); `O5_v2` and `O6_v2` remain unmeasured. Changes are uncommitted and unpushed.
+- Next ready task: none scheduled. Public cloud deployment needs explicit user authorization.
+
+## 18. Session: 12 October 2026, T32 Measurement of `O5_v2` and `O6_v2`
+
+- Tasks completed: `T32`.
+- Changed/created files: `src/yieldguard/prequential.py` (per-block calibration alarm counts), `scripts/verify_v0_2_o5_o6.py`, `tests/test_prequential.py`, `reports/v0_2/wafer_o5_o6_verification.json`, `README.md`, `docs/MODEL_CARD.md`, `app/dashboard.py`, `tasks/todo.md`, `docs/08_DECISIONS_LOG.md`.
+- Commands and results:
+  - `.\.venv\Scripts\python.exe scripts/verify_v0_2_o5_o6.py` (75 s): `O5_v2` PASS, primary `E08_v2` 4.98 alarms per 100 on calibration windows (per-block 4.92–5.03), other scored detectors 5.03; `O6_v2` PASS, maximum metric difference 0.0, predictions SHA-256 identical to the stored run.
+  - `ruff check src api app scripts tests`: all checks passed. `pytest -q`: 88 passed.
+- Unresolved issues: protocol deviations listed in D018 (block count, `O2_v2`/`O3_v2` thresholds in code and README, hyperparameters against config). Verdicts hold under the stricter predeclared criteria. API authentication is still not implemented. Changes are uncommitted and unpushed.
+- Follow-up the same day: README v0.2 table, model card and dashboard technical note corrected to the predeclared `O2_v2`/`O3_v2` targets with a protocol-deviations note (D018 item 5). `ruff check` clean; `pytest -q` 88 passed.
+- Next ready task: none scheduled.

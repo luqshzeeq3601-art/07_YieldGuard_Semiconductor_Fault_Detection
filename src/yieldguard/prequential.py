@@ -565,9 +565,12 @@ def run_prequential_evaluation(
                 budget_per_100=5.0,
             )
             pr_val, _ = compute_pr_auc(y_eval, s_ev)
+            cal_alarms_b5 = int(np.sum(np.asarray(s_cal, dtype=np.float64) > float(thresholds["budget_5"])))
             block_det_metrics[det] = {
                 "pr_auc": pr_val,
                 "threshold_budget_5": float(thresholds["budget_5"]),
+                "calibration_alarms_b5": cal_alarms_b5,
+                "calibration_alarms_per_100_b5": float(100.0 * cal_alarms_b5 / max(len(s_cal), 1)),
                 "alarms_budget_5": int(b5_eval.alarms),
                 "realised_alarms_per_100_b5": float(b5_eval.realised_alarms_per_100 or 0.0),
                 "true_alarms_b5": int(b5_eval.true_alarms),

@@ -1,13 +1,15 @@
 # 12. Deployment and Cloud Hosting Guide
 
-This guide details operations and deployment procedures for YieldGuard services across local container orchestration, public demos, and cloud production infrastructure.
+This guide details operations and deployment procedures for YieldGuard services across local container orchestration, public demos, and cloud container hosting.
+
+YieldGuard is an offline benchmark demonstrator on public datasets, not a production fab system. On the UCI SECOM holdout no detector beat chance (see the README), so any hosted instance is a demo of the engineering, not a working fault predictor.
 
 ---
 
 ## 1. Container Architecture Overview
 
 YieldGuard provides dual containerized services:
-1. **Inference API (`api`)**: Production FastAPI service running via Uvicorn on port `8000`. Serves single-run scoring (`/score`), batch processing, model metadata (`/model-info`), Phase II SPC charting (`/spc`), and health probes (`/health`, `/ready`).
+1. **Inference API (`api`)**: FastAPI service running via Uvicorn on port `8000`. Serves single-run scoring (`/score`), batch processing, model metadata (`/model-info`), Phase II SPC charting (`/spc`), and health probes (`/health`, `/ready`).
 2. **Operations Dashboard (`dashboard`)**: Interactive Streamlit web console on port `8501`. Serves 6 diagnostic and process control views with Plotly interactive charts.
 
 ---
@@ -50,11 +52,13 @@ To deploy the interactive Streamlit dashboard as a free public web application o
 3. Push the repository files to the Space repository:
    * Keep `app/dashboard.py` as the entrypoint (or configure `app_file: app/dashboard.py` in `README.md` YAML frontmatter).
    * Ensure `requirements.lock`, `src/`, `models/v0.1.0/`, and `reports/` are pushed.
-4. The dashboard will automatically launch in **Synthetic Demo Mode** (or with bundled holdout reports) without requiring the raw proprietary manufacturing dataset.
+4. The dashboard will automatically launch in **Synthetic Demo Mode** (or with bundled holdout reports) without requiring the raw UCI SECOM download (a public dataset, CC BY 4.0).
 
 ---
 
-## 4. Production Cloud Deployment: Google Cloud Run & AWS ECS
+## 4. Cloud Container Deployment: Google Cloud Run & AWS ECS
+
+The API has no authentication and no rate limiting, so deploy it as a private service and use the dashboard (section 3) as the public demo. Cloud hosting is a paid resource; `--min-instances 0` lets the service scale to zero when idle.
 
 ### Google Cloud Run (Serverless Container)
 
@@ -62,16 +66,16 @@ To deploy the interactive Streamlit dashboard as a free public web application o
 # 1. Build and submit container image to Google Artifact Registry
 gcloud builds submit --tag gcr.io/$PROJECT_ID/yieldguard-api:latest .
 
-# 2. Deploy serverless container with non-root execution and health probes
+# 2. Deploy as a private service (callers need the Cloud Run invoker role) that scales to zero
 gcloud run deploy yieldguard-api \
   --image gcr.io/$PROJECT_ID/yieldguard-api:latest \
   --platform managed \
   --region us-central1 \
-  --allow-unauthenticated \
+  --no-allow-unauthenticated \
   --port 8000 \
   --memory 2Gi \
   --cpu 2 \
-  --min-instances 1 \
+  --min-instances 0 \
   --set-env-vars YIELDGUARD_BUNDLE_DIR=/app/models/v0.1.0
 ```
 
@@ -88,4 +92,5 @@ gcloud run deploy yieldguard-api \
 1. **Non-Root User Execution**: Both `Dockerfile` and `Dockerfile.dashboard` enforce non-root execution under UID `1000` (`appuser`).
 2. **Payload Size Limits**: Strict middleware in `api/main.py` enforces maximum request payload size of 256 KiB for `/score` and 2 MiB for `/spc`.
 3. **Bundle Tamper Evidence**: Model artifacts are verified via SHA-256 against `metadata.json` on startup. If any weight or configuration is altered, the service refuses initialization and reports `HTTP 503`.
-4. **Air-Gapped Data Isolation**: Raw wafer and SECOM datasets are never copied into production Docker images.
+4. **Raw Data Exclusion**: Raw wafer and SECOM datasets are never copied into the Docker images. The dashboard image does include `reports/` and the split manifest.
+5. **No Authentication or Rate Limiting**: The API accepts requests from any caller that can reach it. Keep it on a private network or behind the platform's identity layer; do not expose it directly to the internet.
