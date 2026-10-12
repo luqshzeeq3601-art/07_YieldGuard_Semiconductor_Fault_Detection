@@ -103,6 +103,12 @@ def test_prequential_temporal_causality_and_one_shot_lock(tmp_path: Path) -> Non
     assert rep1["predictions_sha256"] is not None
     assert "E09_v2" in rep1["detectors"]
 
+    # O5_v2 input: calibration-window alarm rate is recorded per block and matches its count
+    for block in rep1["per_block_summaries"]:
+        for det_metrics in block["detectors"].values():
+            expected = 100.0 * det_metrics["calibration_alarms_b5"] / block["n_calibration_runs"]
+            assert det_metrics["calibration_alarms_per_100_b5"] == pytest.approx(expected)
+
     # Second call with overwrite=False must refuse to overwrite
     with pytest.raises(FileExistsError):
         run_prequential_evaluation(

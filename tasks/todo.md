@@ -237,5 +237,8 @@
 - Files: `Dockerfile.dashboard`, `docker-compose.yml`, `docs/12_DEPLOYMENT_GUIDE.md`.
 - Acceptance check: Multi-container orchestration defined with healthchecks for both FastAPI and Streamlit services; complete deployment operations guide written for Docker Compose, Hugging Face Spaces, and serverless Cloud Run / AWS ECS.
 
-
-
+### T32: Measure predeclared `O5_v2` and `O6_v2` on Wafer Etch
+- [x] Complete T32 (12 October 2026).
+- Dependencies: T25.
+- Files: `src/yieldguard/prequential.py`, `scripts/verify_v0_2_o5_o6.py`, `tests/test_prequential.py`, `reports/v0_2/wafer_o5_o6_verification.json`.
+- Acceptance check: `O5_v2` and `O6_v2` measured against the frozen criteria without regenerating the one-shot confirmatory report. Evidence: `O5_v2` PASS (4.98 alarms per 100 on calibration windows, primary `E08_v2`); `O6_v2` PASS (maximum metric difference 0.0, identical predictions SHA-256).
