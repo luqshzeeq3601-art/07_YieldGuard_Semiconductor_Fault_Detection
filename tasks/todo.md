@@ -211,4 +211,31 @@
 - Files: `app/dashboard.py`, `tests/test_dashboard.py`, `docs/MODEL_CARD.md`, `README.md`, `docs/08_DECISIONS_LOG.md`, `docs/09_PROGRESS_LOG.md`.
 - Acceptance check: Accurate "152 time steps / 1 sensor trace" and "Time Step Index" axis labels; dynamic scorecard verdicts, numbers, and KPI target labels (using ≥, not >) driven strictly from loaded metrics without hard-coded fallbacks or duplicate "PASS (PASS)" prefixes; explicit synthetic wafer banner when in synthetic mode; narrow exception catching on parquet reads; strengthened `test_dashboard.py` verifying View 6 metrics, deltas, and mode selection; honest disclosure that O5_v2/O6_v2 were not measured/recorded in the metrics report and that arbitrary synthetic block ordering means the benchmark tests prequential evaluation mechanics rather than real process drift.
 
+## 11. Post-MVP Enhancements: Items 1–4
+
+### T28: Item 1 — Remote GitHub Repository & CI Verification
+- [x] Complete T28 (12 October 2026; Remote repository created at `luqshzeeq3601-art/07_YieldGuard_Semiconductor_Fault_Detection`; master branch pushed; .gitattributes and cross-platform line ending normalization verified).
+- Dependencies: T27.
+- Files: `.gitattributes`, `.github/workflows/ci.yml`.
+- Acceptance check: GitHub remote repository created and synchronized; workflow permissions and cross-platform file endings handled.
+
+### T29: Item 2 — Probability Calibration Engine & Reliability Diagnostics
+- [x] Complete T29 (12 October 2026).
+- Dependencies: T28.
+- Files: `src/yieldguard/calibration.py`, `tests/test_calibration.py`, `api/schemas.py`, `api/main.py`.
+- Acceptance check: Platt scaling (sigmoid), isotonic regression, ECE computation, Brier score loss, and Bayes odds-ratio class imbalance adjustment implemented with unit tests passing (4/4 passed).
+
+### T30: Item 3 — Multi-Stream Process Monitoring (Tool & Chamber Fleets)
+- [x] Complete T30 (12 October 2026).
+- Dependencies: T28.
+- Files: `src/yieldguard/multistream.py`, `tests/test_multistream.py`.
+- Acceptance check: Mortell-Runger multi-stream SPC with chamber-specific baselines, Bonferroni-corrected false alarm control, and chamber attribution implemented and verified with unit tests passing (2/2 passed).
+
+### T31: Item 4 — Turnkey Production Deployment & Cloud Hosting Orchestration
+- [x] Complete T31 (12 October 2026).
+- Dependencies: T28, T29, T30.
+- Files: `Dockerfile.dashboard`, `docker-compose.yml`, `docs/12_DEPLOYMENT_GUIDE.md`.
+- Acceptance check: Multi-container orchestration defined with healthchecks for both FastAPI and Streamlit services; complete deployment operations guide written for Docker Compose, Hugging Face Spaces, and serverless Cloud Run / AWS ECS.
+
+
 

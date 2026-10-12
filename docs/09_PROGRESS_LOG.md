@@ -289,3 +289,23 @@
 - Unresolved issues: None.
 - Next ready task: Portfolio-ready baseline complete.
 
+## 16. Session: 12 October 2026, Post-MVP Roadmap Items 1–4 (T28–T31)
+
+- Date/time: 2026-10-12 08:35 (Asia/Kuala_Lumpur)
+- Tasks completed: `T28` (GitHub Sync & Cross-Platform CI), `T29` (Probability Calibration), `T30` (Multi-Stream SPC), `T31` (Turnkey Deployment).
+- Changed/created files:
+  - `src/yieldguard/calibration.py`, `tests/test_calibration.py` (Platt scaling, Isotonic regression, ECE, Brier score, and odds-ratio class imbalance adjustment).
+  - `src/yieldguard/multistream.py`, `tests/test_multistream.py` (Mortell-Runger multi-stream SPC with stream-stratified baselines, Bonferroni-corrected false alarm budgets, and chamber attribution).
+  - `Dockerfile.dashboard`, `docker-compose.yml`, `docs/12_DEPLOYMENT_GUIDE.md` (dual-service orchestration, Streamlit production image, cloud hosting guide).
+  - `.gitattributes`, `src/yieldguard/artifacts.py`, `tests/test_artifacts.py`, `tests/test_holdout.py` (cross-platform LF line ending normalization and cryptographic verification tolerance for JSON files).
+  - `api/schemas.py`, `api/main.py` (added optional `calibrated_probability` to `ScoreRunResponse`).
+  - `tasks/todo.md`, `docs/09_PROGRESS_LOG.md`.
+- Remote GitHub Repository:
+  - Created public remote repository `luqshzeeq3601-art/07_YieldGuard_Semiconductor_Fault_Detection`.
+  - Pushed `master` branch.
+- Verification evidence:
+  - `.\.venv\Scripts\python.exe -m ruff check src api app scripts tests` -> `All checks passed!`
+  - `.\.venv\Scripts\python.exe -m pytest -q` -> `88 passed` in local virtual environment.
+- Unresolved issues: None. All 4 post-MVP roadmap enhancements implemented and verified.
+
+

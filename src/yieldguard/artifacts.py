@@ -205,6 +205,13 @@ def load_model_bundle(bundle_dir: str | Path) -> LoadedBundle:
         if not fpath.exists():
             raise FileNotFoundError(f"Missing bundle file {fname} in {bundle_path}")
         actual_hash = compute_file_sha256(fpath)
+        if actual_hash != expected_hash and fname.endswith(".json"):
+            raw_bytes = fpath.read_bytes()
+            lf_hash = hashlib.sha256(raw_bytes.replace(b"\r\n", b"\n")).hexdigest()
+            crlf_hash = hashlib.sha256(raw_bytes.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")).hexdigest()
+            if expected_hash in (lf_hash, crlf_hash):
+                actual_hash = expected_hash
+
         if actual_hash != expected_hash:
             raise ValueError(
                 f"Integrity check failed: checksum mismatch for {fname} in {bundle_path}. "

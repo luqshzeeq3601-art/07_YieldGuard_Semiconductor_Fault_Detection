@@ -1,0 +1,15 @@
+# Enforce deterministic LF line endings across all OS checkouts and platforms
+* text=auto eol=lf
+
+# Explicit binary handling for serialized ML models and parquet tables
+*.parquet binary
+*.joblib binary
+models/**/*.parquet binary
+models/**/*.joblib binary
+models/v0.1.0/iforest.joblib binary
+models/v0.1.0/mspc.joblib binary
+models/v0.1.0/quality.joblib binary
+models/v0.1.0/monitoring_reference.parquet binary
+
+# Ensure JSON metadata files always use LF on disk
+*.json text eol=lf

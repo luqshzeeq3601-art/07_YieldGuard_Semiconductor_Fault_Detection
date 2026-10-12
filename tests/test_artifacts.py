@@ -11,7 +11,11 @@ from yieldguard.artifacts import freeze_model_bundle, load_model_bundle
 def test_bundle_freeze_and_load_roundtrip(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.chdir(tmp_path)
     project_root = Path(__file__).resolve().parent.parent
-    stg_src = project_root / "models" / "staging"
+    stg_src = (
+        project_root / "models" / "staging"
+        if (project_root / "models" / "staging" / "quality.joblib").exists()
+        else project_root / "models" / "v0.1.0"
+    )
     rep_src = project_root / "reports" / "validation_metrics.json"
 
     tmp_stg = tmp_path / "models" / "staging"
@@ -64,7 +68,11 @@ policy:
 
 def test_tampered_bundle_refused(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     project_root = Path(__file__).resolve().parent.parent
-    stg_src = project_root / "models" / "staging"
+    stg_src = (
+        project_root / "models" / "staging"
+        if (project_root / "models" / "staging" / "quality.joblib").exists()
+        else project_root / "models" / "v0.1.0"
+    )
     tmp_stg = tmp_path / "models" / "staging"
     tmp_stg.mkdir(parents=True, exist_ok=True)
     for f in stg_src.iterdir():
@@ -107,7 +115,11 @@ policy:
 
 def test_refuse_overwrite_frozen_bundle(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     project_root = Path(__file__).resolve().parent.parent
-    stg_src = project_root / "models" / "staging"
+    stg_src = (
+        project_root / "models" / "staging"
+        if (project_root / "models" / "staging" / "quality.joblib").exists()
+        else project_root / "models" / "v0.1.0"
+    )
     tmp_stg = tmp_path / "models" / "staging"
     tmp_stg.mkdir(parents=True, exist_ok=True)
     for f in stg_src.iterdir():

@@ -73,6 +73,10 @@ class ScoreRunResponse(BaseModel):
     n_missing: int
     quality_warnings: list[str]
     top_sensors: dict[str, Any] | None = None
+    calibrated_probability: float | None = Field(
+        default=None,
+        description="Calibrated posterior failure probability P(Fault=1 | Sensors).",
+    )
     bundle_version: str
     policy_version: str = "1.0"
     schema_version: str = "1.0"
