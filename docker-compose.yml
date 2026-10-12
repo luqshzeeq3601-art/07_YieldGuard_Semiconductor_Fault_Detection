@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: yieldguard-api:latest
+    container_name: yieldguard-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - YIELDGUARD_BUNDLE_DIR=/app/models/v0.1.0
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8000/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    image: yieldguard-dashboard:latest
+    container_name: yieldguard-dashboard
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      - YIELDGUARD_BUNDLE_DIR=/app/models/v0.1.0
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      api:
+        condition: service_healthy

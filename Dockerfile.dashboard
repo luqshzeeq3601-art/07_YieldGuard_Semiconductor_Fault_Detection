@@ -1,0 +1,44 @@
+# syntax=docker/dockerfile:1
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install security updates and curl for healthchecks
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN useradd -m -u 1000 appuser
+
+# Copy lock and setup files
+COPY requirements.lock pyproject.toml README.md /app/
+
+# Install locked dependencies and package
+RUN pip install --no-cache-dir -r requirements.lock
+
+# Copy source code, application, models, and configs
+COPY src /app/src
+COPY app /app/app
+COPY configs /app/configs
+COPY models/v0.1.0 /app/models/v0.1.0
+COPY data/processed/split_manifest.json /app/data/processed/split_manifest.json
+COPY reports /app/reports
+
+RUN pip install --no-cache-dir --no-deps -e .
+
+# Switch to non-root user
+USER appuser
+
+EXPOSE 8501
+
+ENV YIELDGUARD_BUNDLE_DIR=/app/models/v0.1.0 \
+    PYTHONUNBUFFERED=1 \
+    STREAMLIT_SERVER_HEADLESS=true \
+    STREAMLIT_SERVER_ENABLE_CORS=false \
+    STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+
+HEALTHCHECK --interval=15s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+
+CMD ["streamlit", "run", "app/dashboard.py", "--server.port=8501", "--server.address=0.0.0.0"]

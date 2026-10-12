@@ -184,6 +184,7 @@ def score_run(payload: ScoreRunRequest) -> ScoreRunResponse:
         n_missing=res["n_missing"],
         quality_warnings=res["quality_warnings"],
         top_sensors=res["top_sensors"],
+        calibrated_probability=res.get("calibrated_probability"),
         bundle_version=bundle.version,
         policy_version="1.0",
         schema_version="1.0",

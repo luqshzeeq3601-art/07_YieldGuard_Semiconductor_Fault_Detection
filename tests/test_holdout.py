@@ -20,6 +20,12 @@ def test_holdout_evaluation_hashes_predictions_before_labels_open_and_refuses_ov
 ) -> None:
     project_root = Path(__file__).resolve().parent.parent
 
+    # Skip if real SECOM runs parquet or staging artifacts are not present (synthetic CI environment)
+    runs_file = project_root / "data" / "processed" / "runs.parquet"
+    stg_file = project_root / "models" / "staging" / "quality.joblib"
+    if not runs_file.exists() or not stg_file.exists():
+        pytest.skip("SECOM runs.parquet or staging model artifacts not present (synthetic CI environment)")
+
     # Freeze bundle to temporary models dir
     bundle_dir = tmp_path / "models" / "v0.1.0"
     monkeypatch.chdir(tmp_path)
