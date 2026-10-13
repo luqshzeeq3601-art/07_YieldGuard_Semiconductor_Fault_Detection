@@ -4,49 +4,90 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-0f766e.svg)](LICENSE)
 [![Python: 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](pyproject.toml)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?logo=fastapi)](api/main.py)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.32+-FF4B4B.svg?logo=streamlit)](app/dashboard.py)
+[![Tests: Pytest](https://img.shields.io/badge/Tests-88%20Passed-brightgreen.svg)](tests/)
 
-YieldGuard is a decision-support and fault detection system built on the UCI SECOM semiconductor manufacturing dataset (590 sensor channels, 1,567 runs). It combines classical univariate Statistical Process Control (Individuals and EWMA charts), multivariate Hotelling $T^2$ / $SPE$ charts, Isolation Forest, and tuned XGBoost under a strict false-alarm budget constraint (2, 5, or 10 alarms per 100 passing runs).
+<p align="center">
+  <img src="assets/yieldguard_infographic_poster.png" alt="YieldGuard Semiconductor Intelligence Poster" width="800" />
+</p>
 
----
-
-## 1. System Architecture & Workflow
-
-```
-Raw SECOM Runs (590 channels)
-      │
-      ▼
-Train-Only Cleaning & Sensor Screening (Phase I: D1–D4, 940 runs)
-  ├── Retained Features: 274 channels (drops >50% missing, >=99% constants, |r|>=0.95 collinear duplicates)
-  ├── 10 Monitored SPC Sensors (<=5% missing; Rank-Biserial correlation with Benjamini-Hochberg FDR)
-  └── Collinear Group Tracking (preserves sensor groupings for explainability)
-      │
-      ▼
-Detector Candidate Evaluation & Selection
-  ├── E01: Chance Baseline
-  ├── E02: Univariate SPC Individuals (Phase I Centre Line & Moving-Range Sigma) [Selected Primary]
-  ├── E03: Univariate EWMA Chart (λ = 0.20, L = 3.0)
-  ├── E04: Hotelling T² Chart (PCA on passing runs, 50-component cap)
-  ├── E05: Squared Prediction Error (SPE / Q-Residual)
-  ├── E06: Combined MSPC Index (T²/T²_limit + SPE/SPE_limit)
-  ├── E07: Isolation Forest (200 trees, passing runs only)
-  └── E08: XGBoost Booster (xgb_c01: depth=1, trees=100, lr=0.03)
-      │
-      ▼
-Threshold Calibration on D5 (235 runs)
-  └── Quantile thresholds set at strict budgets: 2, 5, and 10 alarms per 100 scored runs
-      │
-      ▼
-Frozen Release Bundle (`models/v0.1.0/`) & One-Shot Holdout Evaluation (392 runs, 24 fails)
-      │
-      ├── CLI Batch Scoring (`yieldguard score`, `yieldguard explain`)
-      ├── REST API Service (FastAPI: `/health`, `/ready`, `/model-info`, `/score`, `/spc`)
-      ├── Interactive Engineering Dashboard (Streamlit: 5 operational & overview views)
-      └── Offline Data Drift Monitoring (Evidently + missingness tracking + 3 controls)
-```
+YieldGuard is an industrial decision-support and early fault detection platform built on the UCI SECOM semiconductor manufacturing dataset (590 sensor channels, 1,567 runs) and the Semiconductor Wafer Etch benchmark (7,164 runs). It bridges classical univariate Statistical Process Control (Shewhart Individuals, EWMA), multivariate MSPC (Hotelling $T^2$ and $SPE$ Q-residuals), and modern Machine Learning (Isolation Forest, class-weighted XGBoost) under strict operational false-alarm budgets (2, 5, or 10 alarms per 100 runs).
 
 ---
 
-## 2. Measured Empirical Results (`v0.1.0`)
+## 1. Problem, Objectives & Societal Impact
+
+### 1.1 Problem Statement
+* **High-Dimensional Sensor Flood:** Each wafer run records 590 continuous sensor channels, but only ~1 in 15 runs fails (~6.12% holdout prevalence), creating extreme class imbalance.
+* **The "Accuracy" Paradox:** A naive baseline predicting "pass" for every run achieves ~93.9% accuracy while detecting zero defective wafers.
+* **Alert Fatigue & Capacity Constraints:** Fab review capacity is strictly bounded—cleanroom engineers can typically review only 2 to 5 suspect wafers per 100 runs without stalling production.
+* **Root-Cause Attribution Void:** Flagging runs without identifying *which* specific sensors drifted leads to lengthy fab investigations and prolonged equipment downtime.
+
+### 1.2 Core Objectives
+* **Bounded False-Alarm Detection:** Prioritize and rank failing wafer runs ahead of passing runs under strict, predeclared false-alarm budgets (2, 5, and 10 alarms per 100 runs).
+* **Transparent SPC vs. ML Benchmarking:** Compare classical Statistical Process Control with modern machine learning on leak-free chronological splits without synthetic data inflation.
+* **Actionable Root-Cause Attribution:** Automatically isolate and rank top anomaly-driving sensors for every flagged run via MSPC contributions and TreeSHAP waterfall values.
+* **Production Engineering Delivery:** Provide low-latency scoring via a FastAPI REST service (p95 < 100 ms), a modular CLI, and an interactive Streamlit engineering console.
+
+### 1.3 Target Audience
+* **Process Engineers:** Live univariate EWMA charts, Phase I control limits ($\mu_0, \sigma_0$), and Western Electric rule violation markers.
+* **Yield & Quality Engineers:** Bounded-budget triage queues with ranked sensor root-cause attribution.
+* **Fab Operations Managers:** Stable false-alarm rates to prevent cleanroom alert fatigue and scrap containment bottlenecks.
+* **MLOps & Industrial AI Practitioners:** Drift-adaptive rolling evaluation (Protocol `v0.2.0`), prequential benchmarking, and audit-ready model bundles.
+
+### 1.4 Societal & Environmental Impact
+* **Silicon Scrap & E-Waste Reduction:** Early wafer anomaly detection prevents defective silicon from progressing through costly chemical-mechanical polishing and packaging, drastically cutting semiconductor waste.
+* **Cleanroom Resource Conservation:** Halting bad wafers early saves gigawatt-hours of electricity and millions of gallons of ultrapure water used in cleanroom lithography and etching.
+* **Global Supply Chain Resilience:** Higher production yields reduce semiconductor shortages, stabilizing global supply for automotive, healthcare, and green-energy infrastructure.
+
+---
+
+## 2. System Architecture & Workflow
+
+<p align="center">
+  <img src="assets/yieldguard_architecture_pipeline.png" alt="YieldGuard Smart Semiconductor Yield Pipeline" width="850" />
+</p>
+
+```mermaid
+flowchart TD
+    RAW["Raw SECOM Runs (590 sensor channels, 1,567 runs)"]
+
+    subgraph PREP ["Phase I Cleaning & Sensor Screening (D1–D4, 940 runs)"]
+        direction TB
+        F1["Retained Features: 274 channels<br/>(Drops >50% missing, >=99% constants, |r| >= 0.95)"]
+        F2["10 Monitored SPC Sensors<br/>(<=5% missing, Rank-Biserial FDR)"]
+        F3["Collinear Group Tracking<br/>(Preserves groupings for explainability)"]
+    end
+
+    subgraph DETECT ["Detector Evaluation & Selection (8 Candidates)"]
+        direction TB
+        D_SPC["SPC Family:<br/>• E02: Individuals Chart (Selected Primary)<br/>• E03: Univariate EWMA (λ=0.20, L=3.0)<br/>• E04: Hotelling T² (PCA, 50 comp)<br/>• E05: SPE / Q-Residual<br/>• E06: Combined MSPC Index"]
+        D_ML["ML & Baseline Family:<br/>• E01: Chance Baseline<br/>• E07: Isolation Forest (200 trees)<br/>• E08: Class-Weighted XGBoost"]
+    end
+
+    CALIB["Threshold Calibration on D5 (235 runs)<br/>Quantile thresholds at strict budgets: 2, 5, and 10 alarms / 100 runs"]
+
+    BUNDLE["Frozen Release Bundle (models/v0.1.0/)<br/>One-Shot Holdout Evaluation (392 runs, 24 fails)"]
+
+    subgraph INTERFACES ["Deployment, Serving & Monitoring"]
+        direction TB
+        S1["CLI: yieldguard score / explain"]
+        S2["REST API: FastAPI (/score, /spc, /health)"]
+        S3["Dashboard: Streamlit (5 operational views)"]
+        S4["Drift: Evidently & Missingness Tracking"]
+    end
+
+    RAW --> PREP
+    PREP --> DETECT
+    DETECT --> CALIB
+    CALIB --> BUNDLE
+    BUNDLE --> INTERFACES
+```
+
+---
+
+## 3. Measured Empirical Results (`v0.1.0`)
 
 > [!IMPORTANT]
 > **Headline Verdict (`v0.1.0` on UCI SECOM Holdout): No detector beat chance.**
@@ -54,7 +95,7 @@ Frozen Release Bundle (`models/v0.1.0/`) & One-Shot Holdout Evaluation (392 runs
 
 All measurements below are recorded on the **unseen chronological holdout set** (392 runs, 24 fails, prevalence 6.12%). Evaluations were executed once post-freeze; predictions were written and hashed before opening holdout labels (`reports/holdout_predictions.csv`).
 
-### 2.1 Predeclared Objective Verdicts (`O1`–`O7`)
+### 3.1 Predeclared Objective Verdicts (`O1`–`O7`)
 
 | Target ID | Description | Predeclared Criterion | Measured Holdout Result | 95% Wider Bootstrap CI | Fail Count | Target Status | Evidence Link |
 |---|---|---|---|---|---|---|---|
@@ -66,7 +107,7 @@ All measurements below are recorded on the **unseen chronological holdout set** 
 | **O6** | Score Reproducibility | Multi-run score delta $\le 10^{-6}$ | **0.0** (exact match) | N/A | N/A | **PASS** | [runtime.json](reports/runtime.json) |
 | **O7** | Engineering & API Delivery | CLI/API parity $\le 10^{-9}$; p95 latency | Parity: **0.0**; p95: **63.8 ms** | N/A | N/A | **PASS** | [runtime.json](reports/runtime.json) |
 
-### 2.2 All Eight Detectors on the Chronological Holdout (392 Runs, 24 Fails, Prevalence 0.0612)
+### 3.2 All Eight Detectors on the Chronological Holdout (392 Runs, 24 Fails, Prevalence 0.0612)
 
 | Detector | Family | Holdout PR-AUC | 95% Wider PR-AUC CI | Recall @ 5 FAR | Budget-5 Alarms (per 100) | Budget-5 TP / FP | Budget-5 Recall |
 |---|---|---|---|---|---|---|---|
@@ -79,7 +120,7 @@ All measurements below are recorded on the **unseen chronological holdout set** 
 | **E07** | Isolation Forest | 0.0609 | $[0.0349, 0.1088]$ | 0.0000 (0/24) | 17 (4.34) | 0 TP / 17 FP | 0.0000 |
 | **E08** | Class-Weighted XGBoost (`xgb_c01`) | 0.0877 | $[0.0554, 0.1644]$ | 0.0833 (2/24) | 39 (9.95) | 3 TP / 36 FP | 0.1250 |
 
-### 2.3 Phase 2 Exploratory Diagnostics on SECOM (`exploratory_post_holdout`)
+### 3.3 Phase 2 Exploratory Diagnostics on SECOM (`exploratory_post_holdout`)
 
 Before designing `v0.2`, we ran three root-cause diagnostics on SECOM ([`secom_phase2_diagnostics.json`](reports/exploratory/secom_phase2_diagnostics.json)):
 
@@ -100,7 +141,7 @@ Before designing `v0.2`, we ran three root-cause diagnostics on SECOM ([`secom_p
 
 ---
 
-### 2.4 Protocol `v0.2.0`: Prequential Drift-Adaptive Evaluation & Confirmatory Wafer Etch Benchmark
+### 3.4 Protocol `v0.2.0`: Prequential Drift-Adaptive Evaluation & Confirmatory Wafer Etch Benchmark
 
 To address drift without retuning on the spent SECOM holdout, Protocol [`v0.2.0`](docs/11_PROTOCOL_V02.md) ([`configs/v0_2.yaml`](configs/v0_2.yaml)) introduces:
 - **Prequential (Rolling-Origin) Evaluation**: Partition timeline into 8 contiguous blocks ($B_1 \dots B_8$); warm up on $B_1$, and for $k=2 \dots 8$ fit strictly on past history $H_{k-1}$ and evaluate on unseen block $B_k$.
@@ -142,9 +183,29 @@ Applied once without modification to the **Semiconductor Wafer Etch dataset** ([
 
 ---
 
-## 3. Quick Start
+## 4. Interactive Engineering Dashboard (Streamlit)
 
-### 3.1 Local Environment Setup
+YieldGuard includes a comprehensive Streamlit operations dashboard designed for process and yield engineers:
+
+```powershell
+python -m streamlit run app/dashboard.py
+```
+
+The interactive console provides 6 dedicated views:
+1. **Executive Overview & Glossary**: System architecture summary, detector catalog, and plain-language engineering explanations.
+2. **Univariate EWMA & Run Rules**: Real-time control charts with Phase I limits ($\mu_0, \sigma_0$) and Western Electric rule violations across monitored sensors.
+3. **Multivariate SPC ($T^2$ & $SPE$)**: Simultaneous tracking of Hotelling $T^2$ (systematic variance) and Squared Prediction Error (correlation breakdown) against budget thresholds.
+4. **Flagged-Run Drill-Down**: Instant root-cause decomposition via MSPC sensor contribution bars and TreeSHAP waterfall plots with collinear group mappings.
+5. **Alarm-Budget Performance**: Realised alarm rate stability and precision/recall trade-offs evaluated across strict budgets (2, 5, and 10 alarms per 100 runs).
+6. **Wafer Etch Confirmatory Benchmark**: Full interactive evaluation of Protocol `v0.2.0` on 7,164 wafer runs with 152 time-step sensor trace viewers.
+
+*Includes a **Synthetic Demo Mode** toggle to test full dashboard capabilities without requiring raw data downloads.*
+
+---
+
+## 5. Quick Start
+
+### 5.1 Local Environment Setup
 
 Requires Python 3.11:
 
@@ -158,7 +219,7 @@ pip install -r requirements.lock
 pip install --no-deps -e .
 ```
 
-### 3.2 Run the REST API Service
+### 5.2 Run the REST API Service
 
 ```powershell
 $env:YIELDGUARD_BUNDLE_DIR = "models/v0.1.0"
@@ -173,21 +234,7 @@ python scripts/smoke_api.py --url http://127.0.0.1:8000
 
 Interactive OpenAPI documentation is available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
-### 3.3 Run the Interactive Streamlit Dashboard
-
-```powershell
-python -m streamlit run app/dashboard.py
-```
-
-The dashboard includes:
-1. **Univariate EWMA & Run Rules**: Interactive control charts with Phase I limits ($\mu_0, \sigma_0$) and Western Electric run rule markers.
-2. **Multivariate SPC ($T^2$ & $SPE$)**: Hotelling $T^2$ and Squared Prediction Error tracking across time.
-3. **Flagged-Run Drill-Down**: MSPC contribution bars and TreeSHAP waterfall attributions with collinear group maps.
-4. **Alarm-Budget Performance**: Realised alarm rate and precision/recall trade-offs across budgets 2, 5, and 10.
-5. **Synthetic Demo Mode**: Seamless toggle to explore full dashboard functionality on synthetic data without raw data downloads.
-6. **Wafer Etch Confirmatory Benchmark**: Independent prequential benchmark evaluation ($O_{1\text{\_v2}}$–$O_{4\text{\_v2}}$), 152 time-step sensor trace viewer, and detector comparison tables.
- 
-### 3.4 Batch Scoring, Explanations & Protocol `v0.2` via CLI
+### 5.3 Batch Scoring, Explanations & Protocol `v0.2` via CLI
 
 ```powershell
 # Batch score a CSV of runs
@@ -211,9 +258,9 @@ python -m yieldguard.cli prequential --config configs/v0_2.yaml --dataset wafer 
 
 ---
 
-## 4. Testing & Quality Verification
+## 6. Testing & Quality Verification
 
-Run the full automated test suite (all 82 tests run on synthetic data without requiring SECOM or Wafer downloads):
+Run the full automated test suite (all 88 tests run on synthetic data without requiring SECOM or Wafer downloads):
 
 ```powershell
 # Run code formatting and linter
@@ -225,7 +272,7 @@ python -m pytest -v
 
 ---
 
-## 5. Verification Status of Container & CI Components
+## 7. Verification Status of Container & CI Components
 
 In accordance with project integrity standards:
 - **Docker Container Runtime**: **VERIFIED LOCALLY (PASS)** — `docker build -t yieldguard:ci .` (`sha256:0ecc56a4...`) and live container verification via `scripts/smoke_api.py` (`/health`, `/ready`, `/model-info`, `/score`, `/spc`) passed with zero errors.
@@ -233,7 +280,7 @@ In accordance with project integrity standards:
 
 ---
 
-## 6. Dataset Attribution & License
+## 8. Dataset Attribution & License
 
 - **Primary Dataset (`v0.1.0`)**: UCI Machine Learning Repository - SECOM Dataset.
   - **Citation**: McCann, M., Li, Y., Maguire, L., & Johnston, A. (2008). *SECOM Data Set*. University of Ulster.
